@@ -1,0 +1,66 @@
+﻿
+    <table id="dgSymptom" title="Danh mục triệu chứng" style="width:800px;height:480px"
+           toolbar="#toolbarSymptom" pagination="true" idField="Id"
+           rownumbers="true" fitColumns="true" singleSelect="true" nowrap="false" autoRowHeight="true">
+        <thead>
+            <tr>
+                <th field="Id" width="50">Thứ tự</th>
+                <th field="Name" width="50" editor="{type:'validatebox',options:{required:true}}">Tên triệu chứng</th>
+                <th field="Description" width="50" editor="{type:'validatebox',options:{required:true}}">Mô tả</th>
+                <th field="Status" width="30" editor="{type:'switchbutton',options:{onText:'Có',offText:'Không',checked:'true'}}" formatter="Showchecked">Kích hoạt</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbarSymptom">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dgSymptom').edatagrid('addRow')">Thêm</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dgSymptom').edatagrid('destroyRow')">Xóa</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript: $('#dgSymptom').edatagrid('saveRow')">Lưu</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript: $('#dgSymptom').edatagrid('cancelRow')">Hủy</a>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#dgSymptom').edatagrid({
+                onBeforeEdit:function(index,row){
+                    var col = $(this).datagrid('getColumnOption', 'Status');
+                    col.editor.options.on = row.Status;
+                    col.editor.options.off = row.Status;
+                    console.log(row)
+                },
+                url: '@Url.Action("ListAllPaging", "Symptom", new { Area = "Quantri" })',
+                saveUrl: '@Url.Action("Create", "Symptom", new { Area = "Quantri" })',
+                updateUrl: '@Url.Action("Update", "Symptom", new { Area = "Quantri" })',
+                destroyUrl: '@Url.Action("Destroy", "Symptom", new { Area = "Quantri" })'
+            });
+        });
+// customize switch button
+        $.extend($.fn.datagrid.defaults.editors, {
+            switchbutton: {
+                init: function (container, options) {
+                    var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container);
+                    return input.switchbutton(options);
+                },
+                getValue: function (target) {
+                    return $(target).switchbutton('options').checked;
+                },
+                setValue: function (target, value) {
+                    if (value) {
+                        $(target).switchbutton('check');
+                    } else {
+                        $(target).switchbutton('uncheck');
+                    }
+                },
+                resize: function (target, width) {
+                    $(target).switchbutton('resize', { width: width });
+                }
+            }
+        });
+
+        function Showchecked(value) {
+            if (value == true) {
+                return '✓';
+            }
+            else {
+                return '✗';
+            }
+        }
+    </script>

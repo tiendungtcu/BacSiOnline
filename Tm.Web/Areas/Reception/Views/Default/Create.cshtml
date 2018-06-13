@@ -1,0 +1,147 @@
+﻿@model TM.Web.Areas.Reception.Models.ReceptionViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Đăng ký khám bệnh</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <!--div class="panel-heading">
+                Đăng ký khám bệnh
+            </div-->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Html.BeginForm("Create", "Default", new { area = "Reception" }, FormMethod.Post, new { role = "form" }))
+                        {
+                            <h1>Lỗi: @ViewBag.Error</h1>
+                            @Html.AntiForgeryToken()
+                            <!-- Họ tên textbox -->
+                            <div class="form-group" style="width:60%">
+                                @Html.LabelFor(m => m.FullName)                    
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control",placeholder="Nhập họ tên" })                               
+                            </div>
+                            <!-- Số điện thoại -->
+                            <div class="form-group" style="width:60%">
+                                @Html.LabelFor(m => m.PhoneNumber)
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Nhập số đt" })
+                            </div>
+                            <!-- Năm sinh - giới tính combobox -->
+                            <div class="row ">
+                                <!-- Dropdown năm sinh -->
+                                <div class="form-group col-lg-2">
+                                    @Html.LabelFor(m => m.BirthYear)
+                                    <select id="BirthYear" name="BirthYear" class="form-control">
+                                        <option>1987</option>
+                                    </select>
+                                </div>
+
+                                <!-- Dropdown giới tính -->
+                                <div class="form-group col-lg-2">
+                                    <label for="Gender">Giới tính</label>
+                                    <select id="Gender" name="Gender" class="form-control">
+                                        <option value="M">Nam</option>
+                                        <option value="F">Nữ</option>
+                                        <option value="O">Khác</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <!-- address textbox -->
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address)
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ", style = "width:60%" })                              
+                            </div>
+                            <!-- Địa chỉ textbox - comboboxes -->
+                            <div class="row">
+                                <div class="col-lg-2">
+
+                                    <!-- Dropdown tỉnh -->
+                                    <div class="form-group">
+                                        <label for="ProvinceId">Tỉnh</label>
+                                        <select id="ProvinceId" name="ProvinceId" class="form-control">
+                                            <option>1988</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <!-- Dropdown huyện -->
+                                    <div class="form-group">
+                                        <label for="DistrictId">Huyện</label>
+                                        <select id="DistrictId" name="DistrictId" class="form-control">
+                                            <option>Krong ana</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <!-- dropdown xã -->
+                                    <div class="form-group">
+                                        <label for="WardId">Xã</label>
+                                        <select id="WardId" name="WardId" class="form-control">
+                                            <option value="7">Draysap</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Triệu chứng -->
+                            <div class="form-group">
+                                <label for="Symptom">Triệu chứng:</label>
+                                <textarea class="form-control" name="Symptom" rows="5" id="Symptom" style="width:60%"></textarea>
+                            </div>
+
+                            <!-- Bác sĩ khám -->
+                            <div class="form-group">
+                                <label for="DoctorId">Bác sĩ</label>
+                                <select name ="DoctorId" id="DoctorId" class="form-control" style="width:50%">
+
+                                </select>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Tạo hồ sơ</button>
+                            <button type="reset" class="btn btn-default">Đặt lại form</button>
+                        }
+                    </div>
+                    <!-- /.col-lg-6 (nested) -->
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+@section Scripts {
+<script src="~/Content/Common/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+    var userRoleUrl = '@Url.Action("ListAllDoctor", "UserManager", new { role="DOCTOR_GROUP", Area = "Quantri" })';
+    $(function () {
+        // Configure Symptom Select2 Box
+        $('#DoctorId').select2({
+            ajax: {
+                url: userRoleUrl
+            },
+            placeholder: '--Chọn bác sĩ--',
+            language: 'vi',
+            width: 'resolve',
+            allowClear: true,
+            minimumInputLength: 0,
+            CloseOnSelect: false
+        }
+      );
+    });
+</script>
+}

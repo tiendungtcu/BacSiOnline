@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Areas/Doctor/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<h1>Mô tả triệu chứng</h1>
+
+<div class="row" [lang="vi"]>
+
+    <select id="symptom-select" class="select2-symptom" name="states[]" style="width:50%" multiple ="multiple">
+        
+    </select>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <div class="form-group">
+            <!-- Province select2 -->
+            <select class="form-control select2-single" id="province">
+                
+            </select>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="form-group">
+            <!-- District select2 -->
+            <select class="form-control select2-single" id="district">
+                
+            </select>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="form-group">
+            <!-- Ward select2 -->
+            <select class="form-control select2-single" id="ward"></select>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Content/Common/select2/js/select2.min.js"></script>
+    <script type="text/javascript">
+        var symptomUrl = '@Url.Action("SymptomDropdown", "Symptom", new { Area = "Quantri" })';
+        var proUrl = '@Url.Action("ProvinceDropdown", "Province", new { Area = "Quantri" })';
+        var disUrl = '@Url.Action("DistrictDropdown", "District", new { Area = "Quantri" })';
+        var wardUrl = '@Url.Action("WardDropdown", "Ward", new { Area = "Quantri" })';
+        $(function () {
+            // Configure Symptom Select2 Box
+            $('#symptom-select').select2({
+                ajax:{
+                    url : symptomUrl
+                },
+                placeholder: '--Chọn triệu chứng--',
+                language: 'vi',
+                width: 'resolve',
+                allowClear: true,
+                minimumInputLength: 0,
+                CloseOnSelect:false
+            }
+          );
+        // Configure Province, Ward and District Select2
+            $("#province").select2({
+                ajax: {
+                    url: proUrl
+                },
+                placeholder: '-- Chọn tỉnh/tp--',
+                language: 'vi',
+                width: 'resolve',
+                minimumInputLength: 0,
+            });
+            $("#district").select2({
+                placeholder: '-- Chọn huyện/lị--',
+                language: 'vi',
+                width: 'resolve',
+                minimumInputLength: 0,
+            });
+            $("#ward").select2({
+                placeholder: '-- Chọn phường/xã--',
+                language: 'vi',
+                width: 'resolve',
+                minimumInputLength: 0,
+            });
+            //add change event to #province
+        $("#province").change(function () {
+            //get province id from #province select2
+            var proid = $(this).val();
+            $.ajax({
+                url: disUrl,
+                dataType: "json",// Json
+                data: { proid: proid },//add province_id to ajax request
+                success: function (data) {
+                    //Clear district text
+                    $("#district").text("");
+                    $("#district").append("<option value='0'>  --Chọn huyện-- </option>");
+                    //process district data
+                    $.each(data.results, function (index, value) {
+                        $("#district").append("<option value='" + value.id + "'> " + value.text + "</option>");
+                    });
+                }
+            });
+        });
+        //  #district
+        $("#district").change(function () {
+            //get province id from #province select2
+            var disid = $(this).val();
+            $.ajax({
+                url: wardUrl,
+                dataType: "json",// Json
+                data: { disid: disid },//add district id to ajax request
+                success: function (data) {
+                    //Clear ward text
+                    $("#ward").text("");
+                    $("#ward").append("<option value='0'>  --Chọn xã-- </option>");
+                    //process district data
+                    $.each(data.results, function (index, value) {
+                        $("#ward").append("<option value='" + value.id + "'> " + value.text + "</option>");
+                    });
+                }
+            })
+        });
+   });
+</script>
+}

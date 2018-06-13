@@ -1,0 +1,10 @@
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\Tm.Data.dll.config
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\Tm.Data.dll
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\Tm.Data.pdb
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\EntityFramework.dll
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\EntityFramework.xml
+D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.csprojResolveAssemblyReference.cache
+D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.dll
+D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.pdb

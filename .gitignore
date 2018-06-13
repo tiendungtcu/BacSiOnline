@@ -1,0 +1,5 @@
+packages/*
+Tm.Web/obj/*
+Tm.Web/bin/*
+Tm.Data/bin/*
+Tm.Data/obj/*

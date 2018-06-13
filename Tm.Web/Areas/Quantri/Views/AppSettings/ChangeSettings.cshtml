@@ -1,0 +1,59 @@
+﻿@model TM.Web.Areas.Quantri.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Thay đổi cài đặt";
+    Layout = "~/Areas/Quantri/Views/Shared/_Layout.cshtml";
+}
+<div id="tt" class="easyui-tabs" border="false" fit="true">
+    <div title="Cấu hình hệ thống" data-options="closable:true" iconCls="icon-gears" style="width:100%;max-width:700px;padding:30px 60px;">
+
+            @using (Html.BeginForm("SaveSettings", "AppSettings", FormMethod.Post, new { id = "fmChangeSettings" }))
+            {
+                <div style="margin-bottom:20px">
+                    <span>Tiêu đề trang:</span>
+                    @Html.EditorFor(model => model.AppTitle, new { htmlAttributes = new { @class = "easyui-textbox", @data_options = "required:true", @style = "width:100%;", } })
+                </div>
+                <div style="margin-bottom:20px">
+                    <span>Dòng chân trang:</span>
+                    @Html.EditorFor(model => model.FooterLine, new { htmlAttributes = new { @class = "easyui-textbox", @data_options = "required:true", @style = "width:100%;", } })
+                </div>
+                <div style="margin-bottom:20px">
+                    <span>Chọn kiểu nền:</span><br />
+                    @Html.DropDownList("ThemeSetting", (SelectList)ViewBag.ThemesList, new { @data_options = "required:true,limitToList:true", @class = "easyui-combobox", @style = "width:60%" })
+                </div>
+            }
+            <div style="text-align:center;padding:5px 0">
+                <a href="javascript:void(0)" class="easyui-linkbutton c3" id="btnSubmit" onclick="updateSettings()" style="width:80px">Lưu</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Xóa</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        //--------------------------------------------------------------------------
+        //update general application settings
+        //--------------------------------------------------------------------------
+        function updateSettings() {
+            $('#fmChangeSettings').form('submit', {
+                onSubmit: function () {
+                    if ($(this).form('validate')) {
+                        $('#btnSubmit').linkbutton('disable');
+                        return true;
+                    }
+                    return false;
+                },
+                success: function (result) {
+                    $('#btnSubmit').linkbutton('enable');
+                    var result = eval('(' + result + ')');
+                    if (result.message == 'error') {
+                        $.messager.alert('Lỗi', 'Thông tin chưa chính xác!', 'error');
+                    } else {
+                        $.messager.alert('Thông báo', 'Cập nhật thông tin thành công!');
+                    }
+                }
+            });
+        }
+        // reset form
+        function clearForm() {
+            $('#fmChangeSettings').form('clear');
+        }
+    </script>
+

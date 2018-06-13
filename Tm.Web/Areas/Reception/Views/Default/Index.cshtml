@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Đăng ký thành công</h1>
+        <h2>Username: @ViewBag.Username </h2>
+        <h2>Password: @ViewBag.Password</h2>
+        <h2>Address Id: @ViewBag.Result.AddressId</h2>
+        <h2>Order Id: @ViewBag.Result.OrderId</h2>
+        <button>Đăng ký khám</button>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

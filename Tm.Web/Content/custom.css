@@ -1,0 +1,92 @@
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+legend{
+	margin-left: -6px;
+	font-weight: bold;
+}
+fieldset{
+	margin: 20px 10px;
+}
+.text-center{
+    text-align:center;
+}
+.demo-info{
+	padding:0 0 12px 0;
+}
+.demo-tip{
+	display:none;
+}
+.label-top{
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+.tree-title{
+	font-size: 14px;
+}
+.tree-title a{
+	text-decoration: none;
+}
+#head-menu{
+	position: absolute;
+	z-index: 8;
+	display: none;
+	background: #2d3e50;
+	color: #fff;
+	left: 0;
+	padding: 0 4.5%;
+	top: 66px;
+}
+#head-menu .navbar{
+	margin: 0 40px 20px 40px;
+}
+#head-menu a{
+	color: #fff;
+}
+/*format panel body*/
+.content-doc{
+	padding: 1.5%;
+	font-size: 14px;
+}
+.element-inline{
+	display: inline-block;
+
+	padding:2px 5px;
+}
+.form-horizontal {
+	margin:5px;
+	padding:5px 5px;
+}
+.line-horizontal{
+	display: block;
+	height: 1px;
+	margin: 10px 100px;
+	background: blue;
+}
+.form-element {
+	display: contents;
+	margin:5px;
+	padding:5px 5px;
+}
+.l-btn{
+		vertical-align:middle;
+}
+.button-sep {
+    display: inline-block;
+    width: 0;
+    height: 22px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    vertical-align: middle;
+}

@@ -1,0 +1,192 @@
+﻿
+<!-- Table hiển thị danh sách Thông báo-->
+<table id="dgNotify" title="Danh mục thông báo" style="width:auto;height:380px" nowrap="false" autoRowHeight="true">
+    <thead>
+        <tr>
+            <th field="Title" width="100" editor="{type:'validatebox',options:{required:true}}">Tiêu đề</th>
+            <th field="Contents" width="100" editor="{type:'textbox',options:{height:'60px',required:true,multiline:true}}">Nội dung</th>
+            <th data-options="field:'Type',width:80,
+                        formatter:function(value,row){
+                             return row.TypeName;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'Id',
+                                textField:'Name',
+                                method:'get',
+                                url:'@Url.Action("ListAll", "NotifyType", new { Area = "Quantri" })',
+                                required:'true'
+                            }}">Thể loại</th>
+            <th data-options="field:'ReceiverId',width:80,
+                        formatter:function(value,row){
+                             return row.Receiver;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'Id',
+                                textField:'FullName',
+                                method:'get',
+                                url:'@Url.Action("ListAll", "UserManager", new { Area = "Quantri" })',
+                                required:'true'
+                            }}">Người nhận</th>
+              
+            <th field="Status" width="30" editor="{type:'switchbutton',options:{checked:true,onText:'Rồi',offText:'Chưa',width:20}}" formatter="Showchecked">Đã xem</th>        
+        </tr>
+    </thead>
+</table>
+<!-- Toolbar hiển thị trên bảng notification-->
+<div id="toolbarNotify"> 
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newNotify()">Thêm</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript: $('#dgNotify').edatagrid('destroyRow')">Xóa</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript: $('#dgNotify').edatagrid('saveRow')">Lưu</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript: $('#dgNotify').edatagrid('cancelRow')">Hủy</a>
+    <span class="button-sep"></span>
+    <span> Từ khóa:</span>
+    <input id="keyword" style="width:200px;line-height:24px;border:2px solid #ccc" />
+    <span class="button-sep"></span>
+    <span> Thể loại:</span>
+    <input class="easyui-combobox" id="TypeFilter" data-options=
+                   "url:'@Url.Action("ListAll", "NotifyType", new { Area = "Quantri" })',
+                   valueField:'Id',
+                   textField:'Name'"
+           style="width:80px;">
+    <span class="button-sep"></span>
+    <span> Người Nhận:</span>
+    <input class="easyui-combobox" id="ReceiverFilter" data-options=
+                   "url:'@Url.Action("ListAll", "UserManager", new { Area = "Quantri" })',
+                   valueField:'Id',
+                   textField:'FullName'"
+           style="width:80px;">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()"> Tìm kiếm</a>
+</div>
+<!--Dialog thêm Notification mới-->
+<div id="dlgNotify" class="easyui-dialog" style="width:680px"
+     closed="true" buttons="#dlgNotify-buttons">
+    <form id="fmNotify" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">Nội dung thông báo</div>
+        <div style="margin-bottom:10px">
+            <input name="Title" class="easyui-textbox" required="true" label="Tiêu đề:" style="width:100%">
+        </div>  
+        <div style="margin-bottom:10px">
+            <input name="Contents" class="easyui-textbox" multiline="true" required="true"  label="Nội dung:" style="width:80%;height:150px">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-combobox" name="Type" data-options="required:'true',
+                   url:'@Url.Action("ListAll", "NotifyType", new { Area = "Quantri" })',
+                   valueField:'Id',
+                   textField:'Name',
+                   label:'Thể loại',
+                   labelPosition:'left'"
+                   style="width:40%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-combobox" name="ReceiverId" data-options="required:'true',
+                   url:'@Url.Action("ListAll", "UserManager", new { Area = "Quantri" })',
+                   valueField:'Id',
+                   textField:'FullName',
+                   label:'Người Nhận',
+                   labelPosition:'left'"
+                   style="width:40%;">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-combobox" name="Link" data-options=
+                   "url:'@Url.Action("ListAll", "Order", new { Area = "Quantri" })',
+                   valueField:'Id',
+                   textField:'Title',
+                   label:'Bệnh án',
+                   labelPosition:'left'"
+                   style="width:40%;">
+        </div>
+    </form>
+</div>
+<!--2 Button Ok và Cancel cho Dialog thêm mới Notification-->
+<div id="dlgNotify-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveNotify()" style="width:90px">Lưu</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgNotify').dialog('close')" style="width:90px">Hủy</a>
+</div>
+<script type="text/javascript">
+    var url;
+    /* chạy khi click nút Thêm */
+    function newNotify() {
+        $('#dlgNotify').dialog('open').dialog('center').dialog('setTitle', 'Thêm thông báo');
+        $('#fmNotify').form('clear');
+        url = '@Url.Action("Create","Notification")';
+    }
+    /* Thực hiện khi người dùng click nút Ok sau khi thêm*/
+    function saveNotify() {
+        $('#fmNotify').form('submit', {
+            url: url,
+            onSubmit: function () { /* kiểm tra dữ liệu trước khi POST */
+                return $(this).form('validate');
+            },
+            success: function (result) { /* nhận dữ liệu thành công */
+                var result = eval('('+result+')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Lỗi',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlgNotify').dialog('close');        // Đóng hộp thoại thêm User
+                    $('#dgNotify').datagrid('reload');    // Load lại dữ liệu người dùng
+                }
+            }
+        });
+    }
+</script>
+<script>
+    /* chuyển table thành edatagridview*/
+		$(function () {
+		    $('#dgNotify').edatagrid({
+		        onEndEdit: function (index, row, changes) {
+		            var typeEd = $('#dgNotify').datagrid('getEditor', {
+		                index: index,
+		                field: 'Type'
+		            });
+		            var receiverEd = $('#dgNotify').datagrid('getEditor', {
+		                index: index,
+		                field: 'ReceiverId'
+		            });
+		            if (typeEd) {
+		                var text = $(typeEd.target).combobox('getText');	// get combobox text		              
+		                row.TypeName = text;	// update field value
+		            }
+		            if (receiverEd) {
+		                var text = $(receiverEd.target).combobox('getText');	// get combobox text
+		                row.Receiver = text;	// update field value
+		            }
+
+		        },
+		        url: '@Url.Action("ListAllPaging", "Notification", new { Area = "Quantri" })',
+		        saveUrl: '@Url.Action("Create", "Notification", new { Area = "Quantri" })',
+		        updateUrl: '@Url.Action("Update", "Notification", new { Area = "Quantri" })',
+		        destroyUrl: '@Url.Action("Destroy", "Notification", new { Area = "Quantri" })',
+		        toolbar: '#toolbarNotify',
+		        iconCls: 'icon-edit',
+		        idField: 'Id',
+		        rownumbers: true,
+		        fitColumns: true,
+		        pagination: true,
+		        singleSelect: true
+		    });
+		});
+
+    function Showchecked(value) {
+        if (value == true) {
+            return '✓';
+        }
+        else {
+            return '✗';
+        }
+    }
+    function doSearch() {
+        $('#dgNotify').datagrid('load', {
+            keyword: $('#keyword').val(),
+            typeId: $('#TypeFilter').combobox('getValue'),
+            userId: $('#ReceiverFilter').combobox('getValue')
+        });
+    }
+
+</script>

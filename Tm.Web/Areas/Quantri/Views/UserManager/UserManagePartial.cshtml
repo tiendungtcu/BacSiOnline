@@ -1,0 +1,175 @@
+﻿
+<!-- Table hiển thị danh sách người dùng-->
+<table id="dgUser" title="Danh mục tài khoản người dùng" style="width:auto;height:380px">
+    <thead>
+        <tr>
+            <th field="UserName" width="100"  >Tên đăng nhập</th>    
+            <th data-options="field:'RoleId',width:80,
+                        formatter:function(value,row){
+                             return row.Role;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'Id',
+                                textField:'Name',
+                                method:'get',
+                                url:'@Url.Action("ListAll", "Role", new { Area = "Quantri" })',
+                                required:true
+                            }
+                        }">Nhóm</th>
+            <th field="Email" width="100" editor="{type:'validatebox',options:{required:true, validType:'email'}}">Email</th>    
+            <th field="FullName" width="100" editor="text">Tên đầy đủ</th>          
+        </tr>
+    </thead>
+</table>
+<!-- Toolbar hiển thị trên bảng user-->
+<div id="toolbarUser">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">Thêm</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dgUser').edatagrid('destroyRow')">Xóa</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dgUser').edatagrid('saveRow')">Lưu</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dgUser').edatagrid('cancelRow')">Hủy</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="resetPassword()">Đặt lại mật khẩu</a>
+</div>
+<!--Dialog thêm user mới-->
+<div id="dlgUser" class="easyui-dialog" style="width:500px"
+     closed="true" buttons="#dlgUser-buttons">
+    <form id="fmUser" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">Thông tin tài khoản</div>
+        <div style="margin-bottom:10px">
+            <input name="UserName" class="easyui-textbox" required="true" label="Username:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" name ="PassWord" id="pass"  required="true" validType="length[6,12]" label="Mật khẩu:" prompt="Mật khẩu ít nhất 6 ký tự" iconWidth="28" style="width:100%;height:34px">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" label="Nhắc lại:" required="true" prompt="Nhập lại mật khẩu" iconWidth="28" validType="confirmPass['#pass']" style="width:100%;height:34px">           
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="Email" class="easyui-textbox" required="true" validType="email" label="Email:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-combobox" name="Role" data-options="required:'true',
+                   url:'@Url.Action("ListAll", "Role", new { Area = "Quantri" })',                                                  
+                   valueField:'Id',
+                   textField:'Name',
+                   label:'Nhóm',
+                   labelPosition:'left'"
+                   style="width:100%;">
+        </div>
+    </form>
+</div>
+<!--2 Button Ok và Cancel cho Dialog thêm mới user-->
+<div id="dlgUser-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Lưu</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgUser').dialog('close')" style="width:90px">Hủy</a>
+</div>
+<!-- Dialog xác nhận đặt lại mật khẩu-->
+<div id="dlgResetPassword" class="easyui-dialog" title="Đặt lại mật khẩu" data-options="iconCls:'icon-help'" style="width:400px;height:200px;padding:10px" closed="true" buttons="#dlgResetPassword-buttons">
+    Mật khẩu người dùng này sẽ được đặt lại là '123456' .
+</div>
+<div id="dlgResetPassword-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="resetPassword()" style="width:90px">Xác nhận</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgResetPassword').dialog('close')" style="width:90px">Hủy</a>
+</div>
+<script type="text/javascript">
+    var url;
+    /* chạy khi click nút Thêm */
+    function newUser() {
+        $('#dlgUser').dialog('open').dialog('center').dialog('setTitle', 'Thêm tài khoản');
+        $('#fmUser').form('clear');
+        url = '@Url.Action("Create","UserManager")';
+    }
+    /* khi click nút Đặt lại mật khẩu */
+    function resetPassword() {
+        var row = $('#dgUser').edatagrid('getSelected');
+        if (row) {
+            $.messager.confirm('Xác nhận', 'Mật khẩu của tài khoản này sẽ reset về mặc định (123456) ?', function (r) {
+                if (r) {
+                    $.post('@Url.Action("ResetPassword", "UserManager", new { Area = "Quantri"})?Id='+row.Id, function (result) {
+                        if (result.success) {
+                            $.messager.alert('Thông báo', 'Reset mật khẩu thành công!');
+                        } else {
+                            $.messager.show({    // show error message
+                                title: 'Lỗi',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+    /* Thực hiện khi người dùng click nút Ok sau khi thêm*/
+    function saveUser() {
+        $('#fmUser').form('submit', {
+            url: url,
+            onSubmit: function () { /* kiểm tra dữ liệu trước khi POST */
+                return $(this).form('validate');
+            },
+            success: function (result) { /* nhận dữ liệu thành công */
+                var result = eval('('+result+')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Lỗi',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlgUser').dialog('close');        // Đóng hộp thoại thêm User
+                    $('#dgUser').datagrid('reload');    // Load lại dữ liệu người dùng
+                }
+            }
+        });
+    }
+</script>
+<script>
+    /* tùy biến editor cho number spinner 
+		$.extend($.fn.datagrid.defaults.editors, {
+			numberspinner: {
+				init: function(container, options){
+					var input = $('<input type="text">').appendTo(container);
+					return input.numberspinner(options);
+				},
+				destroy: function(target){
+					$(target).numberspinner('destroy');
+				},
+				getValue: function(target){
+					return $(target).numberspinner('getValue');
+				},
+				setValue: function(target, value){
+					$(target).numberspinner('setValue',value);
+				},
+				resize: function(target, width){
+					$(target).numberspinner('resize',width);
+				}
+			}
+		});
+        */
+    /* tùy biến cho confirm password*/
+        $.extend($.fn.validatebox.defaults.rules, {
+            confirmPass: {
+                validator: function (value, param) {
+                    var pass = $(param[0]).passwordbox('getValue');
+                    return value == pass;
+                },
+                message: 'Mật khẩu không khớp.'
+            }
+        })
+    /* chuyển table thành edatagridview*/
+		$(function () {
+		    $('#dgUser').edatagrid({
+		        url: '@Url.Action("ListAllPaging", "UserManager", new { Area = "Quantri" })',
+		        saveUrl: '@Url.Action("Create", "UserManager", new { Area = "Quantri" })',
+		        updateUrl: '@Url.Action("Update", "UserManager", new { Area = "Quantri" })',
+		        destroyUrl: '@Url.Action("Destroy", "UserManager", new { Area = "Quantri" })',
+		        toolbar: '#toolbarUser',
+		        iconCls: 'icon-edit',
+                idField: 'Id' ,
+                rownumbers:true, 
+                fitColumns:true,
+                pagination:true, 
+                singleSelect:true
+		    });
+		});
+
+</script>

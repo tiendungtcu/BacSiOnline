@@ -1,0 +1,63 @@
+﻿
+    <table id="dgParam" title="Danh mục thông số" style="width:800px;height:480px"
+           toolbar="#toolbarParam" pagination="true" idField="Id"
+           rownumbers="true" fitColumns="true" singleSelect="true" nowrap="false" autoRowHeight="true">
+        <thead>
+            <tr>
+                <th field="Id" width="50">Thứ tự</th>
+                <th field="CodeName" width="50" editor="{type:'validatebox',options:{required:true}}">Tên thông số</th>
+                <th field="Description" width="50" editor="{type:'validatebox',options:{required:true}}">Mô tả</th>
+                <th field="Unit" width="50" editor="{type:'validatebox',options:{required:true}}">Đơn vị</th>
+                <th field="Status" width="30" editor="{type:'switchbutton',options:{onText:'Có',offText:'Không',width:20,checked:'true'}}" formatter="Showchecked">Kích hoạt</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbarParam">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dgParam').edatagrid('addRow')">Thêm</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript: $('#dgParam').edatagrid('destroyRow')">Xóa</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript: $('#dgParam').edatagrid('saveRow')">Lưu</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript: $('#dgParam').edatagrid('cancelRow')">Hủy</a>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#dgParam').edatagrid({               
+                url: '@Url.Action("ListAllPaging", "Param", new { Area = "Quantri" })',
+                saveUrl: '@Url.Action("Create", "Param", new { Area = "Quantri" })',
+                updateUrl: '@Url.Action("Update", "Param", new { Area = "Quantri" })',
+                destroyUrl: '@Url.Action("Destroy", "Param", new { Area = "Quantri" })'        
+            });
+        });
+
+        $.extend($.fn.datagrid.defaults.editors, {
+            switchbutton: {
+                init: function (container, options) {
+                    var input = $('<input type="text" class="datagrid-editable-input">').appendTo(container);
+                    return input.switchbutton(options);
+                },
+                getValue: function (target) {
+                    return $(target).switchbutton('options').checked;
+                },
+                setValue: function (target, value) {
+                    if (value) {
+                        $(target).switchbutton('check');
+                    } else {
+                        $(target).switchbutton('uncheck');
+                    }
+                },
+                resize: function (target, width) {
+                    $(target).switchbutton('resize', { width: width });
+                }
+            }
+        });
+
+
+        function Showchecked(value) {          
+                if (value == true) {
+                    return '✓';
+                }
+                else {
+                    return '✗';
+                }
+        }
+    </script>

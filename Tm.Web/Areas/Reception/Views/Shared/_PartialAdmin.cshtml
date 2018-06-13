@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNet.Identity
+<a href="#" class="easyui-menubutton c3" data-options="menu:'#mm6',iconCls:'icon-man'" >@User.Identity.GetUserName() </a>
+<div id="mm6">
+    @using (Html.BeginForm("LogOff", "Account",new { area=""}, FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    
+    <div data-options="iconCls:'icon-sign-out'" onclick="LogOff()">
+        Đăng xuất
+    </div>
+</div>
