@@ -26,6 +26,8 @@ namespace TM.Web.Areas.Reception.Models
         public int DistrictId { get; set; }
         public int WardId { get; set; }
         public string Symptom { get; set; }
+        [Required]
+        [Display(Name ="Bác sĩ")]
         public int DoctorId { get; set; }
     }
 }

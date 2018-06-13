@@ -4,25 +4,19 @@
     Layout = "~/Views/Shared/_DoctorLayout.cshtml";
 }
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Đăng ký khám bệnh</h1>
-    </div>
-    <!-- /.col-lg-12 -->
-</div>
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <!--div class="panel-heading">
-                Đăng ký khám bệnh
-            </div-->
+            <div class="panel-heading">
+                <h2>Đăng ký khám bệnh</h2>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
                         @using (Html.BeginForm("Create", "Default", new { area = "Reception" }, FormMethod.Post, new { role = "form" }))
                         {
-                            <h1>Lỗi: @ViewBag.Error</h1>
+                            <h1 style="color:red">@ViewBag.Error</h1>
                             @Html.AntiForgeryToken()
                             <!-- Họ tên textbox -->
                             <div class="form-group" style="width:60%">
@@ -39,21 +33,23 @@
                                 <!-- Dropdown năm sinh -->
                                 <div class="form-group col-lg-2">
                                     @Html.LabelFor(m => m.BirthYear)
-                                    <select id="BirthYear" name="BirthYear" class="form-control">
-                                        <option>1987</option>
-                                    </select>
+                                    @{ 
+                                        var selectList =
+                                        new SelectList(Enumerable.Range(1930, (DateTime.Now.Year - 1930)));
+                                    }
+                                    @Html.DropDownListFor(x => x.BirthYear,selectList,new { @class = "form-control" })
                                 </div>
 
                                 <!-- Dropdown giới tính -->
                                 <div class="form-group col-lg-2">
-                                    <label for="Gender">Giới tính</label>
-                                    <select id="Gender" name="Gender" class="form-control">
-                                        <option value="M">Nam</option>
-                                        <option value="F">Nữ</option>
-                                        <option value="O">Khác</option>
-                                    </select>
+                                    @Html.LabelFor(m => m.Gender)
+                                    @Html.DropDownListFor(x => x.Gender, new List<SelectListItem>
+                                        {
+                                             new SelectListItem() {Text = "Nam", Value="M"},
+                                             new SelectListItem() {Text = "Nữ", Value="F"},
+                                             new SelectListItem() {Text = "Khác", Value="O"}
+                                        }, new { @class = "form-control" })
                                 </div>
-
                             </div>
                             <!-- address textbox -->
                             <div class="form-group">
@@ -62,48 +58,50 @@
                             </div>
                             <!-- Địa chỉ textbox - comboboxes -->
                             <div class="row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
 
                                     <!-- Dropdown tỉnh -->
                                     <div class="form-group">
                                         <label for="ProvinceId">Tỉnh</label>
-                                        <select id="ProvinceId" name="ProvinceId" class="form-control">
-                                            <option>1988</option>
-                                        </select>
+                                        <select id="ProvinceId" name="ProvinceId" class="form-control">                                        </select>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <!-- Dropdown huyện -->
                                     <div class="form-group">
                                         <label for="DistrictId">Huyện</label>
                                         <select id="DistrictId" name="DistrictId" class="form-control">
-                                            <option>Krong ana</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <!-- dropdown xã -->
                                     <div class="form-group">
                                         <label for="WardId">Xã</label>
-                                        <select id="WardId" name="WardId" class="form-control">
-                                            <option value="7">Draysap</option>
+                                        <select id="WardId" name="WardId" class="form-control">                                           
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <!-- Triệu chứng -->
                             <div class="form-group">
-                                <label for="Symptom">Triệu chứng:</label>
-                                <textarea class="form-control" name="Symptom" rows="5" id="Symptom" style="width:60%"></textarea>
+                                @Html.LabelFor(m => m.Symptom)
+                                @Html.TextAreaFor(m=>m.Symptom, new { @class = "form-control", rows="5", style="width:60%"})
+                                
                             </div>
 
                             <!-- Bác sĩ khám -->
                             <div class="form-group">
-                                <label for="DoctorId">Bác sĩ</label>
-                                <select name ="DoctorId" id="DoctorId" class="form-control" style="width:50%">
-
-                                </select>
+                                @Html.LabelFor(m => m.DoctorId)
+                                @{ List<SelectListItem> listItems = new List<SelectListItem>();
+                                    listItems.Add(new SelectListItem
+                                    {
+                                        Text = "Chọn bác sĩ",
+                                        Value = "0"
+                                    });
+                                  }
+                                @Html.DropDownListFor(M => M.DoctorId, new SelectList(listItems, "Value","Text"), new { @class = "form-control", style = "width:50%" })                              
                             </div>
                             <div class="progress">
                                 <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -128,6 +126,9 @@
 <script src="~/Content/Common/select2/js/select2.min.js"></script>
 <script type="text/javascript">
     var userRoleUrl = '@Url.Action("ListAllDoctor", "UserManager", new { role="DOCTOR_GROUP", Area = "Quantri" })';
+    var proUrl = '@Url.Action("ProvinceDropdown", "Province", new { Area = "Quantri" })';
+    var disUrl = '@Url.Action("DistrictDropdown", "District", new { Area = "Quantri" })';
+    var wardUrl = '@Url.Action("WardDropdown", "Ward", new { Area = "Quantri" })';
     $(function () {
         // Configure Symptom Select2 Box
         $('#DoctorId').select2({
@@ -140,8 +141,68 @@
             allowClear: true,
             minimumInputLength: 0,
             CloseOnSelect: false
-        }
-      );
+        });
+
+        // Configure Province, Ward and District Select2
+        $("#ProvinceId").select2({
+            ajax: {
+                url: proUrl
+            },
+            placeholder: '-- Chọn tỉnh/tp--',
+            language: 'vi',
+            width: 'resolve',
+            minimumInputLength: 0,
+        });
+        $("#DistrictId").select2({
+            placeholder: '-- Chọn huyện/lị--',
+            language: 'vi',
+            width: 'resolve',
+            minimumInputLength: 0,
+        });
+        $("#WardId").select2({
+            placeholder: '-- Chọn phường/xã--',
+            language: 'vi',
+            width: 'resolve',
+            minimumInputLength: 0,
+        });
+        //add change event to #province
+        $("#ProvinceId").change(function () {
+            //get province id from #province select2
+            var proid = $(this).val();
+            $.ajax({
+                url: disUrl,
+                dataType: "json",// Json
+                data: { proid: proid },//add province_id to ajax request
+                success: function (data) {
+                    //Clear district text
+                    $("#DistrictId").text("");
+                    $("#DistrictId").append("<option value='0'>  --Chọn huyện-- </option>");
+                    //process district data
+                    $.each(data.results, function (index, value) {
+                        $("#DistrictId").append("<option value='" + value.id + "'> " + value.text + "</option>");
+                    });
+                }
+            });
+        });
+        //  #district
+        $("#DistrictId").change(function () {
+            //get province id from #province select2
+            var disid = $(this).val();
+            $.ajax({
+                url: wardUrl,
+                dataType: "json",// Json
+                data: { disid: disid },//add district id to ajax request
+                success: function (data) {
+                    //Clear ward text
+                    $("#WardId").text("");
+                    $("#WardId").append("<option value='0'>  --Chọn xã-- </option>");
+                    //process district data
+                    $.each(data.results, function (index, value) {
+                        $("#WardId").append("<option value='" + value.id + "'> " + value.text + "</option>");
+                    });
+                }
+            })
+        });
     });
 </script>
 }
