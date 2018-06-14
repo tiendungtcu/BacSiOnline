@@ -1,0 +1,11 @@
+.card-body .card-block fieldset legend
+{
+    font-size: 14px;
+}
+
+.param-right-add-button
+{
+    display: block;
+    float: right;
+    padding-top: 10px;
+}

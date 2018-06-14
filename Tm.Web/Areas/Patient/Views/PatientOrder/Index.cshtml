@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: 18px;
+                        text-transform: uppercase; background: #BFD7EA; color: black">
+            <strong>Thông tin bệnh án</strong>
+        </div>
+        <div class="card-body card-block">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="record-title-input" class=" form-control-label">Tiêu đề bệnh án(*)</label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="text" name="record-title-input" placeholder="Nhập tiêu đề bệnh án" class="form-control">
+                        <small class="form-text text-muted">
+                            Tiêu đề thường có nội dung tóm tắt tình trạng sức khỏe của bệnh nhân
+                        </small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="record-date-input" class=" form-control-label">Ngày tạo</label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <input type="date" name="record-date-input" class="form-control">
+                    </div>
+                </div>
+                <hr>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="symdrome-input" class=" form-control-label">Triệu chứng</label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <textarea name="syndrome-tags-holder" rows="4" class="form-control"></textarea>
+                        <small class="help-block form-text">Chúng tôi sẽ gợi ý các triệu chứng cho bạn</small>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div style="padding-bottom: 20px;">
+                    <strong>Thông số lâm sàng</strong>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="height-input">Chiều cao(cm)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" id="text-input" name="height-input" placeholder="Nhập chiều cao" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="weight-input">Cân nặng(kg)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" name="weight-input" placeholder="Nhập cân nặng" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" name="bmi-label" placeholder="BMI" readonly class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="ha-tam-thu-input">Huyết áp tâm thu (mmHg)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" placeholder="Chỉ số trên" name="ha-tam-thu-input" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="date" name="ha-date-input" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="ha-tam-thu-input">Huyết áp tâm trương (mmHg)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" placeholder="Chỉ số dưới" name="ha-tam-truong-input" class="form-control">
+                    </div>
+                </div>
+
+                <div style="float: right; padding-right: 90px;">
+                    <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px">
+                        <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
+                    </button>
+                </div>
+                <div class="row col-12"></div>
+                <hr>
+
+                <div style="padding-bottom: 20px;">
+                    <strong>Thông số cận lâm sàng</strong>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="cholesteron-input">Cholesteron (mmol/l)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="date" name="cholesteron-date-input" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="gpt-input">GPT (mmol/l)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" placeholder="Chỉ số gpt trong máu" name="gpt-input" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="date" name="gpt-date-input" class="form-control">
+                    </div>
+                </div>
+                <div style="float: right; padding-right: 90px; padding-bottom:80px;">
+                    <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px">
+                        <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
+                    </button>
+                </div>
+                <div class="card-footer" style="padding-top:120px;">
+                    <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px">
+                        <i class="fa fa-dot-circle-o"></i> Tạo bệnh án
+                    </button>
+                    <button type="reset" class="btn btn-danger btn-lg" style="font-size: 16px">
+                        <i class="fa fa-ban"></i> Xóa viết lại
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        
+    </div>
+</div>
