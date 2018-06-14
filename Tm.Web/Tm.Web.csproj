@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +44,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -187,6 +190,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Areas\Patient\Controllers\PatientOrderController.cs" />
     <Compile Include="Areas\Quantri\Controllers\DistrictController.cs" />
     <Compile Include="Areas\Quantri\Controllers\NotificationController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -208,10 +212,11 @@
     <Compile Include="Areas\Quantri\Models\CreateUserViewModel.cs" />
     <Compile Include="Areas\Quantri\Models\SettingsViewModel.cs" />
     <Compile Include="Areas\Quantri\QuantriAreaRegistration.cs" />
-    <Compile Include="Areas\Reception\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Reception\Controllers\RegisterPatientController.cs" />
     <Compile Include="Areas\Reception\Models\ReceptionViewModel.cs" />
     <Compile Include="Areas\Reception\ReceptionAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -231,25 +236,115 @@
     <Content Include="Areas\Quantri\Views\UserManager\UserManagePartial.cshtml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Common\animsition\animsition.min.css" />
+    <Content Include="Content\Common\animsition\animsition.min.js" />
+    <Content Include="Content\Common\bootstrap-4.1\bootstrap.min.css" />
+    <Content Include="Content\Common\bootstrap-4.1\bootstrap.min.js" />
+    <Content Include="Content\Common\bootstrap-4.1\popper.min.js" />
+    <Content Include="Content\Common\bootstrap-progressbar\bootstrap-progressbar-3.3.4.min.css" />
+    <Content Include="Content\Common\bootstrap-progressbar\bootstrap-progressbar.min.js" />
     <Content Include="Content\Common\bootstrap-social\bootstrap-social.css" />
     <Content Include="Content\Common\bootstrap\css\bootstrap.css" />
     <Content Include="Content\Common\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\Common\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Common\bootstrap\js\bootstrap.js" />
     <Content Include="Content\Common\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Common\chartjs\Chart.bundle.min.js" />
+    <Content Include="Content\Common\circle-progress\circle-progress.js" />
+    <Content Include="Content\Common\circle-progress\circle-progress.min.js" />
+    <Content Include="Content\Common\countdown\countdowntime.js" />
+    <Content Include="Content\Common\countdown\jquery.countdown.min.js" />
+    <Content Include="Content\Common\countdown\moment-timezone-with-data.min.js" />
+    <Content Include="Content\Common\countdown\moment-timezone.min.js" />
+    <Content Include="Content\Common\countdown\moment.min.js" />
+    <Content Include="Content\Common\counter-up\jquery.counterup.min.js" />
+    <Content Include="Content\Common\counter-up\jquery.waypoints.min.js" />
+    <Content Include="Content\Common\counter-up\waypoints.min.js" />
+    <Content Include="Content\Common\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\Common\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\Common\css\font-face.css" />
+    <Content Include="Content\Common\css\style.css" />
+    <Content Include="Content\Common\css\theme.css" />
     <Content Include="Content\Common\datatables-plugins\dataTables.bootstrap.css" />
     <Content Include="Content\Common\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Content\Common\datatables-plugins\dataTables.bootstrap.min.js" />
     <Content Include="Content\Common\datatables-plugins\index.html" />
+    <Content Include="Content\Common\font-awesome-4.7\css\font-awesome.css" />
+    <Content Include="Content\Common\font-awesome-4.7\css\font-awesome.min.css" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Common\font-awesome-4.7\HELP-US-OUT.txt" />
+    <Content Include="Content\Common\font-awesome-5\css\fontawesome-all.min.css" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-solid-900.svg" />
     <Content Include="Content\Common\font-awesome\css\font-awesome.css" />
     <Content Include="Content\Common\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\Common\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Common\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-italic.svg" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.svg" />
+    <Content Include="Content\Common\images\bg-title-01.jpg" />
+    <Content Include="Content\Common\images\bg-title-02.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-01.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-02.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-03.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-04.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-05.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-06.jpg" />
+    <Content Include="Content\Common\images\icon\avatar-big-01.jpg" />
+    <Content Include="Content\Common\images\icon\logo-blue.png" />
+    <Content Include="Content\Common\images\icon\logo-mini.png" />
+    <Content Include="Content\Common\images\icon\logo-white.png" />
+    <Content Include="Content\Common\images\icon\logo.1.png" />
+    <Content Include="Content\Common\images\icon\logo.png" />
+    <Content Include="Content\Common\images\icon\Untitled-1.jpg" />
+    <Content Include="Content\Common\jquery-3.2.1.min.js" />
+    <Content Include="Content\Common\jquery-ui.min.js" />
     <Content Include="Content\Common\jquery\jquery.min.js" />
+    <Content Include="Content\Common\js\main.js" />
+    <Content Include="Content\Common\lightbox2\dist\css\lightbox.css" />
+    <Content Include="Content\Common\lightbox2\dist\images\close.png" />
+    <Content Include="Content\Common\lightbox2\dist\images\loading.gif" />
+    <Content Include="Content\Common\lightbox2\dist\images\next.png" />
+    <Content Include="Content\Common\lightbox2\dist\images\prev.png" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox-plus-jquery.js" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox-plus-jquery.min.js" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox.js" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox.min.js" />
+    <Content Include="Content\Common\lightbox2\src\css\lightbox.css" />
+    <Content Include="Content\Common\lightbox2\src\images\close.png" />
+    <Content Include="Content\Common\lightbox2\src\images\loading.gif" />
+    <Content Include="Content\Common\lightbox2\src\images\next.png" />
+    <Content Include="Content\Common\lightbox2\src\images\prev.png" />
+    <Content Include="Content\Common\lightbox2\src\js\lightbox.js" />
+    <Content Include="Content\Common\mdi-font\css\material-design-iconic-font.css" />
+    <Content Include="Content\Common\mdi-font\css\material-design-iconic-font.min.css" />
+    <Content Include="Content\Common\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\Common\metisMenu\metisMenu.css" />
     <Content Include="Content\Common\metisMenu\metisMenu.js" />
     <Content Include="Content\Common\metisMenu\metisMenu.min.css" />
     <Content Include="Content\Common\metisMenu\metisMenu.min.js" />
+    <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.css" />
+    <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.js" />
+    <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.min.js" />
+    <Content Include="Content\Common\progressbar\progressbar.js" />
+    <Content Include="Content\Common\progressbar\progressbar.min.js" />
     <Content Include="Content\Common\sb-admin\css\sb-admin-2.css" />
     <Content Include="Content\Common\sb-admin\css\sb-admin-2.min.css" />
     <Content Include="Content\Common\sb-admin\js\sb-admin-2.js" />
@@ -312,6 +407,29 @@
     <Content Include="Content\Common\select2\js\i18n\zh-TW.js" />
     <Content Include="Content\Common\select2\js\select2.full.min.js" />
     <Content Include="Content\Common\select2\js\select2.min.js" />
+    <Content Include="Content\Common\slick\ajax-loader.gif" />
+    <Content Include="Content\Common\slick\fonts\slick.svg" />
+    <Content Include="Content\Common\slick\slick-theme.css" />
+    <Content Include="Content\Common\slick\slick.css" />
+    <Content Include="Content\Common\slick\slick.js" />
+    <Content Include="Content\Common\slick\slick.min.js" />
+    <Content Include="Content\Common\smk-accordion\accordion.css" />
+    <Content Include="Content\Common\smk-accordion\accordion.js" />
+    <Content Include="Content\Common\smk-accordion\accordion.min.js" />
+    <Content Include="Content\Common\sweetalert\sweetalert.min.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.brazil.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.europe.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.france.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.germany.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.min.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.russia.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.sampledata.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.usa.js" />
+    <Content Include="Content\Common\vector-map\jquery.vmap.world.js" />
+    <Content Include="Content\Common\vector-map\jqvmap.min.css" />
+    <Content Include="Content\Common\wow\animate.css" />
+    <Content Include="Content\Common\wow\wow.min.js" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\Common\datatables-responsive\dataTables.responsive.css" />
     <Content Include="Content\Common\datatables-responsive\dataTables.responsive.js" />
@@ -433,8 +551,113 @@
     <Content Include="Areas\Patient\Views\web.config" />
     <Content Include="Areas\Quantri\Views\NotifyType\NotifyTypePartial.cshtml" />
     <Content Include="Areas\Quantri\Views\Notification\NotificationPartial.cshtml" />
-    <Content Include="Areas\Reception\Views\Default\Index.cshtml" />
-    <Content Include="Areas\Reception\Views\Default\Create.cshtml" />
+    <Content Include="Areas\Reception\Views\RegisterPatient\Index.cshtml" />
+    <Content Include="Areas\Reception\Views\RegisterPatient\Create1.cshtml" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Common\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\Common\font-awesome-5\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox-plus-jquery.min.map" />
+    <Content Include="Content\Common\lightbox2\dist\js\lightbox.min.map" />
+    <Content Include="Content\Common\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Content\Common\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\Common\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\Common\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Content\Common\slick\config.rb" />
+    <Content Include="Content\Common\slick\fonts\slick.eot" />
+    <Content Include="Content\Common\slick\fonts\slick.ttf" />
+    <Content Include="Content\Common\slick\fonts\slick.woff" />
+    <Content Include="Content\Common\slick\slick-theme.less" />
+    <Content Include="Content\Common\slick\slick-theme.scss" />
+    <Content Include="Content\Common\slick\slick.less" />
+    <Content Include="Content\Common\slick\slick.scss" />
+    <Content Include="Areas\Patient\Views\PatientOrder\Index.cshtml" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-200italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-300italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-500italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-600italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-700italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-800italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-900italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-italic.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-italic.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-italic.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-italic.woff2" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.eot" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.ttf" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff" />
+    <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff2" />
+    <Content Include="Areas\Reception\Views\RegisterPatient\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -486,11 +709,11 @@
     <Content Include="Views\Shared\_DoctorLayout.cshtml" />
     <Content Include="Views\Shared\_PartialLeftSideBar.cshtml" />
     <Content Include="Views\Shared\_PartialTopNavBar.cshtml" />
+    <Content Include="Views\Shared\_PatientLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Doctor\Models\" />
-    <Folder Include="Areas\Patient\Controllers\" />
     <Folder Include="Areas\Patient\Models\" />
     <Folder Include="Areas\Patient\Views\Shared\" />
     <Folder Include="Areas\Quantri\Views\District\" />
@@ -509,6 +732,7 @@
     <Folder Include="Content\easyui\themes\metro-orange\" />
     <Folder Include="Content\easyui\themes\metro-red\" />
     <Folder Include="Content\Patient\" />
+    <Folder Include="Views\Dropdown\" />
     <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>

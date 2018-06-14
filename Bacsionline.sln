@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tm.Web", "Tm.Web\Tm.Web.csproj", "{40C62F19-2484-4E15-A6FF-2C9651966963}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tm.Data", "Tm.Data\Tm.Data.csproj", "{0E8DE528-B9FD-4E0F-8189-E702E23496C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserRoleMan", "..\..\BaoBanTCKT\UserRoleMan.csproj", "{40E48BE8-8E6B-4501-AB3E-0529485C15D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +21,11 @@ Global
 		{0E8DE528-B9FD-4E0F-8189-E702E23496C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8DE528-B9FD-4E0F-8189-E702E23496C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8DE528-B9FD-4E0F-8189-E702E23496C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40E48BE8-8E6B-4501-AB3E-0529485C15D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40E48BE8-8E6B-4501-AB3E-0529485C15D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40E48BE8-8E6B-4501-AB3E-0529485C15D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40E48BE8-8E6B-4501-AB3E-0529485C15D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D004F68-5779-4C71-A839-CDED6CCC7F67}
 	EndGlobalSection
 EndGlobal

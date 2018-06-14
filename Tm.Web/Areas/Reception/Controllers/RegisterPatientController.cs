@@ -14,7 +14,7 @@ using TM.Web.Models;
 
 namespace TM.Web.Areas.Reception.Controllers
 {
-    public class DefaultController : QuantriBaseController
+    public class RegisterPatientController : QuantriBaseController
     {
         // GET: Reception/Home
         public ActionResult Index()
