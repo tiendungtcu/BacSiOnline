@@ -22,9 +22,13 @@ namespace TM.Web.Areas.Reception.Models
         public string Gender { get; set; }
         [Display(Name = "Địa chỉ")]
         public string Address { get; set; }
+        [Display(Name = "Tỉnh")]
         public int ProvinceId { get; set; }
+        [Display(Name = "Huyện")]
         public int DistrictId { get; set; }
+        [Display(Name = "Xã")]
         public int WardId { get; set; }
+        [Display(Name = "Triệu chứng ban đầu")]
         public string Symptom { get; set; }
         [Required]
         [Display(Name ="Bác sĩ")]

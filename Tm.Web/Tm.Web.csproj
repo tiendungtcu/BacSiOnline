@@ -191,6 +191,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="Areas\Patient\Controllers\PatientOrderController.cs" />
+    <Compile Include="Areas\Patient\Models\OrderViewModel.cs" />
     <Compile Include="Areas\Quantri\Controllers\DistrictController.cs" />
     <Compile Include="Areas\Quantri\Controllers\NotificationController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -584,7 +585,7 @@
     <Content Include="Content\Common\slick\slick-theme.scss" />
     <Content Include="Content\Common\slick\slick.less" />
     <Content Include="Content\Common\slick\slick.scss" />
-    <Content Include="Areas\Patient\Views\PatientOrder\Index.cshtml" />
+    <Content Include="Areas\Patient\Views\PatientOrder\Create.cshtml" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.eot" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.ttf" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-100.woff" />
@@ -714,7 +715,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Doctor\Models\" />
-    <Folder Include="Areas\Patient\Models\" />
     <Folder Include="Areas\Patient\Views\Shared\" />
     <Folder Include="Areas\Quantri\Views\District\" />
     <Folder Include="Areas\Quantri\Views\Province\" />

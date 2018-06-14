@@ -57,7 +57,37 @@ namespace TM.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            if (User.Identity.IsAuthenticated)
+            {
+                int id = User.Identity.GetUserId<int>();
+                // If Patient role
+                if (UserManager.IsInRole(id, "PATIENT_GROUP"))
+                {
+                    return RedirectToAction("Index", "BaoBanQs", new { area="Patient"});
+                }
+                // If Admin role
+                else if (UserManager.IsInRole(id, "QUANTRI_GROUP"))
+                {
+                    return RedirectToAction("Default", "Default", new { area = "Quantri" });
+                }
+                // If Reception role
+                else if (UserManager.IsInRole(id, "RECEPTION_GROUP"))
+                {
+                    return RedirectToAction("Index", "ReceptionRegister", new { area = "Reception" });
+                }
+                // If doctor role
+                else if (UserManager.IsInRole(id, "DOCTOR_GROUP"))
+                {
+                    return RedirectToAction("Index", "Default", new { area = "Doctor" });
+                }
+                // the left
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
+
+            }
+            ViewBag.ReturnUrl = returnUrl ?? Url.Action("Index", "Home");
             return View();
         }
 
@@ -77,9 +107,36 @@ namespace TM.Web.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
-            {
+            {               
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    ApplicationUser user = await UserManager.FindAsync(model.UserName, model.Password);
+                    // If Patient role
+                    if (UserManager.IsInRole(user.Id, "PATIENT_GROUP"))
+                    {
+                        return RedirectToAction("Create", "Patient", new { area = "Patient" });
+                    }
+                    // If Admin role
+                    else if (UserManager.IsInRole(user.Id, "QUANTRI_GROUP"))
+                    {
+                        return RedirectToAction("Default", "Default", new { area = "Quantri" });
+                    }
+                    // If Reception role
+                    else if (UserManager.IsInRole(user.Id, "RECEPTION_GROUP"))
+                    {
+                        return RedirectToAction("Index", "ReceptionRegiser", new { area = "Reception" });
+                    }
+                    // If Doctor role
+                    else if (UserManager.IsInRole(user.Id, "DOCTOR_GROUP"))
+                    {
+                        return RedirectToAction("Index", "Doctor", new { area = "Doctor" });
+                    }
+                    // còn lại 
+                    else if (UserManager.IsInRole(user.Id, "NguoiDung"))
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "" });
+                    }
+                    return View(model);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

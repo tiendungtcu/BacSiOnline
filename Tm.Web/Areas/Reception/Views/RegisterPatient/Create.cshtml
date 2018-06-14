@@ -1,6 +1,6 @@
 ﻿@model TM.Web.Areas.Reception.Models.ReceptionViewModel
 @{
-    ViewBag.Title = "Create2";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-header" style="text-align: center; font-size: 18px;
                         text-transform: uppercase; background: #BFD7EA; color: black">
-            <strong>Thông tin bệnh án</strong>
+            <strong>Đăng ký khám bệnh</strong>
         </div>
         <div class="card-body card-block">
             @using (Html.BeginForm("Create", "RegisterPatient", new { area = "Reception" }, FormMethod.Post, new { role = "form" }))

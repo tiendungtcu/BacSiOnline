@@ -11,7 +11,10 @@
             <strong>Thông tin bệnh án</strong>
         </div>
         <div class="card-body card-block">
-            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            @using (Html.BeginForm("Create", "PatientOrder", new { area = "Patient" }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                <h1 style="color:red">@ViewBag.Error</h1>
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="record-title-input" class=" form-control-label">Tiêu đề bệnh án(*)</label>
@@ -33,11 +36,12 @@
                 </div>
                 <hr>
                 <div class="row form-group">
+
                     <div class="col col-md-3">
-                        <label for="symdrome-input" class=" form-control-label">Triệu chứng</label>
+                        <label for="Symptom" class=" form-control-label">Triệu chứng</label>
                     </div>
                     <div class="col-12 col-md-8">
-                        <textarea name="syndrome-tags-holder" rows="4" class="form-control"></textarea>
+                        <select id="Symptom" name="Symptom" class="form-control" multiple="multiple" style="width: 50%"></select>
                         <small class="help-block form-text">Chúng tôi sẽ gợi ý các triệu chứng cho bạn</small>
                     </div>
                 </div>
@@ -136,9 +140,31 @@
                         <i class="fa fa-ban"></i> Xóa viết lại
                     </button>
                 </div>
-
-            </form>
+            }
         </div>
-        
+
     </div>
 </div>
+
+
+@section Scripts {
+    <script type="text/javascript"> 
+        
+        
+    var symptomUrl = '@Url.Action("SymptomDropdown", "Dropdown", new { Area = "" })';
+    $(function () {
+        // Configure Symptom Select2 Box
+        $('#Symptom').select2({
+            ajax: {
+                url: symptomUrl
+            },
+            placeholder: '--Chọn triệu chứng--',
+            language: 'vi',
+            //width: 'resolve',
+            allowClear: true,
+            minimumInputLength: 0,
+            CloseOnSelect: false
+        });              
+    });
+    </script>
+}
