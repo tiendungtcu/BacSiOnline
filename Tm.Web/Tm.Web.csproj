@@ -216,6 +216,7 @@
     <Compile Include="Areas\Reception\Models\ReceptionViewModel.cs" />
     <Compile Include="Areas\Reception\ReceptionAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -551,7 +552,7 @@
     <Content Include="Areas\Quantri\Views\NotifyType\NotifyTypePartial.cshtml" />
     <Content Include="Areas\Quantri\Views\Notification\NotificationPartial.cshtml" />
     <Content Include="Areas\Reception\Views\RegisterPatient\Index.cshtml" />
-    <Content Include="Areas\Reception\Views\RegisterPatient\Create.cshtml" />
+    <Content Include="Areas\Reception\Views\RegisterPatient\Create1.cshtml" />
     <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
@@ -656,6 +657,7 @@
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.ttf" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff2" />
+    <Content Include="Areas\Reception\Views\RegisterPatient\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -730,6 +732,7 @@
     <Folder Include="Content\easyui\themes\metro-orange\" />
     <Folder Include="Content\easyui\themes\metro-red\" />
     <Folder Include="Content\Patient\" />
+    <Folder Include="Views\Dropdown\" />
     <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
