@@ -61,6 +61,7 @@
     <Compile Include="Functions\NotificationDao.cs" />
     <Compile Include="Functions\NotifyTypeDao.cs" />
     <Compile Include="Functions\OrderDao.cs" />
+    <Compile Include="Functions\ParamTypeDao.cs" />
     <Compile Include="Functions\PatientDao.cs" />
     <Compile Include="Functions\ProvinceDao.cs" />
     <Compile Include="Functions\ReceptionDao.cs" />
@@ -75,6 +76,9 @@
     <Compile Include="Models\ReceptionRegisterSp_Result.cs">
       <DependentUpon>TMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TM_ParamType.cs">
+      <DependentUpon>TMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TM_UserClaims.cs">
       <DependentUpon>TMModel.tt</DependentUpon>
     </Compile>
@@ -82,6 +86,7 @@
       <DependentUpon>TMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DistrictDetail.cs" />
+    <Compile Include="ViewModels\MeasureParamDetail.cs" />
     <Compile Include="ViewModels\NotificationDetail.cs" />
     <Compile Include="Models\Province.cs">
       <DependentUpon>TMModel.tt</DependentUpon>
@@ -151,6 +156,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\NotifyTypeDto.cs" />
+    <Compile Include="ViewModels\ParamTypeDetail.cs" />
     <Compile Include="ViewModels\SpReceptionRegisterViewModel.cs" />
     <Compile Include="ViewModels\WardDetail.cs" />
   </ItemGroup>

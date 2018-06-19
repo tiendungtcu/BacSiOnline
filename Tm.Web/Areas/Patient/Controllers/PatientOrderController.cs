@@ -18,21 +18,22 @@ namespace TM.Web.Areas.Patient.Controllers
         // GET: Patient/PatientOrder/Create
         public ActionResult Create()
         {
-            ViewBag.DataNew = "chưa có gì";
+            ViewBag.Symptom = "symptom";
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create (OrderViewModel model)
+        public JsonResult Create (OrderViewModel model)
         {
             if (ModelState.IsValid)
             {
                 model.ThisDay = DateTime.Now;
 
             }
-            ViewBag.DataNew = model;
-            return View(model);
+
+            return Json(model);
+            //return View(model);
         }
     }
 }

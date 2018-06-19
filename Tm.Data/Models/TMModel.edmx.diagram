@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5e56831896ab4da892ffed52aee9d4f1" Name="Diagram1" ZoomLevel="31">
+      <Diagram DiagramId="5e56831896ab4da892ffed52aee9d4f1" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="BACSIOIModel.Country" Width="1.5" PointX="1.5" PointY="24.375" />
         <EntityTypeShape EntityType="BACSIOIModel.District" Width="1.5" PointX="1.5" PointY="3.25" />
         <EntityTypeShape EntityType="BACSIOIModel.Province" Width="1.5" PointX="1.5" PointY="20.125" />
@@ -46,6 +46,8 @@
         <AssociationConnector Association="BACSIOIModel.FK_dbo_TM_UserLogins_dbo_TM_Users_UserId" />
         <AssociationConnector Association="BACSIOIModel.FK_UserAddress_TM_Users" />
         <AssociationConnector Association="BACSIOIModel.TM_UserRoles" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_ParamType" Width="1.5" PointX="3" PointY="37" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

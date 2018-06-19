@@ -109,6 +109,11 @@
       <Parameter Name="Symptom" Mode="In" Type="String" />
       <Parameter Name="DoctorId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="TM_ParamType" EntityType="BACSIOIModel.TM_ParamType" />
+    <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType">
+      <End Role="TM_ParamType" EntitySet="TM_ParamType" />
+      <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Country">
     <Key>
@@ -213,6 +218,7 @@
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="Status" Type="Boolean" />
     <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" FromRole="TM_MeasureParam" ToRole="TM_OrderParam" />
+    <NavigationProperty Name="TM_ParamType" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_MeasureParam" ToRole="TM_ParamType" />
   </EntityType>
   <EntityType Name="TM_Notification">
     <Key>
@@ -643,4 +649,24 @@
     <Property Type="Int64" Name="OrderId" Nullable="true" />
     <Property Type="Int32" Name="DoctorOrderId" Nullable="true" />
   </ComplexType>
+  <EntityType Name="TM_ParamType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TM_MeasureParam" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_ParamType" ToRole="TM_MeasureParam" />
+  </EntityType>
+  <Association Name="FK_TM_MeasureParam_TM_ParamType">
+    <End Type="BACSIOIModel.TM_ParamType" Role="TM_ParamType" Multiplicity="0..1" />
+    <End Type="BACSIOIModel.TM_MeasureParam" Role="TM_MeasureParam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_ParamType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_MeasureParam">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

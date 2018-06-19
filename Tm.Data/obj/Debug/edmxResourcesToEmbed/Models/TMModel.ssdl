@@ -143,6 +143,13 @@
     <Property Name="SymptomId" Type="int" Nullable="false" />
     <Property Name="Notes" Type="nvarchar" MaxLength="150" />
   </EntityType>
+  <EntityType Name="TM_ParamType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="TM_Patient">
     <Key>
       <PropertyRef Name="Id" />
@@ -386,6 +393,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TM_MeasureParam_TM_ParamType">
+    <End Role="TM_ParamType" Type="Self.TM_ParamType" Multiplicity="0..1" />
+    <End Role="TM_MeasureParam" Type="Self.TM_MeasureParam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_ParamType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_MeasureParam">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TM_Notification_TM_NotifyType">
     <End Role="TM_NotifyType" Type="Self.TM_NotifyType" Multiplicity="0..1" />
     <End Role="TM_Notification" Type="Self.TM_Notification" Multiplicity="*" />
@@ -538,6 +557,7 @@
     <EntitySet Name="TM_Order" EntityType="Self.TM_Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_OrderParam" EntityType="Self.TM_OrderParam" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_OrderSymptom" EntityType="Self.TM_OrderSymptom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TM_ParamType" EntityType="Self.TM_ParamType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_Patient" EntityType="Self.TM_Patient" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_Roles" EntityType="Self.TM_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TM_Symptom" EntityType="Self.TM_Symptom" Schema="dbo" store:Type="Tables" />
@@ -587,6 +607,10 @@
     <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="Self.FK_TM_DoctorOrder_TM_Users">
       <End Role="TM_Users" EntitySet="TM_Users" />
       <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="Self.FK_TM_MeasureParam_TM_ParamType">
+      <End Role="TM_ParamType" EntitySet="TM_ParamType" />
+      <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
     </AssociationSet>
     <AssociationSet Name="FK_TM_Notification_TM_NotifyType" Association="Self.FK_TM_Notification_TM_NotifyType">
       <End Role="TM_NotifyType" EntitySet="TM_NotifyType" />

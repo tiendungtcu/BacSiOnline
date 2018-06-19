@@ -148,6 +148,13 @@
           <Property Name="SymptomId" Type="int" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="TM_ParamType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TM_Patient">
           <Key>
             <PropertyRef Name="Id" />
@@ -391,6 +398,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TM_MeasureParam_TM_ParamType">
+          <End Role="TM_ParamType" Type="Self.TM_ParamType" Multiplicity="0..1" />
+          <End Role="TM_MeasureParam" Type="Self.TM_MeasureParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TM_ParamType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TM_MeasureParam">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TM_Notification_TM_NotifyType">
           <End Role="TM_NotifyType" Type="Self.TM_NotifyType" Multiplicity="0..1" />
           <End Role="TM_Notification" Type="Self.TM_Notification" Multiplicity="*" />
@@ -543,6 +562,7 @@
           <EntitySet Name="TM_Order" EntityType="Self.TM_Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TM_OrderParam" EntityType="Self.TM_OrderParam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TM_OrderSymptom" EntityType="Self.TM_OrderSymptom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TM_ParamType" EntityType="Self.TM_ParamType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TM_Patient" EntityType="Self.TM_Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TM_Roles" EntityType="Self.TM_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TM_Symptom" EntityType="Self.TM_Symptom" Schema="dbo" store:Type="Tables" />
@@ -592,6 +612,10 @@
           <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="Self.FK_TM_DoctorOrder_TM_Users">
             <End Role="TM_Users" EntitySet="TM_Users" />
             <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="Self.FK_TM_MeasureParam_TM_ParamType">
+            <End Role="TM_ParamType" EntitySet="TM_ParamType" />
+            <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
           </AssociationSet>
           <AssociationSet Name="FK_TM_Notification_TM_NotifyType" Association="Self.FK_TM_Notification_TM_NotifyType">
             <End Role="TM_NotifyType" EntitySet="TM_NotifyType" />
@@ -751,6 +775,11 @@
             <Parameter Name="Symptom" Mode="In" Type="String" />
             <Parameter Name="DoctorId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TM_ParamType" EntityType="BACSIOIModel.TM_ParamType" />
+          <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType">
+            <End Role="TM_ParamType" EntitySet="TM_ParamType" />
+            <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Country">
           <Key>
@@ -855,6 +884,7 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" FromRole="TM_MeasureParam" ToRole="TM_OrderParam" />
+          <NavigationProperty Name="TM_ParamType" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_MeasureParam" ToRole="TM_ParamType" />
         </EntityType>
         <EntityType Name="TM_Notification">
           <Key>
@@ -1285,6 +1315,26 @@
           <Property Type="Int64" Name="OrderId" Nullable="true" />
           <Property Type="Int32" Name="DoctorOrderId" Nullable="true" />
         </ComplexType>
+        <EntityType Name="TM_ParamType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TM_MeasureParam" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_ParamType" ToRole="TM_MeasureParam" />
+        </EntityType>
+        <Association Name="FK_TM_MeasureParam_TM_ParamType">
+          <End Type="BACSIOIModel.TM_ParamType" Role="TM_ParamType" Multiplicity="0..1" />
+          <End Type="BACSIOIModel.TM_MeasureParam" Role="TM_MeasureParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TM_ParamType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TM_MeasureParam">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1574,6 +1624,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TM_ParamType">
+            <EntityTypeMapping TypeName="BACSIOIModel.TM_ParamType">
+              <MappingFragment StoreEntitySet="TM_ParamType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

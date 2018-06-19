@@ -12,25 +12,18 @@ namespace Tm.Data.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TM_MeasureParam
+    public partial class TM_ParamType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TM_MeasureParam()
+        public TM_ParamType()
         {
-            this.TM_OrderParam = new HashSet<TM_OrderParam>();
+            this.TM_MeasureParam = new HashSet<TM_MeasureParam>();
         }
     
-        public short Id { get; set; }
-        public string CodeName { get; set; }
-        public string Description { get; set; }
-        public string Unit { get; set; }
-        public Nullable<int> Type { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public int Id { get; set; }
+        public string TypeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TM_OrderParam> TM_OrderParam { get; set; }
-        public virtual TM_ParamType TM_ParamType { get; set; }
+        public virtual ICollection<TM_MeasureParam> TM_MeasureParam { get; set; }
     }
 }

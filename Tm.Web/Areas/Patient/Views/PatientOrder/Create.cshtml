@@ -38,10 +38,10 @@
                 <div class="row form-group">
 
                     <div class="col col-md-3">
-                        <label for="Symptom" class=" form-control-label">Triệu chứng</label>
+                        <label for="Symptoms" class=" form-control-label">Triệu chứng</label>
                     </div>
                     <div class="col-12 col-md-8">
-                        <select id="Symptom" name="Symptom" class="form-control" multiple="multiple" style="width: 50%"></select>
+                        <select id="Symptoms" name="Symptoms" class="form-control" multiple="multiple" style="width: 50%"></select>
                         <small class="help-block form-text">Chúng tôi sẽ gợi ý các triệu chứng cho bạn</small>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <label for="height-input">Chiều cao(cm)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" id="text-input" name="height-input" placeholder="Nhập chiều cao" class="form-control">
+                        <input type="number" min=0 max=20 step=0.1 id="text-input" name="height-input" placeholder="Nhập chiều cao" class="form-control">
                     </div>
                 </div>
 
@@ -65,10 +65,10 @@
                         <label for="weight-input">Cân nặng(kg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" name="weight-input" placeholder="Nhập cân nặng" class="form-control">
+                        <input type="number" min=0 max=150 step=0.1 name="weight-input" placeholder="Nhập cân nặng" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" name="bmi-label" placeholder="BMI" readonly class="form-control">
+                        <input type="number" min=0 max=20 step=0.1 name="bmi-label" placeholder="BMI" readonly class="form-control">
                     </div>
                 </div>
 
@@ -77,7 +77,7 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm thu (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" placeholder="Chỉ số trên" name="ha-tam-thu-input" class="form-control">
+                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số trên" name="ha-tam-thu-input" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="date" name="ha-date-input" class="form-control">
@@ -89,7 +89,7 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm trương (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" placeholder="Chỉ số dưới" name="ha-tam-truong-input" class="form-control">
+                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số dưới" name="ha-tam-truong-input" class="form-control">
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                         <label for="cholesteron-input">Cholesteron (mmol/l)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
+                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="date" name="cholesteron-date-input" class="form-control">
@@ -121,7 +121,7 @@
                         <label for="gpt-input">GPT (mmol/l)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" placeholder="Chỉ số gpt trong máu" name="gpt-input" class="form-control">
+                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số gpt trong máu" name="gpt-input" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="date" name="gpt-date-input" class="form-control">
@@ -142,7 +142,6 @@
                 </div>
             }
         </div>
-
     </div>
 </div>
 
@@ -150,11 +149,10 @@
 @section Scripts {
     <script type="text/javascript"> 
         
-        
     var symptomUrl = '@Url.Action("SymptomDropdown", "Dropdown", new { Area = "" })';
     $(function () {
         // Configure Symptom Select2 Box
-        $('#Symptom').select2({
+        $('#Symptoms').select2({
             ajax: {
                 url: symptomUrl
             },

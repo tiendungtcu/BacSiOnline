@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Tm.Data.Models;
 using Tm.Data.Functions;
-
+using Tm.Data.ViewModels;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
@@ -49,10 +49,18 @@ namespace TM.Web.Areas.Quantri.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult Create(TM_MeasureParam param)
+        public JsonResult Create(MeasureParamDetail param)
         {
-            param.CreatedDate = DateTime.Now;
-            int result = new MeasureParamDao().Create(param);
+            
+            TM_MeasureParam entity = new TM_MeasureParam();
+            entity.CreatedDate = DateTime.Now;
+            entity.CodeName = param.CodeName;
+            entity.Description = param.Description;
+            entity.Status = param.Status;
+            entity.Unit = param.Unit;
+            int result = new MeasureParamDao().Create(entity);
+            param.Id = entity.Id;
+            param.TypeName = new ParamTypeDao().FindName(param.Type);
             if (result >0)
             {
                 return Json(param);
@@ -69,9 +77,10 @@ namespace TM.Web.Areas.Quantri.Controllers
         /// <param name="Role"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult Update([Bind(Include = "Id,CodeName,Description,Unit,Status")] TM_MeasureParam param)
+        public JsonResult Update([Bind(Include = "Id,CodeName,Description,Type,Unit,Status")] TM_MeasureParam param)
         {
             bool result = new MeasureParamDao().Update(param);
+            string TypeName = new ParamTypeDao().FindName(param.Type);
             if (result)
             {
                 return Json(new
@@ -81,7 +90,9 @@ namespace TM.Web.Areas.Quantri.Controllers
                     CodeName = param.CodeName,
                     Description = param.Description,
                     Unit = param.Unit,
-                    Status = param.Status
+                    Status = param.Status,
+                    Type = param.Type,
+                    TypeName = TypeName
                 });
             }
             else

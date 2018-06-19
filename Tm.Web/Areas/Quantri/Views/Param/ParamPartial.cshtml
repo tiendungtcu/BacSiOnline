@@ -4,7 +4,20 @@
            rownumbers="true" fitColumns="true" singleSelect="true" nowrap="false" autoRowHeight="true">
         <thead>
             <tr>
-                <th field="Id" width="50">Thứ tự</th>
+                <th data-options="field:'Type',width:30,
+                        formatter:function(value,row){
+                             return row.TypeName;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'Id',
+                                textField:'TypeName',
+                                method:'get',
+                                url:'@Url.Action("ListAll", "ParamType", new { Area = "Quantri" })',
+                                required:true
+                            }
+                        }">Loại thông số</th>
                 <th field="CodeName" width="50" editor="{type:'validatebox',options:{required:true}}">Tên thông số</th>
                 <th field="Description" width="50" editor="{type:'validatebox',options:{required:true}}">Mô tả</th>
                 <th field="Unit" width="50" editor="{type:'validatebox',options:{required:true}}">Đơn vị</th>
