@@ -9,11 +9,11 @@
     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger", style = "display:block" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "au-input au-input--full", placeholder = "Email hoặc số điện thoại", })
-        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })        
+        @Html.LabelFor(m => m.EmailOrPhone, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EmailOrPhone, new { @class = "au-input au-input--full", placeholder = "Email hoặc số điện thoại", })
+        @Html.ValidationMessageFor(m => m.EmailOrPhone, "", new { @class = "text-danger" })        
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "control-label" })

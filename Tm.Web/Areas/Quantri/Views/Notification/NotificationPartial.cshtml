@@ -82,11 +82,12 @@
                    style="width:40%">
         </div>
         <div style="margin-bottom:10px">
-            <input class="easyui-combobox" name="ReceiverId" data-options="required:'true',
+            <input class="easyui-combobox" name="ReceiverId[]" data-options="required:'true',
                    url:'@Url.Action("ListAll", "UserManager", new { Area = "Quantri" })',
                    valueField:'Id',
                    textField:'FullName',
                    label:'Người Nhận',
+                    multiple:true,
                    labelPosition:'left'"
                    style="width:40%;">
         </div>

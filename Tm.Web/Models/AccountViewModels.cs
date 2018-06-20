@@ -49,20 +49,17 @@ namespace TM.Web.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "Số điện thoại")]
-        public string UserName { get; set; }
+        [Display(Name = "Email hoặc SĐT")]
+        //[EmailAddress]
+        [EmailOrPhone]
+        public string EmailOrPhone { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Ghi nhớ đăng nhập?")]
         public bool RememberMe { get; set; }
     }
 

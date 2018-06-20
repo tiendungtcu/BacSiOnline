@@ -63,7 +63,7 @@ namespace TM.Web.Controllers
                 // If Patient role
                 if (UserManager.IsInRole(id, "PATIENT_GROUP"))
                 {
-                    return RedirectToAction("Index", "BaoBanQs", new { area="Patient"});
+                    return RedirectToAction("Index", "Default", new { area="Patient"});
                 }
                 // If Admin role
                 else if (UserManager.IsInRole(id, "QUANTRI_GROUP"))
@@ -105,16 +105,16 @@ namespace TM.Web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            SignInStatus result =await SignInManager.PasswordSignInAsync(model.EmailOrPhone, model.Password, model.RememberMe, shouldLockout: false);                       
             switch (result)
             {               
                 case SignInStatus.Success:
                     //return RedirectToLocal(returnUrl);
-                    ApplicationUser user = await UserManager.FindAsync(model.UserName, model.Password);
+                    ApplicationUser user = await UserManager.FindAsync(model.EmailOrPhone, model.Password);
                     // If Patient role
                     if (UserManager.IsInRole(user.Id, "PATIENT_GROUP"))
                     {
-                        return RedirectToAction("Create", "Patient", new { area = "Patient" });
+                        return RedirectToAction("Create", "PatientOrder", new { area = "Patient" });
                     }
                     // If Admin role
                     else if (UserManager.IsInRole(user.Id, "QUANTRI_GROUP"))
@@ -136,14 +136,17 @@ namespace TM.Web.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { area = "" });
                     }
+                    ModelState.AddModelError("", "Đăng nhập thành công");
                     return View(model);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
+                    ModelState.AddModelError("", "Nhập sai tài khoản hoặc mật khẩu");
+                    return View(model);
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Lỗi đăng nhập");
                     return View(model);
             }
         }

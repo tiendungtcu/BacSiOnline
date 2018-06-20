@@ -58,6 +58,7 @@ namespace TM.Web.Areas.Quantri.Controllers
             entity.Description = param.Description;
             entity.Status = param.Status;
             entity.Unit = param.Unit;
+            entity.Type = param.Type;
             int result = new MeasureParamDao().Create(entity);
             param.Id = entity.Id;
             param.TypeName = new ParamTypeDao().FindName(param.Type);

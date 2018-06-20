@@ -53,7 +53,11 @@ namespace Tm.Data.Functions
                 if (!string.IsNullOrEmpty(entity.Description))
                 {
                     param.Description = entity.Description;
-                }              
+                }
+                if (entity.Status!=null)
+                {
+                    param.Status = entity.Status;
+                }          
                 db.SaveChanges();
                 return true;
             }
