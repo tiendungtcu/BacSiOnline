@@ -5,27 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5e56831896ab4da892ffed52aee9d4f1" Name="Diagram1" ZoomLevel="59">
-        <EntityTypeShape EntityType="BACSIOIModel.Country" Width="1.5" PointX="1.5" PointY="24.375" />
-        <EntityTypeShape EntityType="BACSIOIModel.District" Width="1.5" PointX="1.5" PointY="3.25" />
-        <EntityTypeShape EntityType="BACSIOIModel.Province" Width="1.5" PointX="1.5" PointY="20.125" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Address" Width="1.5" PointX="6" PointY="3.625" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Doctor" Width="1.5" PointX="5.25" PointY="17.625" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_DoctorOrder" Width="1.5" PointX="7.5" PointY="17.5" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_MeasureParam" Width="1.5" PointX="5.25" PointY="36.375" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Notification" Width="1.5" PointX="5.25" PointY="13.25" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_NotifyType" Width="1.5" PointX="3" PointY="7.875" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Order" Width="1.5" PointX="5.25" PointY="23.375" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_OrderParam" Width="1.5" PointX="7.5" PointY="23.625" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_OrderSymptom" Width="1.5" PointX="7.5" PointY="20.75" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Patient" Width="1.5" PointX="5.25" PointY="26.875" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Roles" Width="1.5" PointX="0.75" PointY="13.875" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Symptom" Width="1.5" PointX="5.25" PointY="32.625" />
+        <EntityTypeShape EntityType="BACSIOIModel.Country" Width="1.5" PointX="1.5" PointY="24.5" />
+        <EntityTypeShape EntityType="BACSIOIModel.District" Width="1.5" PointX="1.5" PointY="3.375" />
+        <EntityTypeShape EntityType="BACSIOIModel.Province" Width="1.5" PointX="1.5" PointY="20.25" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Address" Width="1.5" PointX="6" PointY="3.75" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Doctor" Width="1.5" PointX="5.25" PointY="30" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_DoctorOrder" Width="1.5" PointX="10.5" PointY="14.5" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_MeasureParam" Width="1.5" PointX="5.25" PointY="33.125" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Notification" Width="1.5" PointX="8.25" PointY="13.375" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_NotifyType" Width="1.5" PointX="6" PointY="12" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Order" Width="1.5" PointX="5.25" PointY="17.125" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_OrderParam" Width="1.5" PointX="7.5" PointY="20.5" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_OrderSymptom" Width="1.5" PointX="7.5" PointY="17.625" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_ParamType" Width="1.5" PointX="3" PointY="33.75" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Patient" Width="1.5" PointX="5.25" PointY="27.25" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Roles" Width="1.5" PointX="0.75" PointY="14" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Symptom" Width="1.5" PointX="5.25" PointY="21.5" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_SysConfig" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_UserClaims" Width="1.5" PointX="5.25" PointY="8.125" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_UserLogins" Width="1.5" PointX="5.25" PointY="29.5" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Users" Width="1.5" PointX="3" PointY="11.375" />
-        <EntityTypeShape EntityType="BACSIOIModel.UserAddress" Width="1.5" PointX="8.25" PointY="13.625" />
-        <EntityTypeShape EntityType="BACSIOIModel.Ward" Width="1.5" PointX="3.75" PointY="3.25" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_UserLogins" Width="1.5" PointX="5.25" PointY="14.5" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Users" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="BACSIOIModel.UserAddress" Width="1.5" PointX="8.25" PointY="9.75" />
+        <EntityTypeShape EntityType="BACSIOIModel.Ward" Width="1.5" PointX="3.75" PointY="3.375" />
         <AssociationConnector Association="BACSIOIModel.FK_Province_Country" />
         <AssociationConnector Association="BACSIOIModel.FK_District_Province" />
         <AssociationConnector Association="BACSIOIModel.FK_Ward_District" />
@@ -34,6 +35,7 @@
         <AssociationConnector Association="BACSIOIModel.FK_TM_Doctor_TM_Users" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_Notification_TM_NotifyType" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_Notification_TM_Users" />
@@ -46,8 +48,6 @@
         <AssociationConnector Association="BACSIOIModel.FK_dbo_TM_UserLogins_dbo_TM_Users_UserId" />
         <AssociationConnector Association="BACSIOIModel.FK_UserAddress_TM_Users" />
         <AssociationConnector Association="BACSIOIModel.TM_UserRoles" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_ParamType" Width="1.5" PointX="3" PointY="37" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

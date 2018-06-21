@@ -27,6 +27,7 @@ namespace Tm.Data.Models
         public Nullable<int> PatientId { get; set; }
         public Nullable<bool> Status { get; set; }
         public string Notes { get; set; }
+        public string Title { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_DoctorOrder> TM_DoctorOrder { get; set; }

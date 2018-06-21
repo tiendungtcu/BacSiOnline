@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="BACSIOIModelStoreContainer" CdmEntityContainer="BACSIOIEntities">
+    <FunctionImportMapping FunctionImportName="ReceptionRegisterSp" FunctionName="BACSIOIModel.Store.ReceptionRegisterSp">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BACSIOIModel.ReceptionRegisterSp_Result">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <ScalarProperty Name="UserAddressId" ColumnName="UserAddressId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="DoctorOrderId" ColumnName="DoctorOrderId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="Countries">
       <EntityTypeMapping TypeName="BACSIOIModel.Country">
         <MappingFragment StoreEntitySet="Country">
@@ -103,9 +114,9 @@
     <EntitySetMapping Name="TM_Notification">
       <EntityTypeMapping TypeName="BACSIOIModel.TM_Notification">
         <MappingFragment StoreEntitySet="TM_Notification">
+          <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
           <ScalarProperty Name="Link" ColumnName="Link" />
           <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Contents" ColumnName="Contents" />
@@ -126,6 +137,7 @@
     <EntitySetMapping Name="TM_Order">
       <EntityTypeMapping TypeName="BACSIOIModel.TM_Order">
         <MappingFragment StoreEntitySet="TM_Order">
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -150,6 +162,14 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="SymptomId" ColumnName="SymptomId" />
           <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TM_ParamType">
+      <EntityTypeMapping TypeName="BACSIOIModel.TM_ParamType">
+        <MappingFragment StoreEntitySet="TM_ParamType">
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -273,24 +293,5 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="ReceptionRegisterSp" FunctionName="BACSIOIModel.Store.ReceptionRegisterSp">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="BACSIOIModel.ReceptionRegisterSp_Result">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-          <ScalarProperty Name="UserAddressId" ColumnName="UserAddressId" />
-          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-          <ScalarProperty Name="DoctorOrderId" ColumnName="DoctorOrderId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="TM_ParamType">
-      <EntityTypeMapping TypeName="BACSIOIModel.TM_ParamType">
-        <MappingFragment StoreEntitySet="TM_ParamType">
-          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

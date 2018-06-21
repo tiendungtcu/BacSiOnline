@@ -19,9 +19,9 @@ namespace Tm.Data.Models
         public string Contents { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<byte> Type { get; set; }
-        public Nullable<int> ReceiverId { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<int> Link { get; set; }
+        public Nullable<int> ReceiverId { get; set; }
     
         public virtual TM_NotifyType TM_NotifyType { get; set; }
         public virtual TM_Users TM_Users { get; set; }

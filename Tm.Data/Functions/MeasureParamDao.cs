@@ -8,6 +8,7 @@ namespace Tm.Data.Functions
 {
     public class MeasureParamDao:CommonDao
     {      
+        // List all params 
         public List<MeasureParamDetail> ListAll()
         {
             var param = db.TM_MeasureParam
@@ -25,6 +26,26 @@ namespace Tm.Data.Functions
                                 .ToList();
             return param;
         }
+        // List all params by type 
+        public List<MeasureParamDetail> ListAll(int type)
+        {
+            var param = db.TM_MeasureParam
+                                .Select(x => new MeasureParamDetail()
+                                {
+                                    Id = x.Id,
+                                    CodeName = x.CodeName,
+                                    Description = x.Description,
+                                    Unit = x.Unit,
+                                    Status = x.Status,
+                                    Type = x.Type,
+                                    TypeName = x.TM_ParamType.TypeName
+                                })
+                                .OrderBy(d => d.Id)
+                                .Where(d => d.Type == type)
+                                .ToList();
+            return param;
+        }
+        // Create a new param
         public int Create(TM_MeasureParam entity)
         {
             entity.CreatedDate = DateTime.Now;
@@ -32,7 +53,7 @@ namespace Tm.Data.Functions
             db.SaveChanges();
             return entity.Id;
         }
-
+        // Update a param
         public bool Update(TM_MeasureParam entity)
         {
             try
@@ -68,6 +89,7 @@ namespace Tm.Data.Functions
             }
         }
 
+        // Change param status
         public bool ChangeStatus(int Id)
         {
             var param = db.TM_MeasureParam.Find(Id);
@@ -76,6 +98,7 @@ namespace Tm.Data.Functions
             return true;
         }
 
+        // Delete a param
         public bool Delete(int Id)
         {
             try
@@ -90,6 +113,8 @@ namespace Tm.Data.Functions
                 return false;
             }
         }
+
+        // List all params and paging
         public IEnumerable<MeasureParamDetail> ListAllPaging(out int total,int pageIndex,int pageSize)
         {                
             int skip = (pageSize * (pageIndex - 1));

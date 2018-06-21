@@ -107,9 +107,9 @@
           <Property Name="Contents" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="Type" Type="tinyint" />
-          <Property Name="ReceiverId" Type="int" />
           <Property Name="Status" Type="bit" />
           <Property Name="Link" Type="int" />
+          <Property Name="ReceiverId" Type="int" />
         </EntityType>
         <EntityType Name="TM_NotifyType">
           <Key>
@@ -128,6 +128,7 @@
           <Property Name="PatientId" Type="int" />
           <Property Name="Status" Type="bit" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TM_OrderParam">
           <Key>
@@ -667,6 +668,13 @@
     <edmx:ConceptualModels>
       <Schema Namespace="BACSIOIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BACSIOIEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="ReceptionRegisterSp" ReturnType="Collection(BACSIOIModel.ReceptionRegisterSp_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="WardId" Mode="In" Type="Int32" />
+            <Parameter Name="Symptom" Mode="In" Type="String" />
+            <Parameter Name="DoctorId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Countries" EntityType="BACSIOIModel.Country" />
           <EntitySet Name="Districts" EntityType="BACSIOIModel.District" />
           <EntitySet Name="Provinces" EntityType="BACSIOIModel.Province" />
@@ -679,6 +687,7 @@
           <EntitySet Name="TM_Order" EntityType="BACSIOIModel.TM_Order" />
           <EntitySet Name="TM_OrderParam" EntityType="BACSIOIModel.TM_OrderParam" />
           <EntitySet Name="TM_OrderSymptom" EntityType="BACSIOIModel.TM_OrderSymptom" />
+          <EntitySet Name="TM_ParamType" EntityType="BACSIOIModel.TM_ParamType" />
           <EntitySet Name="TM_Patient" EntityType="BACSIOIModel.TM_Patient" />
           <EntitySet Name="TM_Roles" EntityType="BACSIOIModel.TM_Roles" />
           <EntitySet Name="TM_Symptom" EntityType="BACSIOIModel.TM_Symptom" />
@@ -719,6 +728,10 @@
           <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users">
             <End Role="TM_Users" EntitySet="TM_Users" />
             <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType">
+            <End Role="TM_ParamType" EntitySet="TM_ParamType" />
+            <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
           </AssociationSet>
           <AssociationSet Name="FK_TM_OrderParam_TM_MeasureParam" Association="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam">
             <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
@@ -768,19 +781,14 @@
             <End Role="TM_Roles" EntitySet="TM_Roles" />
             <End Role="TM_Users" EntitySet="TM_Users" />
           </AssociationSet>
-          <FunctionImport Name="ReceptionRegisterSp" ReturnType="Collection(BACSIOIModel.ReceptionRegisterSp_Result)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
-            <Parameter Name="Address" Mode="In" Type="String" />
-            <Parameter Name="WardId" Mode="In" Type="Int32" />
-            <Parameter Name="Symptom" Mode="In" Type="String" />
-            <Parameter Name="DoctorId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="TM_ParamType" EntityType="BACSIOIModel.TM_ParamType" />
-          <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType">
-            <End Role="TM_ParamType" EntitySet="TM_ParamType" />
-            <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
-          </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="ReceptionRegisterSp_Result">
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="Int32" Name="AddressId" Nullable="true" />
+          <Property Type="Int32" Name="UserAddressId" Nullable="true" />
+          <Property Type="Int64" Name="OrderId" Nullable="true" />
+          <Property Type="Int32" Name="DoctorOrderId" Nullable="true" />
+        </ComplexType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -867,9 +875,9 @@
           <Property Name="DiagnosisDate" Type="DateTime" Precision="3" />
           <Property Name="Diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_DoctorOrder" ToRole="TM_Order" />
           <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="TM_MeasureParam">
           <Key>
@@ -883,8 +891,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" FromRole="TM_MeasureParam" ToRole="TM_OrderParam" />
           <NavigationProperty Name="TM_ParamType" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_MeasureParam" ToRole="TM_ParamType" />
+          <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" FromRole="TM_MeasureParam" ToRole="TM_OrderParam" />
         </EntityType>
         <EntityType Name="TM_Notification">
           <Key>
@@ -895,9 +903,9 @@
           <Property Name="Contents" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Type" Type="Byte" />
-          <Property Name="ReceiverId" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <Property Name="Link" Type="Int32" />
+          <Property Name="ReceiverId" Type="Int32" />
           <NavigationProperty Name="TM_NotifyType" Relationship="BACSIOIModel.FK_TM_Notification_TM_NotifyType" FromRole="TM_Notification" ToRole="TM_NotifyType" />
           <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Notification_TM_Users" FromRole="TM_Notification" ToRole="TM_Users" />
         </EntityType>
@@ -919,6 +927,7 @@
           <Property Name="PatientId" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_Order" ToRole="TM_DoctorOrder" />
           <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Order" ToRole="TM_Users" />
           <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_Order" FromRole="TM_Order" ToRole="TM_OrderParam" />
@@ -946,6 +955,14 @@
           <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_OrderSymptom" ToRole="TM_Order" />
           <NavigationProperty Name="TM_Symptom" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Symptom" FromRole="TM_OrderSymptom" ToRole="TM_Symptom" />
+        </EntityType>
+        <EntityType Name="TM_ParamType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TM_MeasureParam" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_ParamType" ToRole="TM_MeasureParam" />
         </EntityType>
         <EntityType Name="TM_Patient">
           <Key>
@@ -1168,6 +1185,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TM_MeasureParam_TM_ParamType">
+          <End Type="BACSIOIModel.TM_ParamType" Role="TM_ParamType" Multiplicity="0..1" />
+          <End Type="BACSIOIModel.TM_MeasureParam" Role="TM_MeasureParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TM_ParamType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TM_MeasureParam">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TM_OrderParam_TM_MeasureParam">
           <End Type="BACSIOIModel.TM_MeasureParam" Role="TM_MeasureParam" Multiplicity="1" />
           <End Type="BACSIOIModel.TM_OrderParam" Role="TM_OrderParam" Multiplicity="*" />
@@ -1308,39 +1337,23 @@
           <End Type="BACSIOIModel.TM_Roles" Role="TM_Roles" Multiplicity="*" />
           <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="*" />
         </Association>
-        <ComplexType Name="ReceptionRegisterSp_Result">
-          <Property Type="Int32" Name="UserId" Nullable="true" />
-          <Property Type="Int32" Name="AddressId" Nullable="true" />
-          <Property Type="Int32" Name="UserAddressId" Nullable="true" />
-          <Property Type="Int64" Name="OrderId" Nullable="true" />
-          <Property Type="Int32" Name="DoctorOrderId" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="TM_ParamType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TM_MeasureParam" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_ParamType" ToRole="TM_MeasureParam" />
-        </EntityType>
-        <Association Name="FK_TM_MeasureParam_TM_ParamType">
-          <End Type="BACSIOIModel.TM_ParamType" Role="TM_ParamType" Multiplicity="0..1" />
-          <End Type="BACSIOIModel.TM_MeasureParam" Role="TM_MeasureParam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TM_ParamType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TM_MeasureParam">
-              <PropertyRef Name="Type" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BACSIOIModelStoreContainer" CdmEntityContainer="BACSIOIEntities">
+          <FunctionImportMapping FunctionImportName="ReceptionRegisterSp" FunctionName="BACSIOIModel.Store.ReceptionRegisterSp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BACSIOIModel.ReceptionRegisterSp_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="UserAddressId" ColumnName="UserAddressId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="DoctorOrderId" ColumnName="DoctorOrderId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="BACSIOIModel.Country">
               <MappingFragment StoreEntitySet="Country">
@@ -1443,9 +1456,9 @@
           <EntitySetMapping Name="TM_Notification">
             <EntityTypeMapping TypeName="BACSIOIModel.TM_Notification">
               <MappingFragment StoreEntitySet="TM_Notification">
+                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ReceiverId" ColumnName="ReceiverId" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
@@ -1466,6 +1479,7 @@
           <EntitySetMapping Name="TM_Order">
             <EntityTypeMapping TypeName="BACSIOIModel.TM_Order">
               <MappingFragment StoreEntitySet="TM_Order">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -1490,6 +1504,14 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="SymptomId" ColumnName="SymptomId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TM_ParamType">
+            <EntityTypeMapping TypeName="BACSIOIModel.TM_ParamType">
+              <MappingFragment StoreEntitySet="TM_ParamType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1613,25 +1635,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="ReceptionRegisterSp" FunctionName="BACSIOIModel.Store.ReceptionRegisterSp">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BACSIOIModel.ReceptionRegisterSp_Result">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="UserAddressId" ColumnName="UserAddressId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="DoctorOrderId" ColumnName="DoctorOrderId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="TM_ParamType">
-            <EntityTypeMapping TypeName="BACSIOIModel.TM_ParamType">
-              <MappingFragment StoreEntitySet="TM_ParamType">
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

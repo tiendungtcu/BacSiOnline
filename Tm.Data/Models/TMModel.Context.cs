@@ -39,6 +39,7 @@ namespace Tm.Data.Models
         public virtual DbSet<TM_Order> TM_Order { get; set; }
         public virtual DbSet<TM_OrderParam> TM_OrderParam { get; set; }
         public virtual DbSet<TM_OrderSymptom> TM_OrderSymptom { get; set; }
+        public virtual DbSet<TM_ParamType> TM_ParamType { get; set; }
         public virtual DbSet<TM_Patient> TM_Patient { get; set; }
         public virtual DbSet<TM_Roles> TM_Roles { get; set; }
         public virtual DbSet<TM_Symptom> TM_Symptom { get; set; }
@@ -48,7 +49,6 @@ namespace Tm.Data.Models
         public virtual DbSet<TM_Users> TM_Users { get; set; }
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<Ward> Wards { get; set; }
-        public virtual DbSet<TM_ParamType> TM_ParamType { get; set; }
     
         public virtual ObjectResult<ReceptionRegisterSp_Result> ReceptionRegisterSp(Nullable<int> userId, string address, Nullable<int> wardId, string symptom, Nullable<int> doctorId)
         {

@@ -29,8 +29,8 @@ namespace Tm.Data.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<bool> Status { get; set; }
     
+        public virtual TM_ParamType TM_ParamType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_OrderParam> TM_OrderParam { get; set; }
-        public virtual TM_ParamType TM_ParamType { get; set; }
     }
 }

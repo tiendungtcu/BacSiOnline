@@ -102,9 +102,9 @@
     <Property Name="Contents" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="Type" Type="tinyint" />
-    <Property Name="ReceiverId" Type="int" />
     <Property Name="Status" Type="bit" />
     <Property Name="Link" Type="int" />
+    <Property Name="ReceiverId" Type="int" />
   </EntityType>
   <EntityType Name="TM_NotifyType">
     <Key>
@@ -123,6 +123,7 @@
     <Property Name="PatientId" Type="int" />
     <Property Name="Status" Type="bit" />
     <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="TM_OrderParam">
     <Key>
