@@ -11,7 +11,7 @@ namespace TM.Web.Areas.Patient.Models
 
         public DateTime ThisDay { get; set; }
 
-        public string Symptoms { get; set; }
+        public int[] Symptoms { get; set; }
 
         public float Height { get; set; }
 

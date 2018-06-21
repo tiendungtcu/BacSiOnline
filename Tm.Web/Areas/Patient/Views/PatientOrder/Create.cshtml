@@ -38,11 +38,20 @@
                 <div class="row form-group">
 
                     <div class="col col-md-3">
-                        <label for="Symptoms" class=" form-control-label">Triệu chứng</label>
+                        <label for="Symptoms" class="form-control-label">Triệu chứng</label>
                     </div>
                     <div class="col-12 col-md-8">
                         <select id="Symptoms" name="Symptoms" class="form-control" multiple="multiple" style="width: 50%"></select>
                         <small class="help-block form-text">Chúng tôi sẽ gợi ý các triệu chứng cho bạn</small>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="additional-note-input" class=" form-control-label">Ghi chú thêm</label>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <textarea id="additional-note-input" rows="3" class="form-control"></textarea>
+                        <small class="help-block form-text">Cung cấp thêm các thông tin khác, càng chi tiết càng tốt, sẽ giúp việc chẩn đoán của bác sỹ được tốt hơn</small>
                     </div>
                 </div>
 
@@ -56,7 +65,7 @@
                         <label for="height-input">Chiều cao(cm)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=20 step=0.1 id="text-input" name="height-input" placeholder="Nhập chiều cao" class="form-control">
+                        <input type="number" id="height-input" name="height-input" placeholder="Nhập chiều cao" class="form-control">
                     </div>
                 </div>
 
@@ -65,10 +74,10 @@
                         <label for="weight-input">Cân nặng(kg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=150 step=0.1 name="weight-input" placeholder="Nhập cân nặng" class="form-control">
+                        <input type="number" id="weight-input" placeholder="Nhập cân nặng" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=20 step=0.1 name="bmi-label" placeholder="BMI" readonly class="form-control">
+                        <input type="text" id="bmi-label" placeholder="BMI" readonly class="form-control">
                     </div>
                 </div>
 
@@ -77,7 +86,7 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm thu (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số trên" name="ha-tam-thu-input" class="form-control">
+                        <input type="number" placeholder="Chỉ số trên" name="ha-tam-thu-input" class="form-control">
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="date" name="ha-date-input" class="form-control">
@@ -89,49 +98,36 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm trương (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số dưới" name="ha-tam-truong-input" class="form-control">
+                        <input type="number" placeholder="Chỉ số dưới" name="ha-tam-truong-input" class="form-control">
                     </div>
                 </div>
 
-                <div style="float: right; padding-right: 90px;">
-                    <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px">
-                        <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
-                    </button>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="ha-tam-thu-input">Nhịp tim (chu kỳ/phút)</label>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <input type="number" name="nhip-tim-input" class="form-control">
+                    </div>
                 </div>
-                <div class="row col-12"></div>
+
                 <hr>
 
                 <div style="padding-bottom: 20px;">
                     <strong>Thông số cận lâm sàng</strong>
                 </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="cholesteron-input">Cholesteron (mmol/l)</label>
+                    <div id="add-group-before" style="float: right; padding-right: 90px;">
+                        <select name="list-ls" id="select-2" style="border: 1px solid #ced4da; line-height: 1.5; padding: .375rem .75rem;">
+                            <option value="1">Cholesteron</option>
+                            <option value="1">Creatinin</option>
+                            <option value="1">GPT</option>
+                            <option value="1">Insulin</option>
+                        </select>
+                        <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px"
+                                id="btn-add-2">
+                            <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
+                        </button>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <input type="date" name="cholesteron-date-input" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="gpt-input">GPT (mmol/l)</label>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <input type="number" min=0 max=300 step=1 placeholder="Chỉ số gpt trong máu" name="gpt-input" class="form-control">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <input type="date" name="gpt-date-input" class="form-control">
-                    </div>
-                </div>
-                <div style="float: right; padding-right: 90px; padding-bottom:80px;">
-                    <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px">
-                        <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
-                    </button>
-                </div>
                 <div class="card-footer" style="padding-top:120px;">
                     <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px">
                         <i class="fa fa-dot-circle-o"></i> Tạo bệnh án
@@ -162,7 +158,99 @@
             allowClear: true,
             minimumInputLength: 0,
             CloseOnSelect: false
-        });              
+        });
+
+        var paramCount = $("#select-2").children().length;
+
+        // Record creation date: 
+        // 1. Date control in HTML5 accepts in the format of Year-month-day
+        // 2. If month is 9, it needs to be set as 09 not simply 9, apply for day as well
+        function getCurrentDateStr() {
+            var current = new Date($.now());
+            var dd = ('0' + current.getDate()).slice(-2);
+            var mm = ('0' + (current.getMonth() + 1)).slice(-2);
+            var yyyy = current.getFullYear();
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        $("input[type=date]").val(getCurrentDateStr());
+
+        // BMI
+        $("#weight-input, #height-input").change(function () {
+            if ($('#weight-input').val() && $("#height-input").val()) {
+                var h = $("#height-input").val() / 100, w = $('#weight-input').val();
+                $("#bmi-label").val('BMI: ' + (w / (h * h)).toFixed(2));
+            }
+        });
+
+        // Add form group element
+        $("#btn-add-2").click(function () {
+            // <!-- Form Replica -->
+            //     <div class="row form-group" id="copy-group">
+            //         <!-- Label -->
+            //         <div class="col col-md-3">
+            //             <label>Cholesteron (mmol/l)</label>
+            //         </div>
+            //         <!-- Value input -->
+            //         <div class="col-12 col-md-4">
+            //             <input type="text" id="test-select" placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">                                        
+            //         </div>
+            //         <!-- Measuring date input -->
+            //         <div class="col-12 col-md-4">
+            //             <input type="date" name="cholesteron-date-input" class="form-control">                                            
+            //         </div>
+            //         <!-- Delete button -->
+            //         <div class="input-group-btn">
+            //             <button class="btn btn-danger remove" type="button">
+            //                 <i class="fas fa-minus"></i>
+            //             </button>
+            //         </div>
+            // </div>
+            if (paramCount == 0) return;
+            var paramName = $("#select-2").find(":selected").text();
+            $("#select-2 :selected").remove(); paramCount--;
+            // $("#test-select").val("Duy Trung");
+            var pDiv = $('<div/>', {
+                class: "row form-group",
+                name: paramName + '-group',
+                html: [$("<div/>", {
+                    class: "col col-md-3",
+                    html: $('<label/>', {
+                        text: paramName
+                    })
+                }), $("<div/>", {
+                    class: "col-12 col-md-4",
+                    html: $("<input/>", {
+                        type: "number",
+                        placeholder: "Chỉ số " + paramName + " trong máu",
+                        name: paramName + "-input",
+                        class: "form-control"
+                    })
+                }), $("<div/>", {
+                    class: "col-12 col-md-4",
+                    html: $("<input/>", {
+                        type: "date",
+                        name: paramName.toLowerCase() + "-date-input",
+                        value: getCurrentDateStr(),
+                        class: "form-control"
+                    })
+                }), $("<div/>", {
+                    class: "input-group-btn",
+                    html: $("<button/>", {
+                        type: "button",
+                        class: "btn btn-danger remove",
+                        html: '<i class="fas fa-minus"></i>'
+                        + `<input type="hidden" class="btn-hidden-val" value=${paramName}>`,
+                    }).bind('click', function () {
+                        //alert($(this).closest(".form-group").html());
+                        $(this).closest(".form-group").remove(); paramCount++;
+                        $("#select-2").prepend(`<option>${$(this).find(".btn-hidden-val").val()}</option>`);
+                    })
+                })]
+            })
+
+            $("#add-group-before").before(pDiv);
+        });
     });
     </script>
 }

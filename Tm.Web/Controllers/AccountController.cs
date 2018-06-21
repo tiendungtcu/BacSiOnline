@@ -102,15 +102,34 @@ namespace TM.Web.Controllers
             {
                 return View(model);
             }
+            string userName = model.EmailOrPhone;
+            ApplicationUser user = null;
+            // if user sign in by email
+            if (model.EmailOrPhone.Contains('@'))
+            {
+                user = UserManager.FindByEmail(model.EmailOrPhone);
+                if (user!=null)
+                {
+                    userName = user.UserName;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email không tồn tại");
+                    return View(model);
+                }
+            } else
+            // if user sign in by phonenumber(username)
+            {
+                user = await UserManager.FindByNameAsync(model.EmailOrPhone);
+            }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            SignInStatus result =await SignInManager.PasswordSignInAsync(model.EmailOrPhone, model.Password, model.RememberMe, shouldLockout: false);                       
+            SignInStatus result =await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);                       
             switch (result)
             {               
                 case SignInStatus.Success:
-                    //return RedirectToLocal(returnUrl);
-                    ApplicationUser user = await UserManager.FindAsync(model.EmailOrPhone, model.Password);
+                    //return RedirectToLocal(returnUrl);                   
                     // If Patient role
                     if (UserManager.IsInRole(user.Id, "PATIENT_GROUP"))
                     {
