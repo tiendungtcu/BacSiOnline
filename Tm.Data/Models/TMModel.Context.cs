@@ -32,7 +32,6 @@ namespace Tm.Data.Models
         public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<TM_Address> TM_Address { get; set; }
         public virtual DbSet<TM_Doctor> TM_Doctor { get; set; }
-        public virtual DbSet<TM_DoctorOrder> TM_DoctorOrder { get; set; }
         public virtual DbSet<TM_MeasureParam> TM_MeasureParam { get; set; }
         public virtual DbSet<TM_Notification> TM_Notification { get; set; }
         public virtual DbSet<TM_NotifyType> TM_NotifyType { get; set; }
@@ -49,6 +48,7 @@ namespace Tm.Data.Models
         public virtual DbSet<TM_Users> TM_Users { get; set; }
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<Ward> Wards { get; set; }
+        public virtual DbSet<TM_DoctorOrder> TM_DoctorOrder { get; set; }
     
         public virtual ObjectResult<ReceptionRegisterSp_Result> ReceptionRegisterSp(Nullable<int> userId, string address, Nullable<int> wardId, string symptom, Nullable<int> doctorId)
         {

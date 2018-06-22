@@ -16,13 +16,14 @@
             {
                 @Html.AntiForgeryToken()
                 <h1 style="color:red">@ViewBag.Error</h1>
+                @Html.ValidationSummary(true, "", new { style = "display:block" })
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="record-title-input" class=" form-control-label">Tiêu đề bệnh án(*)</label>
                     </div>
                     <div class="col-12 col-md-8">
-                        @Html.TextBoxFor(m => m.Title, new {  placeholder = "Tiêu đề bệnh án", @class = "form-control" })  
-                        @Html.ValidationMessageFor(m=>m.Title)
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = "Tiêu đề bệnh án", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Title)
                         <small class="form-text text-muted">
                             Tiêu đề thường có nội dung tóm tắt tình trạng sức khỏe của bệnh nhân
                         </small>
@@ -42,7 +43,7 @@
                     <div class="col col-md-3">
                         <label for="Symptoms" class="form-control-label">Triệu chứng</label>
                     </div>
-                    <div class="col-12 col-md-8">                     
+                    <div class="col-12 col-md-8">
                         <select id="Symptoms" name="Symptoms" class="form-control" multiple="multiple" style="width: 50%"></select>
                         <small class="help-block form-text">Chúng tôi sẽ gợi ý các triệu chứng cho bạn</small>
                     </div>
@@ -52,7 +53,7 @@
                         <label for="additional-note-input" class=" form-control-label">Ghi chú thêm</label>
                     </div>
                     <div class="col-12 col-md-8">
-                        @Html.TextAreaFor(m=>m.Notes,new { rows = "3", @class="form-control"})                        
+                        @Html.TextAreaFor(m => m.Notes, new { rows = "3", @class = "form-control" })
                         <small class="help-block form-text">Cung cấp thêm các thông tin khác, càng chi tiết càng tốt, sẽ giúp việc chẩn đoán của bác sỹ được tốt hơn</small>
                     </div>
                 </div>
@@ -67,7 +68,8 @@
                         <label for="height-input">Chiều cao(cm)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        @Html.TextBoxFor(m => m.Height, new { type = "number", placeholder = "Chiều cao", @class = "form-control" })                       
+                        @Html.TextBoxFor(m => m.Height, new { type = "number", placeholder = "Chiều cao", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Height)
                     </div>
                 </div>
 
@@ -76,7 +78,8 @@
                         <label for="weight-input">Cân nặng(kg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        @Html.TextBoxFor(m => m.Weight, new { type = "number", placeholder = "Cân nặng", @class = "form-control" })                      
+                        @Html.TextBoxFor(m => m.Weight, new { type = "number", placeholder = "Cân nặng", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Weight)
                     </div>
                     <div class="col-12 col-md-4">
                         <input type="text" id="bmi-label" placeholder="BMI" readonly class="form-control">
@@ -88,10 +91,11 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm thu (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        @Html.TextBoxFor(m => m.LowPressure, new {type="number", placeholder= "Chỉ số trên", @class = "form-control" })                        
+                        @Html.TextBoxFor(m => m.LowPressure, new { type = "number", placeholder = "Chỉ số trên", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LowPressure)
                     </div>
                     <div class="col-12 col-md-4">
-                        @Html.TextBoxFor(m => m.LowPressureDate, "{0:dd/MM/yyyy}",new { type = "date", @class ="form-control"})                       
+                        @Html.TextBoxFor(m => m.LowPressureDate, "{0:dd/MM/yyyy}", new { type = "date", @class = "form-control" })
                     </div>
                 </div>
 
@@ -100,7 +104,8 @@
                         <label for="ha-tam-thu-input">Huyết áp tâm trương (mmHg)</label>
                     </div>
                     <div class="col-12 col-md-4">
-                        @Html.TextBoxFor(m => m.HighPressure, new { type = "number", placeholder = "Chỉ số dưới", @class = "form-control" })                       
+                        @Html.TextBoxFor(m => m.HighPressure, new { type = "number", placeholder = "Chỉ số dưới", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.HighPressure)
                     </div>
                     <div class="col-12 col-md-4">
                         @Html.TextBoxFor(m => m.HighPressureDate, "{0:dd/MM/yyyy}", new { type = "date", @class = "form-control" })
@@ -127,7 +132,7 @@
                     <strong>Thông số cận lâm sàng</strong>
                 </div>
                 <div id="add-group-before" style="float: right; padding-right: 90px;">
-                    @Html.DropDownListFor(m => m.AddParam, new SelectList(ViewBag.SymptomList, "Id", "CodeName"),new { style = "border: 1px solid #ced4da; line-height: 1.5; padding: .375rem .75rem;" })
+                    @Html.DropDownListFor(m => m.AddParam, new SelectList(ViewBag.SymptomList, "Id", "Description"), new { style = "border: 1px solid #ced4da; line-height: 1.5; padding: .375rem .75rem;" })
                     <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px"
                             id="btn-add-2">
                         <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
@@ -215,6 +220,7 @@
             if (paramCount == 0) return;
             var paramName = 'ParaclinicalParams';//$("#AddParam").find(":selected").text();
             var displayText = $("#AddParam").find(":selected").text();
+            var paramIndex = $("#AddParam").find(":selected").val();
             $("#AddParam :selected").remove(); paramCount--;
             // $("#test-select").val("Duy Trung");
             var pDiv = $('<div/>', {
@@ -227,12 +233,23 @@
                     })
                 }), $("<div/>", {
                     class: "col-12 col-md-4",
-                    html: $("<input/>", {
-                        type: "number",
-                        placeholder: "Chỉ số " + displayText + " trong máu",
-                        name: paramName,
-                        class: "form-control"
-                    })
+                    html: [
+                        $("<input/>", {
+                            type: "hidden",                            
+                            name: "ParamIds",
+                            value: paramIndex
+                        }),
+                        $("<input/>", {
+                            type: "number",
+                            placeholder: "Chỉ số " + displayText + " trong máu",
+                            name: paramName,
+                            class: "form-control",
+                            min: 20,
+                            max: 180,
+                            value: 80
+                        })
+                        ] 
+                        
                 }), $("<div/>", {
                     class: "col-12 col-md-4",
                     html: $("<input/>", {

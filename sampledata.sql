@@ -1,4 +1,6 @@
-﻿-- -- Sample data for TM_ParamType
+﻿DBCC CHECKIDENT (TM_Order, RESEED, 0)
+
+-- -- Sample data for TM_ParamType
 DBCC CHECKIDENT (TM_ParamType, RESEED, 0)
 insert into TM_ParamType(TypeName)
 Values(N'Lâm sàng')

@@ -75,10 +75,10 @@
     </Key>
     <Property Name="DoctorId" Type="int" Nullable="false" />
     <Property Name="OrderId" Type="bigint" Nullable="false" />
+    <Property Name="Diagnosis" Type="nvarchar" MaxLength="500" />
     <Property Name="DiagnosisDate" Type="datetime" />
-    <Property Name="Diagnosis" Type="nvarchar(max)" />
+    <Property Name="PatientId" Type="int" />
     <Property Name="Status" Type="bit" />
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="TM_MeasureParam">
     <Key>
@@ -394,6 +394,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TM_DoctorOrder_TM_Users1">
+    <End Role="TM_Users" Type="Self.TM_Users" Multiplicity="0..1" />
+    <End Role="TM_DoctorOrder" Type="Self.TM_DoctorOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_DoctorOrder">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TM_MeasureParam_TM_ParamType">
     <End Role="TM_ParamType" Type="Self.TM_ParamType" Multiplicity="0..1" />
     <End Role="TM_MeasureParam" Type="Self.TM_MeasureParam" Multiplicity="*" />
@@ -606,6 +618,10 @@
       <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
     </AssociationSet>
     <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="Self.FK_TM_DoctorOrder_TM_Users">
+      <End Role="TM_Users" EntitySet="TM_Users" />
+      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TM_DoctorOrder_TM_Users1" Association="Self.FK_TM_DoctorOrder_TM_Users1">
       <End Role="TM_Users" EntitySet="TM_Users" />
       <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
     </AssociationSet>

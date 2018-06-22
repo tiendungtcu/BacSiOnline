@@ -157,6 +157,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\NotifyTypeDto.cs" />
     <Compile Include="ViewModels\OrderDetail.cs" />
+    <Compile Include="ViewModels\OrderListModel.cs" />
     <Compile Include="ViewModels\ParamTypeDetail.cs" />
     <Compile Include="ViewModels\SpReceptionRegisterViewModel.cs" />
     <Compile Include="ViewModels\WardDetail.cs" />

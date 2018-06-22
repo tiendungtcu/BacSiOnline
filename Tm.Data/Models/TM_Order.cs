@@ -17,9 +17,9 @@ namespace Tm.Data.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TM_Order()
         {
-            this.TM_DoctorOrder = new HashSet<TM_DoctorOrder>();
             this.TM_OrderParam = new HashSet<TM_OrderParam>();
             this.TM_OrderSymptom = new HashSet<TM_OrderSymptom>();
+            this.TM_DoctorOrder = new HashSet<TM_DoctorOrder>();
         }
     
         public long Id { get; set; }
@@ -29,12 +29,12 @@ namespace Tm.Data.Models
         public string Notes { get; set; }
         public string Title { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TM_DoctorOrder> TM_DoctorOrder { get; set; }
         public virtual TM_Users TM_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_OrderParam> TM_OrderParam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_OrderSymptom> TM_OrderSymptom { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TM_DoctorOrder> TM_DoctorOrder { get; set; }
     }
 }

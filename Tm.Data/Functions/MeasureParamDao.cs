@@ -7,7 +7,12 @@ using Tm.Data.ViewModels;
 namespace Tm.Data.Functions
 {
     public class MeasureParamDao:CommonDao
-    {      
+    {  
+        //Find MeasureParam id by CodeName
+        public int FindIdByCodeName(string codeName)
+        {
+            return db.TM_MeasureParam.Where(p => p.CodeName.Equals(codeName)).FirstOrDefault().Id;
+        }
         // List all params 
         public List<MeasureParamDetail> ListAll()
         {
@@ -21,7 +26,7 @@ namespace Tm.Data.Functions
                                         Type = x.Type,
                                         TypeName = x.TM_ParamType.TypeName
                                     })
-                                .OrderBy(d => d.Id)
+                                .OrderBy(d => d.Type)
                                 .Where(d => d.Status == true)
                                 .ToList();
             return param;
@@ -124,7 +129,7 @@ namespace Tm.Data.Functions
                 return null;
             }
             return db.TM_MeasureParam.Select(d => new { d.Id, d.CodeName, d.Description, d.Unit,d.Type,d.TM_ParamType.TypeName, d.Status })
-                                 .OrderBy(d => d.CodeName)
+                                 .OrderBy(d => d.Type).ThenBy(n=>n.CodeName)
                                  .Skip(skip)
                                  .Take(pageSize)
                                  .AsEnumerable().Select(x=>new MeasureParamDetail() {

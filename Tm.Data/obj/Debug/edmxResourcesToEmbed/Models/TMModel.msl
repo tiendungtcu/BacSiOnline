@@ -85,18 +85,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TM_DoctorOrder">
-      <EntityTypeMapping TypeName="BACSIOIModel.TM_DoctorOrder">
-        <MappingFragment StoreEntitySet="TM_DoctorOrder">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
-          <ScalarProperty Name="DiagnosisDate" ColumnName="DiagnosisDate" />
-          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TM_MeasureParam">
       <EntityTypeMapping TypeName="BACSIOIModel.TM_MeasureParam">
         <MappingFragment StoreEntitySet="TM_MeasureParam">
@@ -293,5 +281,17 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="TM_DoctorOrder">
+      <EntityTypeMapping TypeName="BACSIOIModel.TM_DoctorOrder">
+        <MappingFragment StoreEntitySet="TM_DoctorOrder">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="DiagnosisDate" ColumnName="DiagnosisDate" />
+          <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -661,6 +661,7 @@
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff" />
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff2" />
     <Content Include="Areas\Reception\Views\RegisterPatient\Create.cshtml" />
+    <Content Include="Areas\Patient\Views\PatientOrder\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -13,7 +13,6 @@
     <EntitySet Name="Provinces" EntityType="BACSIOIModel.Province" />
     <EntitySet Name="TM_Address" EntityType="BACSIOIModel.TM_Address" />
     <EntitySet Name="TM_Doctor" EntityType="BACSIOIModel.TM_Doctor" />
-    <EntitySet Name="TM_DoctorOrder" EntityType="BACSIOIModel.TM_DoctorOrder" />
     <EntitySet Name="TM_MeasureParam" EntityType="BACSIOIModel.TM_MeasureParam" />
     <EntitySet Name="TM_Notification" EntityType="BACSIOIModel.TM_Notification" />
     <EntitySet Name="TM_NotifyType" EntityType="BACSIOIModel.TM_NotifyType" />
@@ -53,14 +52,6 @@
     <AssociationSet Name="FK_TM_Doctor_TM_Users" Association="BACSIOIModel.FK_TM_Doctor_TM_Users">
       <End Role="TM_Users" EntitySet="TM_Users" />
       <End Role="TM_Doctor" EntitySet="TM_Doctor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TM_DoctorOrder_TM_Order" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order">
-      <End Role="TM_Order" EntitySet="TM_Order" />
-      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users">
-      <End Role="TM_Users" EntitySet="TM_Users" />
-      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
     </AssociationSet>
     <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType">
       <End Role="TM_ParamType" EntitySet="TM_ParamType" />
@@ -113,6 +104,19 @@
     <AssociationSet Name="TM_UserRoles" Association="BACSIOIModel.TM_UserRoles">
       <End Role="TM_Roles" EntitySet="TM_Roles" />
       <End Role="TM_Users" EntitySet="TM_Users" />
+    </AssociationSet>
+    <EntitySet Name="TM_DoctorOrder" EntityType="BACSIOIModel.TM_DoctorOrder" />
+    <AssociationSet Name="FK_TM_DoctorOrder_TM_Order" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order">
+      <End Role="TM_Order" EntitySet="TM_Order" />
+      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users">
+      <End Role="TM_Users" EntitySet="TM_Users" />
+      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TM_DoctorOrder_TM_Users1" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1">
+      <End Role="TM_Users" EntitySet="TM_Users" />
+      <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="ReceptionRegisterSp_Result">
@@ -198,20 +202,6 @@
     <Property Name="UserId" Type="Int32" />
     <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Doctor_TM_Users" FromRole="TM_Doctor" ToRole="TM_Users" />
   </EntityType>
-  <EntityType Name="TM_DoctorOrder">
-    <Key>
-      <PropertyRef Name="DoctorId" />
-      <PropertyRef Name="OrderId" />
-    </Key>
-    <Property Name="DoctorId" Type="Int32" Nullable="false" />
-    <Property Name="OrderId" Type="Int64" Nullable="false" />
-    <Property Name="DiagnosisDate" Type="DateTime" Precision="3" />
-    <Property Name="Diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="Boolean" />
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_DoctorOrder" ToRole="TM_Order" />
-    <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
-  </EntityType>
   <EntityType Name="TM_MeasureParam">
     <Key>
       <PropertyRef Name="Id" />
@@ -261,10 +251,10 @@
     <Property Name="Status" Type="Boolean" />
     <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_Order" ToRole="TM_DoctorOrder" />
     <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Order" ToRole="TM_Users" />
     <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_Order" FromRole="TM_Order" ToRole="TM_OrderParam" />
     <NavigationProperty Name="TM_OrderSymptom" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_Order" ToRole="TM_OrderSymptom" />
+    <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_Order" ToRole="TM_DoctorOrder" />
   </EntityType>
   <EntityType Name="TM_OrderParam">
     <Key>
@@ -384,7 +374,6 @@
     <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
     <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TM_Doctor" Relationship="BACSIOIModel.FK_TM_Doctor_TM_Users" FromRole="TM_Users" ToRole="TM_Doctor" />
-    <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_Users" ToRole="TM_DoctorOrder" />
     <NavigationProperty Name="TM_Notification" Relationship="BACSIOIModel.FK_TM_Notification_TM_Users" FromRole="TM_Users" ToRole="TM_Notification" />
     <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Users" ToRole="TM_Order" />
     <NavigationProperty Name="TM_Patient" Relationship="BACSIOIModel.FK_TM_Patient_TM_Users" FromRole="TM_Users" ToRole="TM_Patient" />
@@ -392,6 +381,8 @@
     <NavigationProperty Name="TM_UserLogins" Relationship="BACSIOIModel.FK_dbo_TM_UserLogins_dbo_TM_Users_UserId" FromRole="TM_Users" ToRole="TM_UserLogins" />
     <NavigationProperty Name="UserAddresses" Relationship="BACSIOIModel.FK_UserAddress_TM_Users" FromRole="TM_Users" ToRole="UserAddress" />
     <NavigationProperty Name="TM_Roles" Relationship="BACSIOIModel.TM_UserRoles" FromRole="TM_Users" ToRole="TM_Roles" />
+    <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_Users" ToRole="TM_DoctorOrder" />
+    <NavigationProperty Name="TM_DoctorOrder1" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1" FromRole="TM_Users" ToRole="TM_DoctorOrder" />
   </EntityType>
   <EntityType Name="UserAddress">
     <Key>
@@ -491,30 +482,6 @@
       </Principal>
       <Dependent Role="TM_Doctor">
         <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TM_DoctorOrder_TM_Order">
-    <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
-    <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TM_Order">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="TM_DoctorOrder">
-        <PropertyRef Name="OrderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TM_DoctorOrder_TM_Users">
-    <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="1" />
-    <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TM_Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="TM_DoctorOrder">
-        <PropertyRef Name="DoctorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -669,5 +636,56 @@
   <Association Name="TM_UserRoles">
     <End Type="BACSIOIModel.TM_Roles" Role="TM_Roles" Multiplicity="*" />
     <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="*" />
+  </Association>
+  <EntityType Name="TM_DoctorOrder">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int64" Nullable="false" />
+    <Property Name="Diagnosis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DiagnosisDate" Type="DateTime" Precision="3" />
+    <Property Name="PatientId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_DoctorOrder" ToRole="TM_Order" />
+    <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
+    <NavigationProperty Name="TM_Users1" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
+  </EntityType>
+  <Association Name="FK_TM_DoctorOrder_TM_Order">
+    <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
+    <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_DoctorOrder">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TM_DoctorOrder_TM_Users">
+    <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="1" />
+    <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_DoctorOrder">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TM_DoctorOrder_TM_Users1">
+    <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="0..1" />
+    <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TM_Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TM_DoctorOrder">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

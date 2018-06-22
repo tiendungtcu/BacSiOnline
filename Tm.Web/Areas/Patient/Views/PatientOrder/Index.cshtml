@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Tm.Data.ViewModels.OrderListModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header">
+            <p>Bộ lọc</p>
+        </div>
+        <div class="card-body card-block">
+
+
+            @Html.BeginForm("Index", "PatientOrder", new { Area = "Patient" }, FormMethod.Post, new { id = "summitFilter" })
+            {
+            <div class="col col-md-3">
+                <select class="form-control" id="filter-by-status">
+                    <option value="0">Tất cả</option>
+                    <option value="1">Đã chẩn đoán</option>
+                    <option value="2">Chưa chẩn đoán</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-lg" >
+                    <i class="fa fa-dot-circle-o"></i> Xem
+                </button>
+            </div>
+           }       
+            <div class="col-12 col-md-8">
+                <label for="">Thời gian</label>
+            </div>
+        </div>
+    </div>
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <div class="table-responsive m-b-40">
+                        <table class="table table-borderless table-data3">
+                            <thead>
+                                <tr>
+                                    <th>Mã bệnh án</th>
+                                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                                    <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Doctor)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                                    <th>@Html.DisplayNameFor(model => model.DiagnosisNote)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    string colorFormat = item.Status.Equals("Đã chẩn đoán") ? "denied" : "proceed";
+                                <tr>
+                                    <td>@Html.ActionLink(item.Id.ToString(), "Detail", "PatientOrder", new { Area = "Patient", id = item.Id }, new { })</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Doctor)</td>
+                                    <td class="@colorFormat">@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DiagnosisNote)</td>
+                                </tr>
+                                }
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
