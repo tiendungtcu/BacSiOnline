@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tm.Data.ViewModels;
+﻿using System.Linq;
 using Tm.Data.Models;
+using Tm.Data.ViewModels.Reception;
 
 namespace Tm.Data.Functions
 {

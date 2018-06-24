@@ -5,17 +5,8 @@ namespace Tm.Data.Functions
 {
     public class AddressDao:CommonDao
     {
-        /*
-        public int Create(int WardId, string address)
-        {
-            TM_Address entity = new TM_Address();
-            entity.WardId = WardId;
-            entity.Address = address;
-            db.TM_Address.Add(entity);
-            db.SaveChanges();
-            return entity.Id;
-        }
-        */
+       
+
         public int Create(TM_Address entity)
         {
             db.TM_Address.Add(entity);

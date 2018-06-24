@@ -43,7 +43,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="@Url.Action("Index", "PatientOrder", new {Area = "Patient"})">
                             <img src="~/Content/Common/images/icon/logo.1.png" alt="Doctor" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -58,90 +58,29 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Thêm bệnh nhân mới
+                            <a class="js-arrow" href="@Url.Action("Index", "PatientOrder", new { Area = "Patient" })" >
+                                <i class="fas fa-tachometer-alt"></i>Danh sách bệnh án
                             </a>
                         </li>
                         <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Charts
+                            <a href="@Url.Action("Create", "PatientOrder", new { Area = "Patient" })" >
+                                <i class="fas fa-chart-bar"></i>Tạo bệnh án
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables
+                            <a href="@Url.Action("History", "PatientOrder", new { Area = "Patient" })">
+                                <i class="fas fa-table"></i>Lịch sử bệnh án
                             </a>
                         </li>
                         <li>
-                            <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms
+                            <a href="@Url.Action("Statistic", "PatientOrder", new {Area = "Patient" })">
+                                <i class="far fa-check-square"></i>Thống kê
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="fas fa-calendar-alt"></i>Calendar
+                                <i class="fas fa-calendar-alt"></i>Trợ giúp
                             </a>
-                        </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-map-marker-alt"></i>Maps
-                            </a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="button.html">Button</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html">Badges</a>
-                                </li>
-                                <li>
-                                    <a href="tab.html">Tabs</a>
-                                </li>
-                                <li>
-                                    <a href="card.html">Cards</a>
-                                </li>
-                                <li>
-                                    <a href="alert.html">Alerts</a>
-                                </li>
-                                <li>
-                                    <a href="progress-bar.html">Progress Bars</a>
-                                </li>
-                                <li>
-                                    <a href="modal.html">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="switch.html">Switchs</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grids</a>
-                                </li>
-                                <li>
-                                    <a href="fontawesome.html">Fontawesome Icon</a>
-                                </li>
-                                <li>
-                                    <a href="typo.html">Typography</a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -159,7 +98,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="@Url.Action("Index","Home",new { Area=""})">
                                 <i class="fas fa-tachometer-alt"></i>Bảng tin
                             </a>
                         </li>
@@ -169,22 +108,23 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="Trang danh sách bệnh án">
+                                    <a href="@Url.Action("Index","PatientOrder",new { Area = "Patient" })">
                                         <i class="fas fa-list-alt"></i>Danh sách bệnh án
                                     </a>
+                                    
                                 </li>
                                 <li>
-                                    <a href="Trang thêm bệnh án">
+                                    <a href="@Url.Action("Create","PatientOrder",new { Area = "Patient" })">
                                         <i class="fas fa-plus-square"></i>Tạo bênh án mới
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Trang lịch sử bệnh án">
+                                    <a href="@Url.Action("History","PatientOrder",new { Area = "Patient" })">
                                         <i class="fas fa-calendar-alt"></i>Lịch sử bệnh án
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Trang thống kê bệnh án">
+                                    <a href="@Url.Action("Statistic","PatientOrder",new { Area = "Patient" })">
                                         <i class="fas fa-chart-pie"></i>Thống kê
                                     </a>
                                 </li>
@@ -192,7 +132,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="chart.html">
+                            <a href="#">
                                 <i class="fas fa-question-circle"></i>Trợ giúp
                             </a>
                         </li>
@@ -323,13 +263,8 @@
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a href="@Url.Action("Index","PatientProfile",new {Area="Patient" })">
                                                         <i class="zmdi zmdi-account"></i>Hồ sơ bệnh nhân
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Cài đặt
                                                     </a>
                                                 </div>
                                             </div>

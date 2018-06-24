@@ -3,9 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using TM.Web.Models;
-using Tm.Data.Models;
-using TM.Web.Areas.Quantri.Models;
 using System.Threading.Tasks;
+using Tm.Data.ViewModels.Quantri;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
@@ -178,7 +177,11 @@ namespace TM.Web.Areas.Quantri.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser {
+                            UserName = model.UserName,
+                            Email = model.Email,
+                            FullName = model.FullName
+                };
                 // tạo người dùng mới
 
                 var result = UserManager.Create(user, model.PassWord);

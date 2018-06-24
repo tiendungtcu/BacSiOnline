@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="BACSIOIModel.TM_MeasureParam" Width="1.5" PointX="5.25" PointY="33.125" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_Notification" Width="1.5" PointX="8.25" PointY="13.375" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_NotifyType" Width="1.5" PointX="6" PointY="12" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_Order" Width="1.5" PointX="5.25" PointY="17.125" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_OrderParam" Width="1.5" PointX="7.5" PointY="20.5" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_OrderSymptom" Width="1.5" PointX="7.5" PointY="17.625" />
         <EntityTypeShape EntityType="BACSIOIModel.TM_ParamType" Width="1.5" PointX="3" PointY="33.75" />
@@ -36,19 +35,19 @@
         <AssociationConnector Association="BACSIOIModel.FK_TM_OrderParam_TM_MeasureParam" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_Notification_TM_NotifyType" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_Notification_TM_Users" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_Order_TM_Users" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_OrderParam_TM_Order" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Symptom" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_Patient_TM_Users" />
         <AssociationConnector Association="BACSIOIModel.FK_dbo_TM_UserClaims_dbo_TM_Users_UserId" />
         <AssociationConnector Association="BACSIOIModel.FK_dbo_TM_UserLogins_dbo_TM_Users_UserId" />
         <AssociationConnector Association="BACSIOIModel.FK_UserAddress_TM_Users" />
         <AssociationConnector Association="BACSIOIModel.TM_UserRoles" />
-        <EntityTypeShape EntityType="BACSIOIModel.TM_DoctorOrder" Width="1.5" PointX="10.5" PointY="14.375" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_DoctorOrder" Width="1.5" PointX="10.5" PointY="14.5" />
         <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" />
-        <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1" />
+        <EntityTypeShape EntityType="BACSIOIModel.TM_Order" Width="1.5" PointX="5.25" PointY="17.375" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_Order_TM_Users" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_OrderParam_TM_Order" />
+        <AssociationConnector Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

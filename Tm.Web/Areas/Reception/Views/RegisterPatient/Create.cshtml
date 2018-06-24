@@ -1,4 +1,4 @@
-﻿@model TM.Web.Areas.Reception.Models.ReceptionViewModel
+﻿@model Tm.Data.ViewModels.Reception.ReceptionViewModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
@@ -13,7 +13,7 @@
         <div class="card-body card-block">
             @using (Html.BeginForm("Create", "RegisterPatient", new { area = "Reception" }, FormMethod.Post, new { role = "form" }))
             {
-                <h1 style="color:red">@ViewBag.Error</h1>
+                <h5 style="color:red">@ViewBag.Error</h5>
                 @Html.AntiForgeryToken()
                 <!-- Họ tên textbox -->
                 <div class="form-group" style="width:60%">

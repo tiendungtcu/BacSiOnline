@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using TM.Web.Areas.Quantri.Models;
+using Tm.Data.ViewModels.Quantri;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {

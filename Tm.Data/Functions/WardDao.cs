@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Tm.Data.Functions
 {
     public class WardDao:CommonDao
     {
+       
         public List<WardDetail> ListAll()
         {
             var param = db.Wards

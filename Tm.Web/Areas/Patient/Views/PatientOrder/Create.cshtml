@@ -1,4 +1,4 @@
-﻿@using TM.Web.Areas.Patient.Models
+﻿@using Tm.Data.ViewModels.Patient
 @model OrderViewModel
 @{
     ViewBag.Title = "Index";
@@ -19,7 +19,7 @@
                 @Html.ValidationSummary(true, "", new { style = "display:block" })
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label for="record-title-input" class=" form-control-label">Tiêu đề bệnh án(*)</label>
+                        <label for="record-title-input" class="form-control-label">Tiêu đề bệnh án(*)</label>
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.TextBoxFor(m => m.Title, new { placeholder = "Tiêu đề bệnh án", @class = "form-control" })
@@ -31,7 +31,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label for="record-date-input" class=" form-control-label">Ngày tạo</label>
+                        <label for="record-date-input" class="form-control-label">Ngày tạo</label>
                     </div>
                     <div class="col-12 col-md-8">
                         <input type="date" name="record-date-input" class="form-control" disabled>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label for="additional-note-input" class=" form-control-label">Ghi chú thêm</label>
+                        <label for="additional-note-input" class="form-control-label">Ghi chú thêm</label>
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.TextAreaFor(m => m.Notes, new { rows = "3", @class = "form-control" })
@@ -125,26 +125,33 @@
                         @Html.ValidationMessageFor(m => m.HeartBeatDate)
                     </div>
                 </div>
-
                 <hr>
-
                 <div style="padding-bottom: 20px;">
                     <strong>Thông số cận lâm sàng</strong>
                 </div>
-                <div id="add-group-before" style="float: right; padding-right: 90px;">
-                    @Html.DropDownListFor(m => m.AddParam, new SelectList(ViewBag.SymptomList, "Id", "Description"), new { style = "border: 1px solid #ced4da; line-height: 1.5; padding: .375rem .75rem;" })
-                    <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px"
-                            id="btn-add-2">
-                        <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
-                    </button>
+
+                <div class="row form-group" id="add-group-before">
+                    <div class="col-md-2 offset-md-7" style="text-align: right">
+                        @Html.DropDownListFor(m => m.AddParam, new SelectList(ViewBag.SymptomList, "Id", "Description"), new { style = "border: 1px solid #ced4da; line-height: 1.5; padding: .375rem .75rem;" })
+                    </div>
+                    <div class="col-md-2" style="text-align: right">
+                        <button type="button" class="btn btn-outline-primary btn-sm" name="btn-add-form-group" style="font-size: 16px"
+                                id="btn-add-2">
+                            <i class="zmdi zmdi-plus"></i>&nbsp; Thêm thông số
+                        </button>
+                    </div>
+
                 </div>
-                <div class="card-footer" style="padding-top:120px;">
-                    <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px">
-                        <i class="fa fa-dot-circle-o"></i> Tạo bệnh án
-                    </button>
-                    <button type="reset" class="btn btn-danger btn-lg" style="font-size: 16px">
-                        <i class="fa fa-ban"></i> Xóa viết lại
-                    </button>
+                <hr>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" style="font-size: 16px; padding: 10px">
+                            <i class="fa fa-dot-circle-o"></i> Tạo bệnh án
+                        </button>
+                        <button type="reset" class="btn btn-danger" style="font-size: 16px; padding:10px">
+                            <i class="fa fa-ban"></i> Đặt lại
+                        </button>
+                    </div>
                 </div>
             }
         </div>

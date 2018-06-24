@@ -190,8 +190,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Areas\Patient\Controllers\PatientProfileController.cs" />
     <Compile Include="Areas\Patient\Controllers\PatientOrderController.cs" />
-    <Compile Include="Areas\Patient\Models\OrderViewModel.cs" />
     <Compile Include="Areas\Quantri\Controllers\DistrictController.cs" />
     <Compile Include="Areas\Quantri\Controllers\NotificationController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -211,11 +211,8 @@
     <Compile Include="Areas\Quantri\Controllers\SymptomController.cs" />
     <Compile Include="Areas\Quantri\Controllers\UserManagerController.cs" />
     <Compile Include="Areas\Quantri\Controllers\WardController.cs" />
-    <Compile Include="Areas\Quantri\Models\CreateUserViewModel.cs" />
-    <Compile Include="Areas\Quantri\Models\SettingsViewModel.cs" />
     <Compile Include="Areas\Quantri\QuantriAreaRegistration.cs" />
     <Compile Include="Areas\Reception\Controllers\RegisterPatientController.cs" />
-    <Compile Include="Areas\Reception\Models\ReceptionViewModel.cs" />
     <Compile Include="Areas\Reception\ReceptionAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DropdownController.cs" />
@@ -225,7 +222,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EmailOrPhoneValidator.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -311,11 +307,14 @@
     <Content Include="Content\Common\images\icon\avatar-05.jpg" />
     <Content Include="Content\Common\images\icon\avatar-06.jpg" />
     <Content Include="Content\Common\images\icon\avatar-big-01.jpg" />
+    <Content Include="Content\Common\images\icon\default_avatar_male.jpg" />
+    <Content Include="Content\Common\images\icon\female-body-icon.png" />
     <Content Include="Content\Common\images\icon\logo-blue.png" />
     <Content Include="Content\Common\images\icon\logo-mini.png" />
     <Content Include="Content\Common\images\icon\logo-white.png" />
     <Content Include="Content\Common\images\icon\logo.1.png" />
     <Content Include="Content\Common\images\icon\logo.png" />
+    <Content Include="Content\Common\images\icon\male-body-icon.png" />
     <Content Include="Content\Common\images\icon\Untitled-1.jpg" />
     <Content Include="Content\Common\jquery-3.2.1.min.js" />
     <Content Include="Content\Common\jquery-ui.min.js" />
@@ -662,6 +661,9 @@
     <Content Include="Content\Common\fonts\poppins\poppins-v5-latin-regular.woff2" />
     <Content Include="Areas\Reception\Views\RegisterPatient\Create.cshtml" />
     <Content Include="Areas\Patient\Views\PatientOrder\Index.cshtml" />
+    <Content Include="Areas\Patient\Views\PatientOrder\Detail.cshtml" />
+    <Content Include="Areas\Patient\Views\PatientOrder\History.cshtml" />
+    <Content Include="Areas\Patient\Views\PatientProfile\Detail.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -719,7 +721,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Doctor\Models\" />
     <Folder Include="Areas\Patient\Views\Shared\" />
     <Folder Include="Areas\Quantri\Views\District\" />
     <Folder Include="Areas\Quantri\Views\ParamType\" />

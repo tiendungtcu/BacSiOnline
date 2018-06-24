@@ -10,6 +10,10 @@ namespace Tm.Data.Functions
 {
     public class DistrictDao:CommonDao
     {
+
+        // Get Province from district
+
+        // List all districts
         public List<DistrictDetail> ListAll()
         {
             var param = db.Districts

@@ -18,7 +18,7 @@ namespace Tm.Data.Models
         public int SymptomId { get; set; }
         public string Notes { get; set; }
     
-        public virtual TM_Order TM_Order { get; set; }
         public virtual TM_Symptom TM_Symptom { get; set; }
+        public virtual TM_Order TM_Order { get; set; }
     }
 }

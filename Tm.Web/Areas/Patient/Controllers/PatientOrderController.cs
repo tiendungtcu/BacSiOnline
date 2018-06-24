@@ -1,23 +1,79 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Tm.Data.Functions;
 using Tm.Data.Models;
-using TM.Web.Areas.Patient.Models;
+using Tm.Data.ViewModels.Patient;
 
 namespace TM.Web.Areas.Patient.Controllers
 {
     public class PatientOrderController : Controller
     {
+        // Show history of orders of a patient
+        public ActionResult History()
+        {
+            int patienId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (patienId <= 0)
+            {
+                patienId = 1021;
+            }
+            var models = new OrderDao().GetHistories(patienId);
+            return View(models);
+        }
+        // Get detail of an order       
+        public ActionResult Detail(long? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index", "PatientOrder", new { Area = "Patient" });
+            }
+            int patienId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (patienId <= 0)
+            {
+                patienId = 1021;
+            }           
+            var model = new OrderDao().GetDetail((long)id,patienId);
+            if (model==null)
+            {
+                return RedirectToAction("Index", "PatientOrder", new { Area = "Patient" });
+            }
+            //return Json(model,JsonRequestBehavior.AllowGet);                   
+            return View(model);
+        }
         // Patient see a list of order that he submitted before
         // GET: Patient/PatientOrder
-        public ActionResult Index()
+        public ActionResult Index(int? typeFilter)
         {
-            
-            return View(model);
+            // Get list of all patient Orders
+            int patienId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (patienId <= 0)
+            {
+                patienId = 1021;
+            }
+            var orders = new OrderDao().ListOrdersByPatient(patienId);
+            if (typeFilter==2)
+            {
+                orders = orders.Where(o => o.Status.Equals("Chưa chẩn đoán"));
+            }
+            if (typeFilter==1)
+            {
+                orders = orders.Where(o => o.Status.Equals("Đã chẩn đoán"));
+            }
+            IList<SelectListItem> statusList = new List<SelectListItem>
+            {
+                new SelectListItem{Text = "--Tất cả--", Value = "0"},
+                new SelectListItem{Text = "Đã chẩn đoán", Value = "1"},
+                new SelectListItem{Text = "Chưa chẩn đoán", Value = "2"},
+            };
+
+            ViewBag.StatusFilter = statusList;
+            ViewBag.Message = TempData["Message"] != null ? TempData["Message"] : string.Empty;
+            return View(orders);
         }
 
         // GET: Patient/PatientOrder/Create
@@ -36,6 +92,10 @@ namespace TM.Web.Areas.Patient.Controllers
             if (ModelState.IsValid)
             {
                 int curUserId = User.Identity.GetUserId<int>(); //Get current user Id
+                if (curUserId<=0)
+                {
+                    curUserId = 1021;
+                }
 
                 TM_Order order = new TM_Order();
                 order.OrderDate = DateTime.Now;
@@ -116,17 +176,12 @@ namespace TM.Web.Areas.Patient.Controllers
                     return Json(new { loi = "asign doctor for an order",doctor=doctorId,patient = curUserId });
                     //return View(model);
                 }
-
-                return Json(model);
+                TempData["Message"] = "Tạo bệnh án thành công";
+                return RedirectToAction("Index","PatientOrder",new { Area = "Patient" });
             }
             
             return View(model);
         }
 
-        
-        public ActionResult Detail(long id)
-        {
-            return View();
-        }
     }
 }

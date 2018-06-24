@@ -19,6 +19,7 @@ namespace Tm.Data.Models
         public Nullable<int> AddressId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<bool> Status { get; set; }
     
         public virtual TM_Address TM_Address { get; set; }
         public virtual TM_Users TM_Users { get; set; }

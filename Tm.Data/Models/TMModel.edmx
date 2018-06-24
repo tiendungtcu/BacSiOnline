@@ -80,10 +80,10 @@
           </Key>
           <Property Name="DoctorId" Type="int" Nullable="false" />
           <Property Name="OrderId" Type="bigint" Nullable="false" />
-          <Property Name="Diagnosis" Type="nvarchar" MaxLength="500" />
           <Property Name="DiagnosisDate" Type="datetime" />
-          <Property Name="PatientId" Type="int" />
+          <Property Name="Diagnosis" Type="nvarchar(max)" />
           <Property Name="Status" Type="bit" />
+          <Property Name="PatientId" Type="int" />
         </EntityType>
         <EntityType Name="TM_MeasureParam">
           <Key>
@@ -92,9 +92,9 @@
           <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CodeName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="150" />
-          <Property Name="Unit" Type="nchar" MaxLength="15" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="int" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="date" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Status" Type="bit" />
         </EntityType>
@@ -107,9 +107,9 @@
           <Property Name="Contents" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="Type" Type="tinyint" />
+          <Property Name="ReceiverId" Type="int" />
           <Property Name="Status" Type="bit" />
           <Property Name="Link" Type="int" />
-          <Property Name="ReceiverId" Type="int" />
         </EntityType>
         <EntityType Name="TM_NotifyType">
           <Key>
@@ -127,8 +127,8 @@
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="PatientId" Type="int" />
           <Property Name="Status" Type="bit" />
-          <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="TM_OrderParam">
           <Key>
@@ -255,6 +255,7 @@
           <Property Name="AddressId" Type="int" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
+          <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="Ward">
           <Key>
@@ -396,18 +397,6 @@
             </Principal>
             <Dependent Role="TM_DoctorOrder">
               <PropertyRef Name="DoctorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TM_DoctorOrder_TM_Users1">
-          <End Role="TM_Users" Type="Self.TM_Users" Multiplicity="0..1" />
-          <End Role="TM_DoctorOrder" Type="Self.TM_DoctorOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TM_Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TM_DoctorOrder">
-              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -626,10 +615,6 @@
             <End Role="TM_Users" EntitySet="TM_Users" />
             <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK_TM_DoctorOrder_TM_Users1" Association="Self.FK_TM_DoctorOrder_TM_Users1">
-            <End Role="TM_Users" EntitySet="TM_Users" />
-            <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
-          </AssociationSet>
           <AssociationSet Name="FK_TM_MeasureParam_TM_ParamType" Association="Self.FK_TM_MeasureParam_TM_ParamType">
             <End Role="TM_ParamType" EntitySet="TM_ParamType" />
             <End Role="TM_MeasureParam" EntitySet="TM_MeasureParam" />
@@ -699,7 +684,6 @@
           <EntitySet Name="TM_MeasureParam" EntityType="BACSIOIModel.TM_MeasureParam" />
           <EntitySet Name="TM_Notification" EntityType="BACSIOIModel.TM_Notification" />
           <EntitySet Name="TM_NotifyType" EntityType="BACSIOIModel.TM_NotifyType" />
-          <EntitySet Name="TM_Order" EntityType="BACSIOIModel.TM_Order" />
           <EntitySet Name="TM_OrderParam" EntityType="BACSIOIModel.TM_OrderParam" />
           <EntitySet Name="TM_OrderSymptom" EntityType="BACSIOIModel.TM_OrderSymptom" />
           <EntitySet Name="TM_ParamType" EntityType="BACSIOIModel.TM_ParamType" />
@@ -752,18 +736,6 @@
             <End Role="TM_Users" EntitySet="TM_Users" />
             <End Role="TM_Notification" EntitySet="TM_Notification" />
           </AssociationSet>
-          <AssociationSet Name="FK_TM_Order_TM_Users" Association="BACSIOIModel.FK_TM_Order_TM_Users">
-            <End Role="TM_Users" EntitySet="TM_Users" />
-            <End Role="TM_Order" EntitySet="TM_Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TM_OrderParam_TM_Order" Association="BACSIOIModel.FK_TM_OrderParam_TM_Order">
-            <End Role="TM_Order" EntitySet="TM_Order" />
-            <End Role="TM_OrderParam" EntitySet="TM_OrderParam" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TM_OrderSymptom_TM_Order" Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Order">
-            <End Role="TM_Order" EntitySet="TM_Order" />
-            <End Role="TM_OrderSymptom" EntitySet="TM_OrderSymptom" />
-          </AssociationSet>
           <AssociationSet Name="FK_TM_OrderSymptom_TM_Symptom" Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Symptom">
             <End Role="TM_Symptom" EntitySet="TM_Symptom" />
             <End Role="TM_OrderSymptom" EntitySet="TM_OrderSymptom" />
@@ -789,17 +761,26 @@
             <End Role="TM_Users" EntitySet="TM_Users" />
           </AssociationSet>
           <EntitySet Name="TM_DoctorOrder" EntityType="BACSIOIModel.TM_DoctorOrder" />
-          <AssociationSet Name="FK_TM_DoctorOrder_TM_Order" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order">
-            <End Role="TM_Order" EntitySet="TM_Order" />
-            <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
-          </AssociationSet>
           <AssociationSet Name="FK_TM_DoctorOrder_TM_Users" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users">
             <End Role="TM_Users" EntitySet="TM_Users" />
             <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK_TM_DoctorOrder_TM_Users1" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1">
-            <End Role="TM_Users" EntitySet="TM_Users" />
+          <EntitySet Name="TM_Order" EntityType="BACSIOIModel.TM_Order" />
+          <AssociationSet Name="FK_TM_DoctorOrder_TM_Order" Association="BACSIOIModel.FK_TM_DoctorOrder_TM_Order">
+            <End Role="TM_Order" EntitySet="TM_Order" />
             <End Role="TM_DoctorOrder" EntitySet="TM_DoctorOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TM_Order_TM_Users" Association="BACSIOIModel.FK_TM_Order_TM_Users">
+            <End Role="TM_Users" EntitySet="TM_Users" />
+            <End Role="TM_Order" EntitySet="TM_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TM_OrderParam_TM_Order" Association="BACSIOIModel.FK_TM_OrderParam_TM_Order">
+            <End Role="TM_Order" EntitySet="TM_Order" />
+            <End Role="TM_OrderParam" EntitySet="TM_OrderParam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TM_OrderSymptom_TM_Order" Association="BACSIOIModel.FK_TM_OrderSymptom_TM_Order">
+            <End Role="TM_Order" EntitySet="TM_Order" />
+            <End Role="TM_OrderSymptom" EntitySet="TM_OrderSymptom" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReceptionRegisterSp_Result">
@@ -892,9 +873,9 @@
           <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CodeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="TM_ParamType" Relationship="BACSIOIModel.FK_TM_MeasureParam_TM_ParamType" FromRole="TM_MeasureParam" ToRole="TM_ParamType" />
@@ -924,21 +905,6 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="TM_Notification" Relationship="BACSIOIModel.FK_TM_Notification_TM_NotifyType" FromRole="TM_NotifyType" ToRole="TM_Notification" />
         </EntityType>
-        <EntityType Name="TM_Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="PatientId" Type="Int32" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Order" ToRole="TM_Users" />
-          <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_Order" FromRole="TM_Order" ToRole="TM_OrderParam" />
-          <NavigationProperty Name="TM_OrderSymptom" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_Order" ToRole="TM_OrderSymptom" />
-          <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_Order" ToRole="TM_DoctorOrder" />
-        </EntityType>
         <EntityType Name="TM_OrderParam">
           <Key>
             <PropertyRef Name="OrderId" />
@@ -959,8 +925,8 @@
           <Property Name="OrderId" Type="Int64" Nullable="false" />
           <Property Name="SymptomId" Type="Int32" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_OrderSymptom" ToRole="TM_Order" />
           <NavigationProperty Name="TM_Symptom" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Symptom" FromRole="TM_OrderSymptom" ToRole="TM_Symptom" />
+          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_OrderSymptom" ToRole="TM_Order" />
         </EntityType>
         <EntityType Name="TM_ParamType">
           <Key>
@@ -1058,14 +1024,13 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TM_Doctor" Relationship="BACSIOIModel.FK_TM_Doctor_TM_Users" FromRole="TM_Users" ToRole="TM_Doctor" />
           <NavigationProperty Name="TM_Notification" Relationship="BACSIOIModel.FK_TM_Notification_TM_Users" FromRole="TM_Users" ToRole="TM_Notification" />
-          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Users" ToRole="TM_Order" />
           <NavigationProperty Name="TM_Patient" Relationship="BACSIOIModel.FK_TM_Patient_TM_Users" FromRole="TM_Users" ToRole="TM_Patient" />
           <NavigationProperty Name="TM_UserClaims" Relationship="BACSIOIModel.FK_dbo_TM_UserClaims_dbo_TM_Users_UserId" FromRole="TM_Users" ToRole="TM_UserClaims" />
           <NavigationProperty Name="TM_UserLogins" Relationship="BACSIOIModel.FK_dbo_TM_UserLogins_dbo_TM_Users_UserId" FromRole="TM_Users" ToRole="TM_UserLogins" />
           <NavigationProperty Name="UserAddresses" Relationship="BACSIOIModel.FK_UserAddress_TM_Users" FromRole="TM_Users" ToRole="UserAddress" />
           <NavigationProperty Name="TM_Roles" Relationship="BACSIOIModel.TM_UserRoles" FromRole="TM_Users" ToRole="TM_Roles" />
           <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_Users" ToRole="TM_DoctorOrder" />
-          <NavigationProperty Name="TM_DoctorOrder1" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1" FromRole="TM_Users" ToRole="TM_DoctorOrder" />
+          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Users" ToRole="TM_Order" />
           </EntityType>
         <EntityType Name="UserAddress">
           <Key>
@@ -1078,6 +1043,7 @@
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="TM_Address" Relationship="BACSIOIModel.FK_UserAddress_TM_Address" FromRole="UserAddress" ToRole="TM_Address" />
           <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_UserAddress_TM_Users" FromRole="UserAddress" ToRole="TM_Users" />
+          <Property Name="Status" Type="Boolean" />
         </EntityType>
         <EntityType Name="Ward">
           <Key>
@@ -1216,42 +1182,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TM_Order_TM_Users">
-          <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="0..1" />
-          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TM_Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TM_Order">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TM_OrderParam_TM_Order">
-          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
-          <End Type="BACSIOIModel.TM_OrderParam" Role="TM_OrderParam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TM_Order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TM_OrderParam">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TM_OrderSymptom_TM_Order">
-          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
-          <End Type="BACSIOIModel.TM_OrderSymptom" Role="TM_OrderSymptom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TM_Order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TM_OrderSymptom">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TM_OrderSymptom_TM_Symptom">
           <End Type="BACSIOIModel.TM_Symptom" Role="TM_Symptom" Multiplicity="1" />
           <End Type="BACSIOIModel.TM_OrderSymptom" Role="TM_OrderSymptom" Multiplicity="*" />
@@ -1327,13 +1257,39 @@
           </Key>
           <Property Name="DoctorId" Type="Int32" Nullable="false" />
           <Property Name="OrderId" Type="Int64" Nullable="false" />
-          <Property Name="Diagnosis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DiagnosisDate" Type="DateTime" Precision="3" />
+          <Property Name="Diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="PatientId" Type="Int32" />
+          <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
+          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_DoctorOrder" ToRole="TM_Order" />
+        </EntityType>
+        <Association Name="FK_TM_DoctorOrder_TM_Users">
+          <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="1" />
+          <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TM_Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TM_DoctorOrder">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TM_Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <Property Name="PatientId" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="TM_Order" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_DoctorOrder" ToRole="TM_Order" />
-          <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
-          <NavigationProperty Name="TM_Users1" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Users1" FromRole="TM_DoctorOrder" ToRole="TM_Users" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TM_DoctorOrder" Relationship="BACSIOIModel.FK_TM_DoctorOrder_TM_Order" FromRole="TM_Order" ToRole="TM_DoctorOrder" />
+          <NavigationProperty Name="TM_Users" Relationship="BACSIOIModel.FK_TM_Order_TM_Users" FromRole="TM_Order" ToRole="TM_Users" />
+          <NavigationProperty Name="TM_OrderParam" Relationship="BACSIOIModel.FK_TM_OrderParam_TM_Order" FromRole="TM_Order" ToRole="TM_OrderParam" />
+          <NavigationProperty Name="TM_OrderSymptom" Relationship="BACSIOIModel.FK_TM_OrderSymptom_TM_Order" FromRole="TM_Order" ToRole="TM_OrderSymptom" />
         </EntityType>
         <Association Name="FK_TM_DoctorOrder_TM_Order">
           <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
@@ -1347,27 +1303,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TM_DoctorOrder_TM_Users">
-          <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="1" />
-          <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+        <Association Name="FK_TM_Order_TM_Users">
+          <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="0..1" />
+          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TM_Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TM_DoctorOrder">
-              <PropertyRef Name="DoctorId" />
+            <Dependent Role="TM_Order">
+              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TM_DoctorOrder_TM_Users1">
-          <End Type="BACSIOIModel.TM_Users" Role="TM_Users" Multiplicity="0..1" />
-          <End Type="BACSIOIModel.TM_DoctorOrder" Role="TM_DoctorOrder" Multiplicity="*" />
+        <Association Name="FK_TM_OrderParam_TM_Order">
+          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
+          <End Type="BACSIOIModel.TM_OrderParam" Role="TM_OrderParam" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TM_Users">
+            <Principal Role="TM_Order">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="TM_DoctorOrder">
-              <PropertyRef Name="PatientId" />
+            <Dependent Role="TM_OrderParam">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TM_OrderSymptom_TM_Order">
+          <End Type="BACSIOIModel.TM_Order" Role="TM_Order" Multiplicity="1" />
+          <End Type="BACSIOIModel.TM_OrderSymptom" Role="TM_OrderSymptom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TM_Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TM_OrderSymptom">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1498,18 +1466,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TM_Order">
-            <EntityTypeMapping TypeName="BACSIOIModel.TM_Order">
-              <MappingFragment StoreEntitySet="TM_Order">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TM_OrderParam">
             <EntityTypeMapping TypeName="BACSIOIModel.TM_OrderParam">
               <MappingFragment StoreEntitySet="TM_OrderParam">
@@ -1627,6 +1583,7 @@
           <EntitySetMapping Name="UserAddresses">
             <EntityTypeMapping TypeName="BACSIOIModel.UserAddress">
               <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
@@ -1660,12 +1617,24 @@
           <EntitySetMapping Name="TM_DoctorOrder">
             <EntityTypeMapping TypeName="BACSIOIModel.TM_DoctorOrder">
               <MappingFragment StoreEntitySet="TM_DoctorOrder">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="DiagnosisDate" ColumnName="DiagnosisDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
+                <ScalarProperty Name="DiagnosisDate" ColumnName="DiagnosisDate" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TM_Order">
+            <EntityTypeMapping TypeName="BACSIOIModel.TM_Order">
+              <MappingFragment StoreEntitySet="TM_Order">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
