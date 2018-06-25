@@ -54,6 +54,10 @@ namespace Tm.Data.Functions
                                        .Select(u => u.Id)
                                        .ToList();
             IList<AddressDetail> addrList = new List<AddressDetail>();
+            if (addr==null)
+            {
+                return null;
+            }
             foreach (var item in addr)
             {
                 addrList.Add(GetAddressDetail(item));

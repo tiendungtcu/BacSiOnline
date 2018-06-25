@@ -97,6 +97,7 @@
     <Compile Include="Models\TM_UserLogins.cs">
       <DependentUpon>TMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ChangeUserPasswordViewModel.cs" />
     <Compile Include="ViewModels\DistrictDetail.cs" />
     <Compile Include="ViewModels\MeasureParamDetail.cs" />
     <Compile Include="ViewModels\NotificationDetail.cs" />

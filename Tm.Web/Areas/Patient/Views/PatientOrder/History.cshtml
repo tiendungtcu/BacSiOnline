@@ -58,11 +58,14 @@
 
                     @if (string.IsNullOrEmpty(item.DiagnosisNote))
                     {
-                        <div class="col-md-12 time-item-title">
-                            <p>Tình trạng bệnh án</p>
-                            <br /><br />
-                            <p class="process" style="text-align:center">Chưa chẩn đoán</p>
+                    <div class="col-md-12 time-item-title" style="text-align:center">
+                        <p>Tình trạng bệnh án</p>
+                        <br /><br />
+                        <div class="col-md-12 time-label" style="text-align:center;color:forestgreen">
+                            <p>Chưa chẩn đoán</p>
                         </div>
+                    </div>
+
                     }
                     else
                     {

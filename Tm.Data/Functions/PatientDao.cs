@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Linq;
 using Tm.Data.Models;
 
 namespace Tm.Data.Functions
 {
     public class PatientDao:CommonDao
     {    
+        // Find a patient record based on userid
+        public TM_Patient FindByUserId(int userId)
+        {
+            return db.TM_Patient.Where(p => p.UserId == userId).FirstOrDefault();
+        }
         // Insert new patient and return an Id
         public int Insert(TM_Patient patient)
         {

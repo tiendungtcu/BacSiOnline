@@ -8,15 +8,3 @@ D:\CAC PHAN MEM DA LAM\Tm.Data\bin\Debug\EntityFramework.SqlServer.xml
 D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.csprojResolveAssemblyReference.cache
 D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.dll
 D:\CAC PHAN MEM DA LAM\Tm.Data\obj\Debug\Tm.Data.pdb
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\Tm.Data.dll.config
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\Tm.Data.dll
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\Tm.Data.pdb
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\EntityFramework.dll
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\EntityFramework.SqlServer.dll
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\EntityFramework.xml
-D:\Projects\BacSiOnline\Tm.Data\bin\Debug\EntityFramework.SqlServer.xml
-D:\Projects\BacSiOnline\Tm.Data\obj\Debug\Tm.Data.csprojAssemblyReference.cache
-D:\Projects\BacSiOnline\Tm.Data\obj\Debug\Tm.Data.csproj.CoreCompileInputs.cache
-D:\Projects\BacSiOnline\Tm.Data\obj\Debug\Tm.Data.csproj.CopyComplete
-D:\Projects\BacSiOnline\Tm.Data\obj\Debug\Tm.Data.dll
-D:\Projects\BacSiOnline\Tm.Data\obj\Debug\Tm.Data.pdb
