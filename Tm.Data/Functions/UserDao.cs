@@ -11,6 +11,23 @@ namespace Tm.Data.Functions
 {
     public class UserDao : CommonDao
     {
+        // Update Avatar 
+        public bool UpdateAvatar(int userId,string avatar)
+        {
+            try
+            {
+                var user = db.TM_Users.Find(userId);
+                user.Avatar = avatar;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
         // Get patient profile detail
         public PatientProfile GetPatienProfile(int userId)
         {

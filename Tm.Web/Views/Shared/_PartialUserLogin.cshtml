@@ -3,10 +3,13 @@
 @using TM.Web.Models
 @if (Request.IsAuthenticated)
 {
+    // Hiển thị các thông báo nếu đã đăng nhập
+    Html.RenderAction("ListAll", "Notifications",new { Area=""});
+
     <div class="account-wrap">
         <div class="account-item clearfix js-item-menu">
             <div class="image">
-                <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
+                <img src="@User.Identity.GetAvatar()" alt="Avatar" />
             </div>
             <div class="content">
                 <a class="js-acc-btn" href="#">@User.Identity.GetFullName()</a>
@@ -15,7 +18,7 @@
                 <div class="info clearfix">
                     <div class="image">
                         <a href="#">
-                            <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
+                            <img src="@User.Identity.GetAvatar()" alt="Avatar" />
                         </a>
                     </div>
                     <div class="content">
@@ -34,7 +37,7 @@
                     </div>
                 </div>
                 <div class="account-dropdown__footer">
-                    @using (Html.BeginForm("LogOff", "Account", new { Area=""}, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    @using (Html.BeginForm("LogOff", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
                         @Html.AntiForgeryToken()
                         <a href="javascript:document.getElementById('logoutForm').submit()"><i class="zmdi zmdi-power"></i>Đăng xuất</a>

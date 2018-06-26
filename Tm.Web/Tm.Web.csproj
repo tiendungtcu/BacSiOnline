@@ -190,6 +190,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Areas\Patient\Controllers\AvatarController.cs" />
     <Compile Include="Areas\Patient\Controllers\PatientProfileController.cs" />
     <Compile Include="Areas\Patient\Controllers\PatientOrderController.cs" />
     <Compile Include="Areas\Quantri\Controllers\DistrictController.cs" />
@@ -218,10 +219,12 @@
     <Compile Include="Controllers\DropdownController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityExtension.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -268,6 +271,28 @@
     <Content Include="Content\Common\datatables-plugins\dataTables.bootstrap.js" />
     <Content Include="Content\Common\datatables-plugins\dataTables.bootstrap.min.js" />
     <Content Include="Content\Common\datatables-plugins\index.html" />
+    <Content Include="Content\Common\flot-tooltip\jquery.flot.tooltip.js" />
+    <Content Include="Content\Common\flot-tooltip\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\Common\flot-tooltip\jquery.flot.tooltip.source.js" />
+    <Content Include="Content\Common\flot\excanvas.js" />
+    <Content Include="Content\Common\flot\excanvas.min.js" />
+    <Content Include="Content\Common\flot\jquery.colorhelpers.js" />
+    <Content Include="Content\Common\flot\jquery.flot.canvas.js" />
+    <Content Include="Content\Common\flot\jquery.flot.categories.js" />
+    <Content Include="Content\Common\flot\jquery.flot.crosshair.js" />
+    <Content Include="Content\Common\flot\jquery.flot.errorbars.js" />
+    <Content Include="Content\Common\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Content\Common\flot\jquery.flot.image.js" />
+    <Content Include="Content\Common\flot\jquery.flot.js" />
+    <Content Include="Content\Common\flot\jquery.flot.navigate.js" />
+    <Content Include="Content\Common\flot\jquery.flot.pie.js" />
+    <Content Include="Content\Common\flot\jquery.flot.resize.js" />
+    <Content Include="Content\Common\flot\jquery.flot.selection.js" />
+    <Content Include="Content\Common\flot\jquery.flot.stack.js" />
+    <Content Include="Content\Common\flot\jquery.flot.symbol.js" />
+    <Content Include="Content\Common\flot\jquery.flot.threshold.js" />
+    <Content Include="Content\Common\flot\jquery.flot.time.js" />
+    <Content Include="Content\Common\flot\jquery.js" />
     <Content Include="Content\Common\font-awesome-4.7\css\font-awesome.css" />
     <Content Include="Content\Common\font-awesome-4.7\css\font-awesome.min.css" />
     <Content Include="Content\Common\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
@@ -316,10 +341,17 @@
     <Content Include="Content\Common\images\icon\logo.png" />
     <Content Include="Content\Common\images\icon\male-body-icon.png" />
     <Content Include="Content\Common\images\icon\Untitled-1.jpg" />
+    <Content Include="Content\Common\jcrop\Jcrop.gif" />
+    <Content Include="Content\Common\jcrop\jquery.Jcrop.css" />
+    <Content Include="Content\Common\jcrop\jquery.Jcrop.js" />
+    <Content Include="Content\Common\jcrop\jquery.Jcrop.min.css" />
+    <Content Include="Content\Common\jcrop\jquery.Jcrop.min.js" />
     <Content Include="Content\Common\jquery-3.2.1.min.js" />
     <Content Include="Content\Common\jquery-ui.min.js" />
+    <Content Include="Content\Common\jquery\jquery.form.min.js" />
     <Content Include="Content\Common\jquery\jquery.min.js" />
     <Content Include="Content\Common\js\main.js" />
+    <Content Include="Content\Common\js\site.avatar.js" />
     <Content Include="Content\Common\lightbox2\dist\css\lightbox.css" />
     <Content Include="Content\Common\lightbox2\dist\images\close.png" />
     <Content Include="Content\Common\lightbox2\dist\images\loading.gif" />
@@ -342,11 +374,16 @@
     <Content Include="Content\Common\metisMenu\metisMenu.js" />
     <Content Include="Content\Common\metisMenu\metisMenu.min.css" />
     <Content Include="Content\Common\metisMenu\metisMenu.min.js" />
+    <Content Include="Content\Common\morrisjs\morris.css" />
+    <Content Include="Content\Common\morrisjs\morris.js" />
+    <Content Include="Content\Common\morrisjs\morris.min.js" />
     <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.css" />
     <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.js" />
     <Content Include="Content\Common\perfect-scrollbar\perfect-scrollbar.min.js" />
     <Content Include="Content\Common\progressbar\progressbar.js" />
     <Content Include="Content\Common\progressbar\progressbar.min.js" />
+    <Content Include="Content\Common\raphael\raphael.js" />
+    <Content Include="Content\Common\raphael\raphael.min.js" />
     <Content Include="Content\Common\sb-admin\css\sb-admin-2.css" />
     <Content Include="Content\Common\sb-admin\css\sb-admin-2.min.css" />
     <Content Include="Content\Common\sb-admin\js\sb-admin-2.js" />
@@ -477,6 +514,7 @@
     <Content Include="Content\Common\datatables\js\jquery.js" />
     <Content Include="Content\easyui\jquery.easyui.min.js" />
     <Content Include="Content\easyui\jquery.min.js" />
+    <Content Include="Content\site.avatar.css" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Content\images\book.png" />
     <Content Include="Content\images\tomsu.jpg" />
@@ -718,6 +756,8 @@
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_PartialUserLogin.cshtml" />
+    <Content Include="Views\Notifications\ListAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -740,7 +780,6 @@
     <Folder Include="Content\easyui\themes\metro-red\" />
     <Folder Include="Content\Patient\" />
     <Folder Include="Views\Dropdown\" />
-    <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

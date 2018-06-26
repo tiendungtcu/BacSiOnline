@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Tm.Data.Functions;
+using TM.Web.Models;
 
 namespace TM.Web.Areas.Patient.Controllers
 {
     public class AvatarController : Controller
     {
         // Dimesnions of the cropped window - must match frontend definitions
-        private const int _avatarWidth = 100;  // ToDo - Change the size of the stored avatar image
-        private const int _avatarHeight = 100; // ToDo - Change the size of the stored avatar image
+        private const int _avatarWidth = 180;  // ToDo - Change the size of the stored avatar image
+        private const int _avatarHeight = 180; // ToDo - Change the size of the stored avatar image
         // Width of initially uploaded image (scale is preserved so height is calculated).
         private const int _avatarScreenWidth = 400;  // ToDo - Change the value of the width of the image on the screen
 
-        private const string _tempFolder = "/Temp";
+        private const string _tempFolder = "/Upload/Temp";
         private const string _mapTempFolder = "~" + _tempFolder;
-        private const string _avatarPath = "/Avatars";
+        private const string _avatarPath = "/Upload/Avatars";
 
         private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
         [ValidateAntiForgeryToken]
@@ -40,10 +48,15 @@ namespace TM.Web.Areas.Patient.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(string t, string l, string h, string w, string fileName)
+        public async Task<ActionResult> Save(string t, string l, string h, string w, string fileName)
         {
             try
             {
+                int userId = User.Identity.GetUserId<int>();
+                if (userId<1)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 // Get file from temporary folder, ...
                 var fn = Path.Combine(Server.MapPath(_mapTempFolder), Path.GetFileName(fileName));
 
@@ -86,7 +99,21 @@ namespace TM.Web.Areas.Patient.Controllers
                 }
 
                 img.Save(newFileLocation);
+                if (string.IsNullOrEmpty(newFileName))
+                {
+                    return Json(new { success = false, errorMessage = "Lỗi không cập nhật được." });
+                }
+                if (!new UserDao().UpdateAvatar(userId, newFileName)) 
+                {
+                    return Json(new { success = false, errorMessage = "Can not update avatar." });
+                }
+                
+                HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                var user = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(userId);
+                await HttpContext.GetOwinContext().Get<ApplicationSignInManager>().SignInAsync(user, isPersistent: false, rememberBrowser: true);
                 return Json(new { success = true, avatarFileLocation = newFileName });
+                //return RedirectToAction("Detail", "PatientProfile", new { Area = "Patient" });
+
             }
             catch (Exception ex)
             {

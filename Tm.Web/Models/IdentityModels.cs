@@ -35,7 +35,7 @@ namespace TM.Web.Models
             {
                 new Claim("FullName", (this.FullName!=null)?this.FullName:this.UserName),
                 new Claim("Email", (this.Email!=null)?this.Email:this.UserName),
-                //new Claim("Address", (this.Address!=null)?this.Address:""),
+                new Claim("Avatar", (this.Avatar!=null)?this.Avatar:"/Content/Common/images/icon/default_avatar_male.jpg"),
                 
             });
             return userIdentity;

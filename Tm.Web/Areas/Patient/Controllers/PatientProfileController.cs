@@ -66,6 +66,7 @@ namespace TM.Web.Areas.Patient.Controllers
                         return View("Detail", model);
                     }
                 }
+                return RedirectToAction("Detail",new { message= ProfileMessageId.ChangeAccountSuccess });
             }
             return View("Detail",model);
         }
@@ -114,6 +115,13 @@ namespace TM.Web.Areas.Patient.Controllers
         // GET: Patient/PatienProfile
         public ActionResult Detail(ProfileMessageId? message)
         {
+            ViewBag.Errors = message == ProfileMessageId.ChangeAccountSuccess ? "Cập nhật tài khoản thành công."
+                : message == ProfileMessageId.AddAddressSuccess ? "Thêm địa chỉ thành công."
+                : message == ProfileMessageId.ChangeAddressSuccess ? "Thay đổi địa chỉ thành công."
+                : message == ProfileMessageId.Error ? "Lỗi không thực hiện được."
+                : message == ProfileMessageId.ChangePasswordSuccess ? "Đổi mật khẩu thành công."
+                : message == ProfileMessageId.ChangeProfileSuccess ? "Cập nhật thông tin thành công."
+                : "";
             int userid = User.Identity.GetUserId<int>();
             if (userid<=0)
             {

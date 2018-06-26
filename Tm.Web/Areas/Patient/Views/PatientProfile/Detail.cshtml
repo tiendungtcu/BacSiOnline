@@ -14,9 +14,13 @@
         </div>
 
         <div class="card-body card-block">
-            <!-- <div class="col-md-12" style="padding-bottom: 20px">
-                <strong>Thông tin cá nhân</strong>
-            </div> -->
+            @if (!string.IsNullOrEmpty(ViewBag.Errors))
+            {
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Thông báo!</strong> @ViewBag.Errors
+                </div>
+            }
             @using (Html.BeginForm("Update", "PatientProfile", new { area = "Patient" }, FormMethod.Post, new { }))
             {
                 <div class="row form-group">
@@ -118,18 +122,25 @@
                         </fieldset>
                     </div>
                     <!-- <div class="col-md-3">
-                        <label for="" class="">Họ và tên:</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p id="name-label" style="text-transform: uppercase">Lưu Hoàng Nhân</p>
-                    </div> -->
+                <label for="" class="">Họ và tên:</label>
+            </div>
+            <div class="col-md-6">
+                <p id="name-label" style="text-transform: uppercase">Lưu Hoàng Nhân</p>
+            </div> -->
                     <div class="col-md-3">
                         <div class="center-image div-image">
-                            <img src="~/Content/Common/images/icon/default_avatar_male.jpg" id="avatar-holder" alt="@Model.Avatar" style="margin: auto;">
+                            @if (string.IsNullOrEmpty(Model.Avatar))
+                            {
+                                <img src="/Content/Common/images/icon/default_avatar_male.jpg" id="avatar-holder" alt="Hình đại diện" style="margin: auto;">
+                            }
+                            else
+                            {
+                                <img src="@Model.Avatar" id="avatar-holder" alt="Hình đại diện" style="margin: auto;">
+                            }
                         </div>
                         <div style="display: block; margin: auto; text-align: center">
-                            <label id="avatar-input" style="padding-top: 10px"><i class="fa fa-cloud-upload-alt"></i> Thay ảnh đại diện...<input type="file" style="opacity: 0; position: absolute;"></label>
-                            <input type="hidden" name="avatar-link" value="">
+                            <label id="avatar-input" style="padding-top: 10px" onclick="$('#uploadModal').modal();"><i class="fa fa-cloud-upload-alt"></i> Thay ảnh đại diện...</label>
+
                         </div>
                     </div>
                 </div>
@@ -237,8 +248,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" style="color:firebrick">
-                <ul id="modalContent">
-                </ul>
+                <ul id="modalContent"></ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -246,9 +256,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<!-- Modal upload avatar -->
 <div id="uploadModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Tải ảnh lên</h4>
@@ -257,13 +267,16 @@
             <div class="modal-body" style="color:firebrick">
                 <section id="avatar-upload-box">
                     @using (Ajax.BeginForm("_Upload", "Avatar",
-                     new { Area = "Patient" }   ,
+                     new { Area = "Patient" },
                     new AjaxOptions() { HttpMethod = "POST" },
                     new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="file" name="files" /><br>
-                        <div class="upload-file-notice">Maximum Size: <span id="avatar-max-size"></span> MB</div>
+
+                       
+                        <label for="files" class="btn btn-primary">Chọn hình</label>
+                        <input id="files" name="files" style="visibility:hidden;" type="file">
+                        <div class="upload-file-notice">Kích thước tối đa: <span id="avatar-max-size"></span> MB</div>
                     }
                     <div class="upload-progress col-md-6 hidden">
                         <div class="upload-percent-value pull-left">0%</div>
@@ -273,21 +286,22 @@
                 </section>
                 <section id="avatar-crop-box" class="hidden">
                     <p>
-                        <img src="" id="crop-avatar-target" alt="Uploaded image" />
+                        <img src="" id="crop-avatar-target" alt="Ảnh đã tải lên" />
                         <div id="preview-pane">
                             <div class="preview-container">
-                                <img src="" class="jcrop-preview" alt="Preview" />
+                                <img src="" class="jcrop-preview" alt="Xem trước" />
                             </div>
                         </div>
                     </p>
-                    <p><button class="btn btn-default" onclick="saveAvatar()">Save Avatar</button></p>
+                    <hr />
+                    <p><button class="btn btn-info" onclick="saveAvatar()">Lưu lại</button></p>
                 </section>
                 <div id="avatar-result" class="hidden">
                     <img src="" alt="Final Image" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -295,9 +309,13 @@
 
 @section Scripts{
     <script src="~/Content/Common/js/site.avatar.js"></script>
+    <script src="~/Content/Common/jcrop/jquery.Jcrop.min.js"></script>
+    <script src="~/Content/Common/jquery/jquery.form.min.js"></script>
+
     <script type="text/javascript">
         var changpwdUrl = '@Url.Action("ChangePasswordAsync", "PatientProfile", new { Area="Patient"})'
-        $(document).ready(function(){
+        $(document).ready(function () {
+
             $("#change-password").click(function(){
                 $("#change-password-panel").slideToggle("fast");
             });
@@ -309,14 +327,13 @@
             // this is the id of the form
             $("#changepwd").submit(function (e) {
 
-                //var url = "path/to/your/script.php"; // the script where you handle the form input.
-
                 $.ajax({
                     type: "POST",
                     url: changpwdUrl,
                     data: $("#changepwd").serialize(), // serializes the form's elements.
                     success: function (data) {
                         var ul = document.getElementById("modalContent");
+                        ul.innerHTML = '';
                         for (var key in data) {
                             if (data.hasOwnProperty(key)) {
                                 var li = document.createElement("li");
@@ -327,11 +344,12 @@
                         }
 
                         $('#resultModal').modal();
+                        $("#changepwd").reset();
                     }
                 });
                 e.preventDefault(); // avoid to execute the actual submit of the form.
             });
         });
-</script>
+    </script>
 
 }

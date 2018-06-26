@@ -22,6 +22,12 @@ namespace TM.Web.Models
             // Test for null to avoid issues during local testing
             return (claim != null) ? claim.Value : string.Empty;
         }
+        public static string GetAvatar(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("Avatar");
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : "/Content/Common/images/icon/default_avatar_male.jpg";
+        }
     }
 
 }

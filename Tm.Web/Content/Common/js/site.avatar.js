@@ -12,8 +12,8 @@ var jcrop_api,
 // ToDo - change the size limit of the file. You may need to change web.config if larger files are necessary.
 var maxSizeAllowed = 2;     // Upload limit in MB
 var maxSizeInBytes = maxSizeAllowed * 1024 * 1024;
-var keepUploadBox = false;  // ToDo - Remove if you want to keep the upload box
-var keepCropBox = false;    // ToDo - Remove if you want to keep the crop box
+var keepUploadBox = true;  // ToDo - Remove if you want to keep the upload box
+var keepCropBox = true;    // ToDo - Remove if you want to keep the crop box
 
 $(function () {
     if (typeof $('#avatar-upload-form') !== undefined) {
@@ -128,7 +128,7 @@ function saveAvatar() {
 
     $.ajax({
         type: "POST",
-        url: "/Avatar/Save",
+        url: "/Patient/Avatar/Save",
         traditional: true,
         data: {
             w: img.css('width'),
@@ -140,7 +140,7 @@ function saveAvatar() {
     }).done(function (data) {
         if (data.success === true) {
             $('#avatar-result img').attr('src', data.avatarFileLocation);
-
+            $('#avatar-holder').attr('src', data.avatarFileLocation)
             $('#avatar-result').removeClass('hidden');
 
             if (!keepCropBox) {

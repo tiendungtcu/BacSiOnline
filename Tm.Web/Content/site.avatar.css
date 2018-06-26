@@ -12,8 +12,8 @@
 
     #preview-pane .preview-container {
         /* Dimesnions of the cropped window - must match backend definitions */
-        width: 100px; /* ToDo - size of the crop window*/
-        height: 100px; /* ToDo - size of the crop window*/
+        width: 180px; /* ToDo - size of the crop window*/
+        height: 180px; /* ToDo - size of the crop window*/
         overflow: hidden;
     }
 
@@ -30,4 +30,8 @@
 .upload-percent-bar {
     background-color: #bbb;
     height: 20px;
+}
+.hidden{
+    display:none !important;
+    visibility:hidden !important;
 }

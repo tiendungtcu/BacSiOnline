@@ -7,10 +7,61 @@ using Tm.Data.ViewModels;
 namespace Tm.Data.Functions
 {
     public class NotificationDao:CommonDao
-    {       
+    {   
+        // Find link for a notification
+        public int FindLink(int notId)
+        {
+            var link= db.TM_Notification.Find(notId).Link;
+            return link.Value;
+        }
+        // Change a notification to viewed
+        public bool HasBeenViewed(int id)
+        {
+            try
+            {
+                var notify = db.TM_Notification.Find(id);
+                notify.Status = true;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+        // Find a notification by its Id
+        public TM_Notification Find(int id)
+        {
+            return db.TM_Notification.Find(id);
+        }
+
+        // Get All notification of a user
+        public IList<NotificationDetail> ListByUser(int userId)
+        {
+           return  db.TM_Notification
+                                .Select(x => new NotificationDetail()
+                                {
+                                    Id = x.Id,
+                                    Title = x.Title,
+                                    Contents = x.Contents,
+                                    ReceiverId = x.ReceiverId,
+                                    Receiver = x.TM_Users.UserName,
+                                    Type = x.Type,
+                                    TypeName = x.TM_NotifyType.Name,
+                                    Link = x.Link,
+                                    CreatedDate = x.CreatedDate,
+                                    Status = x.Status
+                                })                               
+                                .Where(d => d.ReceiverId == userId && d.Status == false)
+                                .OrderBy(d => d.Id)
+                                .ToList();
+        }
+        // List all
         public List<NotificationDetail> ListAll()
         {
-            var param = db.TM_Notification
+            return db.TM_Notification
                                 .Select(x => new NotificationDetail()
                                 {
                                     Id = x.Id,
@@ -27,7 +78,6 @@ namespace Tm.Data.Functions
                                 .OrderBy(d => d.Id)
                                 .Where(d => d.Status == true)
                                 .ToList();
-            return param;
         }
         // Create
         public long Create(TM_Notification entity)
