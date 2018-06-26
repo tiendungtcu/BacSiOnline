@@ -33,8 +33,8 @@ namespace TM.Web.Models
             // Add custom user claims here
             userIdentity.AddClaims(new List<Claim>()
             {
-                //new Claim("FirstName", (this.FirstName!=null)?this.FirstName:""),
-                //new Claim("LastName", (this.LastName!=null)?this.LastName:this.UserName),
+                new Claim("FullName", (this.FullName!=null)?this.FullName:this.UserName),
+                new Claim("Email", (this.Email!=null)?this.Email:this.UserName),
                 //new Claim("Address", (this.Address!=null)?this.Address:""),
                 
             });
