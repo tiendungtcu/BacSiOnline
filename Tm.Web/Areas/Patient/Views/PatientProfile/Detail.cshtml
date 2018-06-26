@@ -247,7 +247,54 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tải ảnh lên</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="color:firebrick">
+                <section id="avatar-upload-box">
+                    @using (Ajax.BeginForm("_Upload", "Avatar",
+                     new { Area = "Patient" }   ,
+                    new AjaxOptions() { HttpMethod = "POST" },
+                    new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="file" name="files" /><br>
+                        <div class="upload-file-notice">Maximum Size: <span id="avatar-max-size"></span> MB</div>
+                    }
+                    <div class="upload-progress col-md-6 hidden">
+                        <div class="upload-percent-value pull-left">0%</div>
+                        <div class="upload-percent-bar pull-left"></div>
+                    </div>
+                    <div id="upload-status"></div>
+                </section>
+                <section id="avatar-crop-box" class="hidden">
+                    <p>
+                        <img src="" id="crop-avatar-target" alt="Uploaded image" />
+                        <div id="preview-pane">
+                            <div class="preview-container">
+                                <img src="" class="jcrop-preview" alt="Preview" />
+                            </div>
+                        </div>
+                    </p>
+                    <p><button class="btn btn-default" onclick="saveAvatar()">Save Avatar</button></p>
+                </section>
+                <div id="avatar-result" class="hidden">
+                    <img src="" alt="Final Image" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @section Scripts{
+    <script src="~/Content/Common/js/site.avatar.js"></script>
     <script type="text/javascript">
         var changpwdUrl = '@Url.Action("ChangePasswordAsync", "PatientProfile", new { Area="Patient"})'
         $(document).ready(function(){
@@ -268,7 +315,7 @@
                     type: "POST",
                     url: changpwdUrl,
                     data: $("#changepwd").serialize(), // serializes the form's elements.
-                    success: function (data) {  
+                    success: function (data) {
                         var ul = document.getElementById("modalContent");
                         for (var key in data) {
                             if (data.hasOwnProperty(key)) {
@@ -276,7 +323,7 @@
                                 li.appendChild(document.createTextNode(data[key]));
                                 ul.appendChild(li);
                             }
-                            
+
                         }
 
                         $('#resultModal').modal();
@@ -285,6 +332,6 @@
                 e.preventDefault(); // avoid to execute the actual submit of the form.
             });
         });
-    </script>
+</script>
 
 }

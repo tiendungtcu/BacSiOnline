@@ -1,0 +1,53 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using TM.Web.Models
+@if (Request.IsAuthenticated)
+{
+    <div class="account-wrap">
+        <div class="account-item clearfix js-item-menu">
+            <div class="image">
+                <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
+            </div>
+            <div class="content">
+                <a class="js-acc-btn" href="#">@User.Identity.GetFullName()</a>
+            </div>
+            <div class="account-dropdown js-dropdown">
+                <div class="info clearfix">
+                    <div class="image">
+                        <a href="#">
+                            <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
+                        </a>
+                    </div>
+                    <div class="content">
+                        <h5 class="name">
+                            @Html.ActionLink(User.Identity.GetUserName(), "Detail", "PatientProfile", new { Area = "Patient" }, htmlAttributes: new { title = "Xem chi tiết" })
+
+                        </h5>
+                        <span class="email">@User.Identity.GetEmail()</span>
+                    </div>
+                </div>
+                <div class="account-dropdown__body">
+                    <div class="account-dropdown__item">
+                        <a href="@Url.Action("Detail", "PatientProfile", new { Area = "Patient" })">
+                            <i class="zmdi zmdi-account"></i>Hồ sơ bệnh nhân
+                        </a>
+                    </div>
+                </div>
+                <div class="account-dropdown__footer">
+                    @using (Html.BeginForm("LogOff", "Account", new { Area=""}, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="zmdi zmdi-power"></i>Đăng xuất</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

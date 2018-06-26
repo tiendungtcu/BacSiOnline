@@ -30,6 +30,10 @@
     <link href="~/Content/Common/select2/css/select2.min.css" rel="stylesheet" media="all">
     <link href="~/Content/Common/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+    <!-- Jcrop CSS-->
+    <link href="~/Content/Common/jcrop/jquery.Jcrop.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/Common/css/site.avatar.css" rel="stylesheet" media="all">
+
     <!-- Main CSS-->
     <link href="~/Content/Common/css/theme.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="~/Content/Common/css/style.css" media="all">
@@ -237,45 +241,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
-
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">Lưu Hoàng Nhân</a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="~/Content/Common/images/icon/avatar-01.jpg" alt="John Doe" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#">Lưu Hoàng Nhân</a>
-                                                    </h5>
-                                                    <span class="email">hoang.nhan.luu@gmail.com</span>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a href="@Url.Action("Detail","PatientProfile",new {Area="Patient" })">
-                                                        <i class="zmdi zmdi-account"></i>Hồ sơ bệnh nhân
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__footer">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-power"></i>Đăng xuất
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                              
+                                @Html.Partial("_PartialUserLogin")
                             </div>
                         </div>
                     </div>
