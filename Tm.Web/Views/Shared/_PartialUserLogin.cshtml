@@ -5,7 +5,8 @@
 {
     // Hiển thị các thông báo nếu đã đăng nhập
     Html.RenderAction("ListAll", "Notifications",new { Area=""});
-
+    var contrl = "PatientProfile";
+    var namespc = "Patient";
     <div class="account-wrap">
         <div class="account-item clearfix js-item-menu">
             <div class="image">
@@ -15,6 +16,19 @@
                 <a class="js-acc-btn" href="#">@User.Identity.GetFullName()</a>
             </div>
             <div class="account-dropdown js-dropdown">
+
+                @if (this.User.IsInRole("DOCTOR_GROUP"))
+                {
+                    contrl = "DoctorProfile";
+                    namespc = "Doctor";
+                }
+                @if (this.User.IsInRole("RECEPTION_GROUP"))
+                {
+                    contrl = "ReceptionProfile";
+                    namespc = "Reception";
+                }
+
+
                 <div class="info clearfix">
                     <div class="image">
                         <a href="#">
@@ -23,7 +37,7 @@
                     </div>
                     <div class="content">
                         <h5 class="name">
-                            @Html.ActionLink(User.Identity.GetUserName(), "Detail", "PatientProfile", new { Area = "Patient" }, htmlAttributes: new { title = "Xem chi tiết" })
+                            @Html.ActionLink(User.Identity.GetUserName(), "Detail", contrl, new { Area = namespc }, htmlAttributes: new { title = "Xem chi tiết" })
 
                         </h5>
                         <span class="email">@User.Identity.GetEmail()</span>
@@ -31,8 +45,8 @@
                 </div>
                 <div class="account-dropdown__body">
                     <div class="account-dropdown__item">
-                        <a href="@Url.Action("Detail", "PatientProfile", new { Area = "Patient" })">
-                            <i class="zmdi zmdi-account"></i>Hồ sơ bệnh nhân
+                        <a href="@Url.Action("Detail", contrl, new { Area = namespc })">
+                            <i class="zmdi zmdi-account"></i>Hồ sơ người dùng
                         </a>
                     </div>
                 </div>
@@ -49,8 +63,13 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+     <div class="account-wrap">
+             <div>
+                 @Html.ActionLink("Đăng ký", "Register", "Account", new { Area = "" }, htmlAttributes: new { id = "registerLink" })
+             </div>
+             <div>
+                 @Html.ActionLink("Đăng nhập", "Login", "Account", new { Area = "" }, htmlAttributes: new { id = "loginLink" })
+             </div>
+
+         </div>
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using Tm.Data.Common;
 using Tm.Data.Models;
+using Tm.Data.ViewModels;
 using Tm.Data.ViewModels.Patient;
 
 namespace Tm.Data.Functions
@@ -125,6 +124,28 @@ namespace Tm.Data.Functions
                 return null;
             }
             
+        }
+
+        // Get all orders by doctor Id
+        public IEnumerable<OrderListModel> ListOrdersByDoctor(int doctorId)
+        {
+
+            return db.TM_Order.Join( // first order table
+                db.TM_DoctorOrder.Where(dr=>dr.DoctorId==doctorId),   // doctororder table
+                order => order.Id,    //on order.Id
+                doctor => doctor.OrderId, // equal doctor.OrderId
+                (order, doctor) => new OrderListModel // Select
+                {
+                    Id = order.Id,
+                    Title = order.Title,
+                    CreatedDate = order.OrderDate,
+                    Doctor = doctor.TM_Users.FullName,
+                    Status = doctor.Status == true ? "Đã chẩn đoán" : "Chưa chẩn đoán",
+                    DiagnosisNote = doctor.Diagnosis,
+                    PatientId = order.PatientId
+                });
+                
+
         }
 
         // Get all Orders by PatienId

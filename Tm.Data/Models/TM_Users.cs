@@ -17,15 +17,15 @@ namespace Tm.Data.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TM_Users()
         {
-            this.TM_Doctor = new HashSet<TM_Doctor>();
             this.TM_Notification = new HashSet<TM_Notification>();
             this.TM_Patient = new HashSet<TM_Patient>();
             this.TM_UserClaims = new HashSet<TM_UserClaims>();
             this.TM_UserLogins = new HashSet<TM_UserLogins>();
             this.UserAddresses = new HashSet<UserAddress>();
             this.TM_Roles = new HashSet<TM_Roles>();
-            this.TM_DoctorOrder = new HashSet<TM_DoctorOrder>();
             this.TM_Order = new HashSet<TM_Order>();
+            this.TM_Doctor = new HashSet<TM_Doctor>();
+            this.TM_DoctorOrder = new HashSet<TM_DoctorOrder>();
         }
     
         public int Id { get; set; }
@@ -51,8 +51,6 @@ namespace Tm.Data.Models
         public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TM_Doctor> TM_Doctor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_Notification> TM_Notification { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_Patient> TM_Patient { get; set; }
@@ -65,8 +63,10 @@ namespace Tm.Data.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_Roles> TM_Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TM_DoctorOrder> TM_DoctorOrder { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TM_Order> TM_Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TM_Doctor> TM_Doctor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TM_DoctorOrder> TM_DoctorOrder { get; set; }
     }
 }

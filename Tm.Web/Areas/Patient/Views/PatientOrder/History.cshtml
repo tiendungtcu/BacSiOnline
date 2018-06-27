@@ -58,13 +58,20 @@
 
                     @if (string.IsNullOrEmpty(item.DiagnosisNote))
                     {
-                    <div class="col-md-12 time-item-title" style="text-align:center">
-                        <p>Tình trạng bệnh án</p>
-                        <br /><br />
-                        <div class="col-md-12 time-label" style="text-align:center;color:forestgreen">
-                            <p>Chưa chẩn đoán</p>
+                        <div class="col-md-9">
+                            <p class="diagnosis-box">
+                                Đang chờ chẩn đoán...
+                            </p>
                         </div>
-                    </div>
+                        <div class="col-md-3">
+                            <div class="center-image">
+                                <img src="@item.DoctorAvatar" alt="@item.DoctorName" class="diag-avatar">
+                            </div>
+                            <div style="text-align: center">
+                                <p>@item.DoctorName</p>
+                                <p class="time-label">@item.DiagnosisDate</p>
+                            </div>
+                        </div>
 
                     }
                     else
@@ -76,15 +83,15 @@
                         </div>
                         <div class="col-md-3">
                             <div class="center-image">
-                                <img src="~/Content/Common/images/icon//avatar-05.jpg" alt="@item.DoctorName" class="diag-avatar">
+                                <img src="@item.DoctorAvatar" alt="@item.DoctorName" class="diag-avatar">
                             </div>
                             <div style="text-align: center">
                                 <p>@item.DoctorName</p>
                                 <p class="time-label">@item.DiagnosisDate</p>
                             </div>
                         </div>
-                    }                   
-                    <div class="col-md-12">                       
+                    }
+                    <div class="col-md-12">
                         <a href="@Url.Action("Detail", "PatientOrder", new { Area = "Patient", Id = item.Id })" class="btn btn-link" id="change-password"><i class="fa fa-eye"></i> Xem chi tiết bệnh án này</a>
                     </div>
                 </div>

@@ -1,0 +1,290 @@
+﻿@using Tm.Data.ViewModels
+@model IEnumerable<OrderListModel>
+@{
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-body card-block">
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <fieldset id="filter-panel">
+                        <legend><i class="fa fa-filter"></i> Bộ lọc</legend>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <p>Tình trạng:</p>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control-sm" id="filter-by-status">
+                                    <option value="all">Tất cả</option>
+                                    <option value="d">Đã chẩn đoán</option>
+                                    <option value="u">Chưa chẩn đoán</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <p>Thời gian:</p>
+                            </div>
+
+                            <div class="col-md-2" id="insert-temp-after">
+                                <select name="date-range" id="range-select" class="form-control-sm">
+                                    <option value="thisWeek">Trong tuần này</option>
+                                    <option value="lastWeek">Tuần trước</option>
+                                    <option value="twoWeekAgo">2 tuần trước</option>
+                                    <option value="byMonth">Trong tháng</option>
+                                    <option value="byYear">Trong năm</option>
+                                    <option value="custom">Tùy chỉnh</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-1" id="temp-year">
+                                <input type="number" min="1900" max="2200" value="2018" class="input-sm form-control-sm form-control">
+                            </div>
+
+                            <div class="col-md-6" id="temp-range">
+                                <small>Từ ngày</small>
+                                <input type="date" value="2018" class="input-sm form-control-sm form-control">
+                                <small>Đến ngày</small>
+                                <input type="date" value="2018" class="input-sm form-control-sm form-control">
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- <div class="row form-group">
+                            <div class="col-md-2">
+                                <p>Thông số:</p>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="ha-tamthu" class="form-check-input" checked> Huyết áp
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> Cholesteron
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> GPT
+                            </div>
+                        </div>         -->
+
+                    </fieldset>
+                </div>
+            </div>
+            <hr>
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <div class="table-responsive m-b-40">
+                        <!-- <table id="record-table" class="table table-borderless table-data4"> -->
+                        <table id="record-table" class="table table-striped table-bordered" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Id)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                                    <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Doctor)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                                    <th>@Html.DisplayNameFor(model => model.DiagnosisNote)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    string colorFormat = item.Status.Equals("Đã chẩn đoán") ? "denied" : "process";
+                                    <tr>
+                                        <td>@Html.ActionLink(item.Id.ToString(), "Detail", "DoctorOrder", new { Area = "Doctor", id = item.Id }, new { })</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        <td>@item.CreatedDate.Value.ToShortDateString()</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Doctor)</td>
+                                        <td class="@colorFormat">@Html.DisplayFor(modelItem => item.Status)</td>
+                                        <td style="max-width:150px;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;" title="@Html.DisplayFor(modelItem => item.DiagnosisNote)">
+                                            @Html.DisplayFor(modelItem => item.DiagnosisNote)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+
+
+    <!-- My JS -->
+    <script>
+        $(document).ready(function () {
+            // GLOBAL VAR
+            var current = new Date($.now());
+
+            // populate DataTable
+            $("#record-table").DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi một trang",
+                    "zeroRecords": "Không tìm thấy kết quả nào!",
+                    "info": "Hiển thị trang _PAGE_/_PAGES_",
+                    "infoEmpty": "Hiện không có bản ghi nào",
+                    "infoFiltered": "Tìm kiếm trên tất cả _MAX_ bản ghi",
+                    "paginate": {
+                        "previous": "Trước",
+                        "next": "Tiếp"
+                    },
+                    "search": "Tìm kiếm"
+                },
+            });
+
+            // html for month
+            var monthSelect = $('<select/>', {
+                class: "form-control-sm",
+                id: "temp-month"
+            });
+
+            initMonthSelect();
+
+
+            function initMonthSelect() {
+                for (let i = 1; i < 13; i++) {
+                    monthSelect.append($('<option/>', {
+                        value: i,
+                        text: i,
+                    }));
+                }
+                // select current month
+                monthSelect.val(current.getMonth() + 1).change();
+                $('#insert-temp-after').after(monthSelect);
+                monthSelect.hide();
+                $('#temp-year').hide();
+                $('#temp-range').hide();
+            }
+
+
+
+
+            // <option value="thisWeek">Trong tuần này</option>
+            // <option value="lastWeek">Tuần trước</option>
+            // <option value="twoWeekAgo">2 tuần trước</option>
+            // <option value="byMonth">Trong tháng</option>
+            // <option value="byYear">Trong năm</option>
+            // <option value="custom">Tùy chỉnh</option>
+            $('#range-select').on('change', function () {
+                var valueSelected = this.value;
+                switch (valueSelected) {
+                    case 'thisWeek':
+                    case 'lastWeek':
+                    case 'twoWeekAgo':
+                        $('#insert-temp-after').nextAll().hide();
+                        break;
+                    case "byMonth":
+                        $('#insert-temp-after').nextAll().hide();
+                        $('#temp-month').show();
+                        break;
+                    case 'byYear':
+                        $('#insert-temp-after').nextAll().hide();
+                        $('#temp-year').show();
+                        break;
+                    case 'custom':
+                        $('#insert-temp-after').nextAll().hide();
+                        $('#temp-range').show();
+                        break;
+                    default:
+                }
+            });
+
+            // Record creation date:
+            // 1. Date control in HTML5 accepts in the format of Year-month-day
+            // 2. If month is 9, it needs to be set as 09 not simply 9, apply for day as well
+            function getCurrentDateStr() {
+                var current = new Date($.now());
+                var dd = ('0' + current.getDate()).slice(-2);
+                var mm = ('0' + (current.getMonth() + 1)).slice(-2);
+                var yyyy = current.getFullYear();
+                return `${yyyy}-${mm}-${dd}`;
+            }
+
+            // Add form group element
+            // $("#btn-add-2").click(function()
+            // {
+            // <!-- Form Replica -->
+            //     <div class="row form-group" id="copy-group">
+            //         <!-- Label -->
+            //         <div class="col col-md-3">
+            //             <label>Cholesteron (mmol/l)</label>
+            //         </div>
+            //         <!-- Value input -->
+            //         <div class="col-12 col-md-4">
+            //             <input type="text" id="test-select" placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
+            //         </div>
+            //         <!-- Measuring date input -->
+            //         <div class="col-12 col-md-4">
+            //             <input type="date" name="cholesteron-date-input" class="form-control">
+            //         </div>
+            //         <!-- Delete button -->
+            //         <div class="input-group-btn">
+            //             <button class="btn btn-danger remove" type="button">
+            //                 <i class="fas fa-minus"></i>
+            //             </button>
+            //         </div>
+            // </div>
+            //     if(paramCount==0) return;
+            //     var paramName = $("#select-2").find(":selected").text();
+            //     $("#select-2 :selected").remove(); paramCount--;
+            //     // $("#test-select").val("Duy Trung");
+            //     var pDiv = $('<div/>',{
+            //         class:"row form-group",
+            //         name: paramName + '-group',
+            //         html: [$("<div/>",{
+            //             class: "col col-md-3",
+            //             html: $('<label/>',{
+            //                 text: paramName
+            //             })
+            //         }), $("<div/>",{
+            //             class: "col-12 col-md-4",
+            //             html: $("<input/>",{
+            //                 type: "number",
+            //                 placeholder: "Chỉ số " + paramName + " trong máu",
+            //                 name: paramName + "-input",
+            //                 class: "form-control"
+            //             })
+            //         }), $("<div/>",{
+            //             class: "col-12 col-md-4",
+            //             html: $("<input/>",{
+            //                 type: "date",
+            //                 name: paramName.toLowerCase() + "-date-input",
+            //                 value: getCurrentDateStr(),
+            //                 class: "form-control"
+            //             })
+            //         }),$("<div/>",{
+            //             class: "input-group-btn",
+            //             html: $("<button/>",{
+            //                 type: "button",
+            //                 class: "btn btn-danger remove",
+            //                 html: '<i class="fas fa-minus"></i>'
+            //                 + `<input type="hidden" class="btn-hidden-val" value=${paramName}>`,
+            //             }).bind('click',function(){
+            //                 //alert($(this).closest(".form-group").html());
+            //                 $(this).closest(".form-group").remove(); paramCount++;
+            //                 $("#select-2").prepend(`<option>${$(this).find(".btn-hidden-val").val()}</option>`);
+            //             })
+            //         })]
+            //     })
+
+            //     $("#add-group-before").before(pDiv);
+            // });
+
+
+        });
+    </script>
+
+}

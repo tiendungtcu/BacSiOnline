@@ -1,0 +1,360 @@
+﻿@using Tm.Data.ViewModels.Doctor
+@model DoctorProfile
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: 20px;
+                        text-transform: uppercase; background: #BFD7EA; color: black">
+            <strong>Hồ sơ người dùng</strong>
+        </div>
+
+        <div class="card-body card-block">
+            @if (!string.IsNullOrEmpty(ViewBag.Errors))
+            {
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Thông báo!</strong> @ViewBag.Errors
+                </div>
+            }
+            @using (Html.BeginForm("Update", "DoctorProfile", new { area = "Doctor" }, FormMethod.Post, new { }))
+            {
+                <div class="row form-group">
+                    <div class="col-md-9">
+                        <fieldset class="form-control">
+                            <legend>Thông tin cá nhân</legend>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <p>Họ và tên:</p>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @style = "text-transform: uppercase", required = "true" })
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <p>Giới tính:</p>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(m => m.Gender, "M", new { id = "" }) Nam
+                                    @Html.RadioButtonFor(m => m.Gender, "F", new { id = "" }) Nữ
+                                    @Html.RadioButtonFor(m => m.Gender, "O", new { id = "" }) Khác
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label for="dob-input" class="form-control-label">Ngày sinh:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.DoB, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+                                </div>
+                            </div>
+                            @if (Model.Addresses.Count() > 0)
+                            {
+                                int i = 0;
+                                foreach (var addr in Model.Addresses)
+                                {
+
+
+                                    <div class="row form-group">
+                                        <div class="col-md-2">
+                                            <p>Địa chỉ:</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="street-input" class="form-control-label">Số nhà, đường</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBox("addr[" + i + "].Address", addr.Address, new { @class = "form-control", placeholder = "Nhập vào chi tiết số nhà, ngõ, đường phố" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="province-input" class="form-control-label">Tỉnh thành</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].ProvinceName", addr.ProvinceName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="district-input" class="form-control-label">Quận, huyện</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].DistrictName", addr.DistrictName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="ward-input" class="form-control-label">Xã, phường, thị trấn</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].WardName", addr.WardName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    i = i + 1;
+                                }
+                            }
+
+
+
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="idcard-input" class="form-control-label">
+                                        CMND
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.IdentityCard, new { @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="insurance-input" class="form-control-label">
+                                        Chuyên môn
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Major, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <label for="" class="">Họ và tên:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p id="name-label" style="text-transform: uppercase">Lưu Hoàng Nhân</p>
+                    </div> -->
+                    <div class="col-md-3">
+                        <div class="center-image div-image">
+                            @if (string.IsNullOrEmpty(Model.Avatar))
+                            {
+                                <img src="/Content/Common/images/icon/default_avatar_male.jpg" id="avatar-holder" alt="Hình đại diện" style="margin: auto;">
+                            }
+                            else
+                            {
+                                <img src="@Model.Avatar" id="avatar-holder" alt="Hình đại diện" style="margin: auto;">
+                            }
+                        </div>
+                        <div style="display: block; margin: auto; text-align: center">
+                            <label id="avatar-input" style="padding-top: 10px" onclick="$('#uploadModal').modal();"><i class="fa fa-cloud-upload-alt"></i> Thay ảnh đại diện...</label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-9">
+                        <fieldset class="form-control">
+                            <legend>Thông tin liên hệ</legend>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="phone-input" class="form-control-label" style="text-align: right">
+                                        Số điện thoại(*):
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", required = "true" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="email-input" class="form-control-label">
+                                        Email:
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="text-align: right">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <button type="button" id="pwd-collapse" class="btn btn-danger">Trở về</button>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-link" id="change-password"><i class="zmdi zmdi-grain"></i> Đổi mật khẩu</button>
+                    <!-- <a href="" id="change-password"><i class="zmdi zmdi-grain"></i> Đổi mật khẩu</a> -->
+                </div>
+            </div>
+            <!-- </form>  -->
+            <div class="row form-group">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "changepwd" }))
+                    {
+                        <fieldset class="form-control" id="change-password-panel" style="display: none;">
+                            <legend>Thông tin đổi mật khẩu</legend>
+                            <div class="row form-group">
+                                <div class="col-md-5" style="text-align: right">
+                                    <label for="old-pwd-input" class="form-control-label">
+                                        Mật khẩu cũ:
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Password("OldPassword", "", new { @class = "form-control", required = "true" })
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-5" style="text-align: right">
+                                    <label for="new-pwd-input" class="form-control-label">
+                                        Mật khẩu mới:
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Password("NewPassword", "", new { @class = "form-control", required = "true" })
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-5" style="text-align: right">
+                                    <label for="confirm-pwd-input" class="form-control-label">
+                                        Xác nhân mật khẩu mới:
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Password("ConfirmPassword", "", new { @class = "form-control", required = "true" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="text-align: right">
+                                <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                                <button type="reset" class="btn btn-danger">Hủy</button>
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="resultModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="color:firebrick">
+                <ul id="modalContent"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Modal upload avatar -->
+<div id="uploadModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tải ảnh lên</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="color:firebrick">
+                <section id="avatar-upload-box">
+                    @using (Ajax.BeginForm("_Upload", "Avatar",
+                     new { Area = "" },
+                    new AjaxOptions() { HttpMethod = "POST" },
+                    new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        <label for="files" class="btn btn-primary">Chọn hình</label>
+                        <input id="files" name="files" style="visibility:hidden;" type="file">
+                        <div class="upload-file-notice">Kích thước tối đa: <span id="avatar-max-size"></span> MB</div>
+                    }
+                    <div class="upload-progress col-md-6 hidden">
+                        <div class="upload-percent-value pull-left">0%</div>
+                        <div class="upload-percent-bar pull-left"></div>
+                    </div>
+                    <div id="upload-status"></div>
+                </section>
+                <section id="avatar-crop-box" class="hidden">
+                    <p>
+                        <img src="" id="crop-avatar-target" alt="Ảnh đã tải lên" />
+                        <div id="preview-pane">
+                            <div class="preview-container">
+                                <img src="" class="jcrop-preview" alt="Xem trước" />
+                            </div>
+                        </div>
+                    </p>
+                    <hr />
+                    <p><button class="btn btn-info" onclick="saveAvatar()">Lưu lại</button></p>
+                </section>
+                <div id="avatar-result" class="hidden">
+                    <img src="" alt="Final Image" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script src="~/Content/Common/js/site.avatar.js"></script>
+    <script src="~/Content/Common/jcrop/jquery.Jcrop.min.js"></script>
+    <script src="~/Content/Common/jquery/jquery.form.min.js"></script>
+
+    <script type="text/javascript">
+        var changpwdUrl = '@Url.Action("ChangePasswordAsync", "PatientProfile", new { Area="Patient"})'
+        $(document).ready(function () {
+
+            $("#change-password").click(function(){
+                $("#change-password-panel").slideToggle("fast");
+            });
+
+            $("#pwd-collapse").click(function(){
+                $("#change-password-panel").slideUp("fast");
+            });
+
+            // this is the id of the form
+            $("#changepwd").submit(function (e) {
+
+                $.ajax({
+                    type: "POST",
+                    url: changpwdUrl,
+                    data: $("#changepwd").serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        var ul = document.getElementById("modalContent");
+                        ul.innerHTML = '';
+                        for (var key in data) {
+                            if (data.hasOwnProperty(key)) {
+                                var li = document.createElement("li");
+                                li.appendChild(document.createTextNode(data[key]));
+                                ul.appendChild(li);
+                            }
+
+                        }
+
+                        $('#resultModal').modal();
+                        $("#changepwd").reset();
+                    }
+                });
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+            });
+        });
+    </script>
+
+}
+

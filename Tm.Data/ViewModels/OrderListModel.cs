@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Tm.Data.ViewModels.Patient
-{
+namespace Tm.Data.ViewModels
+{ 
     public class OrderListModel
     {
         [Key]
+        [Display(Name = "Mã bệnh án")]
         public long Id { get; set; }
 
         [Display(Name = "Tiêu đề")]

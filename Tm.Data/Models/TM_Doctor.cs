@@ -15,8 +15,9 @@ namespace Tm.Data.Models
     public partial class TM_Doctor
     {
         public int Id { get; set; }
-        public string Major { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string Major { get; set; }
+        public string IdentityCard { get; set; }
     
         public virtual TM_Users TM_Users { get; set; }
     }

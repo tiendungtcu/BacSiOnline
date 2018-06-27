@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Tm.Data.ViewModels;
 using TM.Web.Models;
 
 namespace TM.Web.Controllers
@@ -218,6 +220,50 @@ namespace TM.Web.Controllers
         public ActionResult ChangePassword()
         {
             return View();
+        }
+
+
+        // POST: Change password
+        [HttpPost]
+        public async Task<JsonResult> ChangePasswordAsync(ChangeUserPasswordViewModel model)
+        {
+            // If modelstate isn't valid
+            if (!ModelState.IsValid)
+            {
+                IList<string> errorMessages = new List<string>();
+
+
+                foreach (ModelState modelState in ModelState.Values)
+                {
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        errorMessages.Add(error.ErrorMessage);
+                    }
+                }
+                return Json(errorMessages);
+            }
+
+            // if current user isn't found
+            int userid = User.Identity.GetUserId<int>();
+            if (userid <= 0)
+            {
+                return Json(new { message = "Người dùng chưa đăng nhập" });
+            }
+
+            // change password
+            var result = await UserManager.ChangePasswordAsync(userid, model.OldPassword, model.NewPassword);
+
+            // if success
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(userid);
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: true);
+                }
+                return Json(new { message = "Đổi mật khẩu thành công" });
+            }
+            return Json(result.Errors);
         }
 
         //

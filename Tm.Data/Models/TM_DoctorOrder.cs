@@ -16,12 +16,12 @@ namespace Tm.Data.Models
     {
         public int DoctorId { get; set; }
         public long OrderId { get; set; }
-        public Nullable<System.DateTime> DiagnosisDate { get; set; }
         public string Diagnosis { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public Nullable<System.DateTime> DiagnosisDate { get; set; }
         public Nullable<int> PatientId { get; set; }
+        public Nullable<bool> Status { get; set; }
     
-        public virtual TM_Users TM_Users { get; set; }
         public virtual TM_Order TM_Order { get; set; }
+        public virtual TM_Users TM_Users { get; set; }
     }
 }

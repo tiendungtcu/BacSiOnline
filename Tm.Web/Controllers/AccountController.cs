@@ -63,7 +63,7 @@ namespace TM.Web.Controllers
                 // If Patient role
                 if (UserManager.IsInRole(id, "PATIENT_GROUP"))
                 {
-                    return RedirectToAction("Index", "Default", new { area="Patient"});
+                    return RedirectToAction("History", "PatientOrder", new { area="Patient"});
                 }
                 // If Admin role
                 else if (UserManager.IsInRole(id, "QUANTRI_GROUP"))
@@ -78,7 +78,7 @@ namespace TM.Web.Controllers
                 // If doctor role
                 else if (UserManager.IsInRole(id, "DOCTOR_GROUP"))
                 {
-                    return RedirectToAction("Index", "Default", new { area = "Doctor" });
+                    return RedirectToAction("Detail", "DoctorProfile", new { area = "Doctor" });
                 }
                 // the left
                 else
@@ -148,7 +148,7 @@ namespace TM.Web.Controllers
                     // If Doctor role
                     else if (UserManager.IsInRole(user.Id, "DOCTOR_GROUP"))
                     {
-                        return RedirectToAction("Index", "Doctor", new { area = "Doctor" });
+                        return RedirectToAction("Detail", "DoctorProfile", new { area = "Doctor" });
                     }
                     // còn lại 
                     else if (UserManager.IsInRole(user.Id, "NguoiDung"))
@@ -471,7 +471,7 @@ namespace TM.Web.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account",new { Area = ""});
         }
 
         //

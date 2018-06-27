@@ -265,6 +265,22 @@ namespace TM.Web.Areas.Patient.Controllers
                     }
 
                 }
+                foreach (var param in models[i].ParaclinicalParams)
+                {                   
+                    if (param.CodeName.Equals("GPT"))
+                    {
+                        gpt.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("Insulin"))
+                    {
+                        insulin.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("Cholesteron"))
+                    {
+                        cholesteron.Add((int)param.Value);
+                    }
+
+                }
 
                 // if one has null value, add zero to it
                 if (heartBeat.Count< i+1)

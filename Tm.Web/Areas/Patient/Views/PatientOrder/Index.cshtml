@@ -1,4 +1,4 @@
-﻿@using Tm.Data.ViewModels.Patient
+﻿@using Tm.Data.ViewModels
 @model IEnumerable<OrderListModel>
 
 @{
@@ -43,7 +43,7 @@
                         <table class="table table-borderless table-data4">
                             <thead>
                                 <tr>
-                                    <th>Mã bệnh án</th>
+                                    <th>@Html.DisplayNameFor(model => model.Id)</th>
                                     <th>@Html.DisplayNameFor(model => model.Title)</th>
                                     <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
                                     <th>@Html.DisplayNameFor(model => model.Doctor)</th>

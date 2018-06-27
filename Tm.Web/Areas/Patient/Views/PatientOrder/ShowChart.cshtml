@@ -37,7 +37,7 @@
                 <div class="col-lg-10 offset-lg-1">
                     <div class="au-card m-b-30">
                         <div class="au-card-inner">
-                            <h3 class="chart-title">Huyết áp</h3>
+                            <h3 class="chart-title">Biểu đồ sức khỏe</h3>
                             <canvas id="ha-chart"></canvas>
                         </div>
                     </div>
@@ -53,6 +53,7 @@
 <script src="~/Content/Common/chartjs/Chart.bundle.min.js"></script>
 <script>
     var chartUrl = '@Url.Action("GetChartData", "PatientOrder", new { Area = "Patient" })';
+    var myChart
     $(function () {
         $.ajax({
             type: "POST",
@@ -81,7 +82,7 @@
             var ctx = document.getElementById("ha-chart");
             if (ctx) {
                 ctx.height = 150;
-                var myChart = new Chart(ctx, {
+                myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: aLabels,
@@ -217,6 +218,20 @@
             console.log(repo)
         }
     })
+    function addData(chart, label, data) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+    function removeData(chart) {
+        chart.data.labels.pop();
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+        chart.update();
+    }
 </script>    
 }
 

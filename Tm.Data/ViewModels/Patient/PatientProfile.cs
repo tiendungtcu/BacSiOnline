@@ -16,7 +16,7 @@ namespace Tm.Data.ViewModels.Patient
         public string Gender { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DoB { get; set; }
+        public DateTime? DoB { get; set; }
         public IList<AddressDetail> Addresses { get; set; }        
         public string IdentityCard { get; set; }
         public string AssuranceCard { get; set; }

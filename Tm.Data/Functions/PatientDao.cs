@@ -24,13 +24,8 @@ namespace Tm.Data.Functions
             try
             {
                 var patient = db.TM_Patient.Find(entity.Id);
-                /*
-                if (!string.IsNullOrEmpty(entity.Password))
-                {
-                    user.Password = entity.Password;
-                }*/
                 patient.AssuranceCard = entity.AssuranceCard;
-                //patient.Status = entity.Status;
+                patient.IdentityCard = entity.IdentityCard;
                 db.SaveChanges();
                 return true;
             }

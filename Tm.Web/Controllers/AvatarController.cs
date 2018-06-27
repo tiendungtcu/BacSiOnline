@@ -14,7 +14,7 @@ using Microsoft.Owin.Security;
 using Tm.Data.Functions;
 using TM.Web.Models;
 
-namespace TM.Web.Areas.Patient.Controllers
+namespace TM.Web.Controllers
 {
     public class AvatarController : Controller
     {
@@ -29,6 +29,7 @@ namespace TM.Web.Areas.Patient.Controllers
         private const string _avatarPath = "/Upload/Avatars";
 
         private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
+
         [ValidateAntiForgeryToken]
         public ActionResult _Upload(IEnumerable<HttpPostedFileBase> files)
         {

@@ -68,7 +68,7 @@
                             <ul>
                                 @foreach (var item in Model.Symptoms)
                                 {
-                                    <li>@Html.DisplayFor(modelItem => item.Name)</li>                                                                  
+                                    <li>@Html.DisplayFor(modelItem => item.Name)</li>
                                 }
 
                             </ul>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="typo-articles">
-                            <p>@Html.DisplayFor(model=>model.Notes)</p>
+                            <p>@Html.DisplayFor(model => model.Notes)</p>
                         </div>
                     </div>
                 </div>
@@ -96,14 +96,14 @@
                 {
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label>@Html.DisplayFor(modelItem => item.Description) (@Html.DisplayFor(modelItem=>item.Unit))</label>
+                            <label>@Html.DisplayFor(modelItem => item.Description) (@Html.DisplayFor(modelItem => item.Unit))</label>
                         </div>
                         <div class="col-12 col-md-4">
-                            @Html.TextBoxFor(modelItem => item.Value, new { type = "number" ,@readonly= "readonly",@class="form-control"})                           
+                            @Html.TextBoxFor(modelItem => item.Value, new { type = "number", @readonly = "readonly", @class = "form-control" })
                         </div>
                         <div class="col-12 col-md-4">
-                            @Html.TextBoxFor(modelItem=>item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly="readonly", @class="form-control"})
-                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring</span>                            
+                            @Html.TextBoxFor(modelItem => item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly = "readonly", @class = "form-control" })
+                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring</span>
                         </div>
                     </div>
                 }
@@ -126,45 +126,60 @@
                             <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring </span>
                         </div>
                     </div>
-                    }
-   
+                }
+
                 <hr>
-                
-                    @if (string.IsNullOrEmpty(Model.DiagnosisNote))
-                    {
-                        <div style="padding-bottom: 20px;">
-                            <strong>Tình trạng bệnh án</strong>
-                        </div>
-                        <div style="text-align: center;color:red;">
-                            <p>Chưa được chẩn đoán</p>
-                            <!-- <p class="time-label">28/12/2017 18:32</p> -->
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="padding-bottom: 20px;">
-                            <strong>Chẩn đoán của bác sỹ</strong>
-                        </div>
-                        <div class="row form-group timeline-record-content">
-                            <div class="col-md-2">
-                                <div class="center-image">
-                                    <img src="~/Content/common/images/icon/avatar-05.jpg" alt="@Html.DisplayFor(m=>m.DoctorName)" class="diag-avatar">
-                                </div>
-                                <div style="text-align: center">
-                                    <p>@Html.DisplayFor(m => m.DoctorName)</p>
-                                    <!-- <p class="time-label">28/12/2017 18:32</p> -->
-                                </div>
+
+                @if (string.IsNullOrEmpty(Model.DiagnosisNote))
+                {
+
+                    <div style="padding-bottom: 20px;">
+                        <strong>Bác sĩ phụ trách</strong>
+                    </div>
+                    <div class="row form-group timeline-record-content">
+                        <div class="col-md-2">
+                            <div class="center-image">
+                                <img src="@Model.DoctorAvatar" alt="@Html.DisplayFor(m=>m.DoctorName)" class="diag-avatar">
                             </div>
-                            <div class="col-md-9">
-                                <p class="diagnosis-bubble">
-                                    @Html.DisplayFor(m => m.DiagnosisNote)
-                                </p>
+                            <div style="text-align: center">
+                                <p>@Html.DisplayFor(m => m.DoctorName)</p>
+                                <!-- <p class="time-label">28/12/2017 18:32</p> -->
                             </div>
                         </div>
-                    }                     
+                        <div class="col-md-9">
+                            <p class="diagnosis-bubble">
+                                Đang chờ chẩn đoán...
+                            </p>
+                        </div>
+                    </div>
+
+
+                }
+                else
+                {
+                    <div style="padding-bottom: 20px;">
+                        <strong>Chẩn đoán của bác sỹ</strong>
+                    </div>
+                    <div class="row form-group timeline-record-content">
+                        <div class="col-md-2">
+                            <div class="center-image">
+                                <img src="@Model.DoctorAvatar" alt="@Html.DisplayFor(m=>m.DoctorName)" class="diag-avatar">
+                            </div>
+                            <div style="text-align: center">
+                                <p>@Html.DisplayFor(m => m.DoctorName)</p>
+                                <!-- <p class="time-label">28/12/2017 18:32</p> -->
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <p class="diagnosis-bubble">
+                                @Html.DisplayFor(m => m.DiagnosisNote)
+                            </p>
+                        </div>
+                    </div>
+                }
                 <hr>
                 <div class="row form-group" style="float:right;">
-                    @Html.ActionLink("Về danh sách bệnh án", "Index", "PatientOrder", new { Area = "Patient" }, new { @class="btn btn-danger btn-lg", style="font-size: 16px; margin: 5px"})
+                    @Html.ActionLink("Về danh sách bệnh án", "Index", "PatientOrder", new { Area = "Patient" }, new { @class = "btn btn-danger btn-lg", style = "font-size: 16px; margin: 5px" })
                 </div>
             </form>
         </div>

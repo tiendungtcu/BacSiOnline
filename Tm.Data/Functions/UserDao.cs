@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
-using Tm.Data.Common;
 using Tm.Data.Models;
+using Tm.Data.ViewModels;
+using Tm.Data.ViewModels.Doctor;
 using Tm.Data.ViewModels.Patient;
 
 namespace Tm.Data.Functions
@@ -28,6 +27,43 @@ namespace Tm.Data.Functions
             }
             
         }
+
+        // Get doctor profile detail
+        public DoctorProfile GetDoctorProfile(int userId)
+        {
+            // Find patient account
+            var user = db.TM_Users.Find(userId);
+            if (user == null)
+            {
+                return null;
+            }
+            var doctor = db.TM_Doctor.Where(p => p.UserId == userId).FirstOrDefault();
+            if (doctor == null)
+            {
+                doctor = new TM_Doctor() { Major = string.Empty, IdentityCard = string.Empty };
+            }
+            // Find 
+
+            var model = new DoctorProfile();
+
+            model.Id = user.Id;
+            model.UserName = user.UserName;
+            model.FullName = user.FullName;
+            model.Gender = user.Gender;
+            model.Avatar = user.Avatar;
+            model.DoB = user.DateOfBirth;
+            model.Email = user.Email;
+            model.PhoneNumber = user.PhoneNumber;
+            model.Major = doctor.Major;
+            model.IdentityCard = doctor.IdentityCard;
+            model.Addresses = GetAddresses(userId);
+
+
+            return model;
+
+        }
+
+
         // Get patient profile detail
         public PatientProfile GetPatienProfile(int userId)
         {
@@ -44,21 +80,20 @@ namespace Tm.Data.Functions
             }
             // Find 
 
-            var model = new PatientProfile()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                FullName = user.FullName,
-                Gender = user.Gender,
-                Avatar = user.Avatar,
-                DoB = (DateTime)user.DateOfBirth,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                AssuranceCard = patient.AssuranceCard,
-                IdentityCard = patient.IdentityCard,
-                Addresses = GetAddresses(userId)
+            var model = new PatientProfile();
 
-            };
+            model.Id = user.Id;
+            model.UserName = user.UserName;
+            model.FullName = user.FullName;
+            model.Gender = user.Gender;
+            model.Avatar = user.Avatar;
+            model.DoB = user.DateOfBirth;
+            model.Email = user.Email;
+            model.PhoneNumber = user.PhoneNumber;
+            model.AssuranceCard = patient.AssuranceCard;
+            model.IdentityCard = patient.IdentityCard;
+            model.Addresses = GetAddresses(userId);
+                
             return model;
            
         }
@@ -87,18 +122,16 @@ namespace Tm.Data.Functions
             var useraddr = db.UserAddresses.Find(Id);
             var addr = db.TM_Address.Find(useraddr.AddressId);
 
-            var model = new AddressDetail()
-            {
+            var model = new AddressDetail();
+            model.Id = Id;
+            model.Address = addr.Address;
+            model.StartDate = useraddr.StartDate;
+            model.EndDate = useraddr.EndDate;
+            model.WardId = addr.WardId;
+            model.WardName = FindWardName((int)addr.WardId);
+            model.DistrictName = FindDistrictName((int)addr.WardId);
+            model.ProvinceName = FindProvinceName((int)addr.WardId);
 
-                Id = Id,
-                Address = addr.Address,
-                StartDate = useraddr.StartDate,
-                EndDate = useraddr.EndDate,
-                WardId = addr.WardId,
-                WardName = FindWardName((int)addr.WardId),
-                DistrictName = FindDistrictName((int)addr.WardId),
-                ProvinceName = FindProvinceName((int)addr.WardId),
-            };
             return model;
         }
         public string FindWardName(int wardId)

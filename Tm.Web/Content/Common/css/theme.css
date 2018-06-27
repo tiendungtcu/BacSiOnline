@@ -4735,6 +4735,13 @@ section {
     padding-right: 10px;
 }
 
+.process {
+        color: #00ad5f;
+    }
+.denied {
+    color: #fa4251;
+}
+
 .table-data3 tbody td.process {
     color: #00ad5f;
 }
