@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Tm.Data.Functions;
 using Tm.Data.Models;
@@ -22,9 +19,10 @@ namespace TM.Web.Areas.Patient.Controllers
             int patienId = User.Identity.GetUserId<int>(); //Get current user Id
             if (patienId <= 0)
             {
-                patienId = 1021;
+                return RedirectToAction("Login","Account",new { Area=""});
             }
             var models = new OrderDao().GetHistories(patienId);
+            //return Json(models,JsonRequestBehavior.AllowGet);   
             return View(models);
         }
        
@@ -38,9 +36,9 @@ namespace TM.Web.Areas.Patient.Controllers
             int patienId = User.Identity.GetUserId<int>(); //Get current user Id
             if (patienId <= 0)
             {
-                patienId = 1021;
+                return RedirectToAction("Login", "Account", new { Area = "" });
             }           
-            var model = new OrderDao().GetDetail((long)id,patienId);
+            var model = new OrderDao().GetDetail((long)id);
             if (model==null)
             {
                 return RedirectToAction("Index", "PatientOrder", new { Area = "Patient" });

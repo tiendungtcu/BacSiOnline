@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Tm.Data.Models;
 
-namespace Tm.Data.ViewModels.Patient
+namespace Tm.Data.ViewModels
 {
     public class OrderDetail
     {
@@ -29,6 +29,7 @@ namespace Tm.Data.ViewModels.Patient
         public string DoctorName { get; set; }
         public string DiagnosisNote { get; set; }
         public DateTime? DiagnosisDate { get; set; }
+        public string PatientAvatar { get; set; }
 
     }
 }

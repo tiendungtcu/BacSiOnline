@@ -11,7 +11,7 @@ namespace Tm.Data.Functions
     public class OrderDao:CommonDao
     {
         // Return order Detail
-        public OrderDetail GetDetail(long orderId,int patientId)
+        public OrderDetail GetDetail(long orderId)
         {
             try
             {
@@ -20,33 +20,34 @@ namespace Tm.Data.Functions
                 {
                     return null;
                 }
-                var user = db.TM_Users.Find(patientId); // get user    
+                var patientId = (int)order.PatientId;
+                var user = db.TM_Users.Find(patientId); // get patent   
                 if (user==null)
                 {
                     return null;
                 }            
                 var doctororder = db.TM_DoctorOrder.Where(d => d.OrderId == orderId).FirstOrDefault();
                 var doctor = db.TM_Users.Find(doctororder.DoctorId); // get doctor
-                                                                     
-                var model = new OrderDetail()
-                {
-                    Orders = GetOrderIdTitle(patientId),
-                    SelectedOrder = orderId,
-                    Age = user.DateOfBirth == null ? 0 : DateTime.Now.Year - user.DateOfBirth.Value.Year,
-                    Gender = user.Gender == "M" ? "Nam" : user.Gender == "F" ? "Nữ" : "Khác",
-                    PatientName = user.FullName,
-                    ClinicalParams = GetOrderParams(orderId, Convert.ToInt16(AppConstants.CliParam)),
-                    ParaclinicalParams = GetOrderParams(orderId, Convert.ToInt16(AppConstants.ParParam)),
-                    DoctorAvatar = doctor.Avatar,
-                    Title = order.Title,
-                    Id = order.Id,
-                    CreatedDate = order.OrderDate,
-                    DoctorName = doctor.FullName,
-                    Notes = order.Notes,
-                    Symptoms = GetSymptoms(orderId),
-                    DiagnosisNote = doctororder.Diagnosis,
-                    DiagnosisDate = doctororder.DiagnosisDate,
-                };
+
+                var model = new OrderDetail();                
+                model.Orders = GetOrderIdTitle(patientId);
+                model.SelectedOrder = orderId;
+                model.Age = user.DateOfBirth == null ? 0 : DateTime.Now.Year - user.DateOfBirth.Value.Year;
+                model.Gender = user.Gender == "M" ? "Nam" : user.Gender == "F" ? "Nữ" : "Khác";
+                model.PatientName = user.FullName;
+                model.ClinicalParams = GetOrderParams(orderId, Convert.ToInt16(AppConstants.CliParam));
+                model.ParaclinicalParams = GetOrderParams(orderId, Convert.ToInt16(AppConstants.ParParam));
+                model.DoctorAvatar = doctor.Avatar;
+                model.Title = order.Title;
+                model.Id = order.Id;
+                model.CreatedDate = order.OrderDate;
+                model.DoctorName = doctor.FullName;
+                model.Notes = order.Notes;
+                model.Symptoms = GetSymptoms(orderId);
+                model.DiagnosisNote = doctororder.Diagnosis;
+                model.DiagnosisDate = doctororder.DiagnosisDate;
+                model.PatientAvatar = user.Avatar;
+               
                 return model;
             }
             catch (Exception)
@@ -114,7 +115,12 @@ namespace Tm.Data.Functions
                 IList<OrderDetail> orderList = new List<OrderDetail>();
                 foreach (var item in orderIds)
                 {
-                    orderList.Add(GetDetail(item, patientId));
+                    var temp = GetDetail(item);
+                    if (temp!=null)
+                    {
+                        orderList.Add(temp);
+                    }
+                    
                 }
                 return orderList;
             }
@@ -243,6 +249,8 @@ namespace Tm.Data.Functions
             db.SaveChanges();
             return entity.Id;
         }
+
+        // Assign a doctor to an order
         public bool AssignDoctorToOrder(int doctorId,long orderId,int patienId)
         {
             try

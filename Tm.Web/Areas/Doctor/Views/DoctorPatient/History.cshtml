@@ -1,0 +1,130 @@
+﻿@using Tm.Data.ViewModels
+@model IEnumerable<OrderDetail>
+@{
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+            <!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header" style="background-color:#ddd">
+            <div class="row group-control">
+                <p style="margin: 3px 10px"><a href="./1-doctor-patient-list.html">Chọn bệnh nhân</a></p>
+                <p style="margin: 3px 10px">&#9658;</p>
+
+                 @Html.DropDownList("SelectedPatient", (SelectList)ViewBag.PatientList)                
+            </div>
+        </div>
+        <div class="card-header card-header-title">
+            <strong>Lịch sử bệnh án</strong>
+        </div>
+        <div class="card-body card-block">
+
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="timeline-record">
+            <div class="col-md-12 time-item-title">
+                <p>@item.Id: @item.Title</p>
+                <p class="time-label">@item.CreatedDate</p>
+            </div>
+
+            <div class="row form-group timeline-record-content">
+             @if(item.ClinicalParams.Count > 2 && item.ParaclinicalParams.Count > 0)
+              {
+                <div class="col-md-3">
+                    <div class="center-image">
+                        <img src="~/Content/Common/images/icon/male-body-icon.png" alt="manequinn ở đây">
+                    </div>
+                    <div style="text-align: center">
+                        <p>@item.ClinicalParams.Where(c => c.CodeName == "Height").FirstOrDefault().Value (cm) - @item.ClinicalParams.Where(c => c.CodeName == "Weight").FirstOrDefault().Value (kg)</p>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <p>&#9658; Huyết áp: @item.ClinicalParams.Where(c => c.CodeName == "HighPressure").FirstOrDefault().Value / @item.ClinicalParams.Where(c => c.CodeName == "LowPressure").FirstOrDefault().Value mmHg</p>
+                    <p>&#9658; Nhịp tim: @item.ClinicalParams.Where(c => c.CodeName == "HeartBeat").FirstOrDefault().Value chu kỳ/phút</p>
+                    @foreach (var param in item.ParaclinicalParams)
+                    {
+                        <p>&#9658; @param.CodeName : @param.Value (@param.Unit)</p>
+                    }
+
+                    <p>@item.Notes</p>
+                </div>
+                }
+                else
+                {
+                <div class="col-md-3">
+                    <p>Bệnh nhân đăng ký khám lần đầu</p>
+                </div>
+                <div class="col-md-9">
+                    <p>Triệu chứng ban đầu: @item.Notes</p>
+                </div>
+                }
+            </div>
+
+            <div class="row form-group timeline-record-content">
+                @if (string.IsNullOrEmpty(item.DiagnosisNote))
+                    {
+                    <div class="col-md-9">
+                        <p class="diagnosis-box">
+                            Đang chờ chẩn đoán...
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="center-image">
+                            <img src="@item.DoctorAvatar" alt="@item.DoctorName" class="diag-avatar">
+                        </div>
+                        <div style="text-align: center">
+                            <p>@item.DoctorName</p>
+                            <p class="time-label">@item.DiagnosisDate</p>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-md-9">
+                        <p class="diagnosis-box">
+                            @item.DiagnosisNote
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="center-image">
+                            <img src="@item.DoctorAvatar" alt="@item.DoctorName" class="diag-avatar">
+                        </div>
+                        <div style="text-align: center">
+                            <p>@item.DoctorName</p>
+                            <p class="time-label">@item.DiagnosisDate</p>
+                        </div>
+                    </div>
+                }
+                <div class="col-md-12">
+                    <a href="@Url.Action("Detail", "DoctorOrder", new { Area = "Doctor", Id = item.Id })" class="btn btn-link" id="change-password"><i class="fa fa-eye"></i> Xem chi tiết bệnh án này</a>
+                </div>
+            </div>
+        </div>
+      <hr>
+    }
+}
+
+
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+  </div>
+ <!-- END MAIN CONTENT-->
+
+@section Scripts{
+    <script type="text/javascript">
+    var recUrl = '@Url.Action("History","DoctorPatient",new { Area = "Doctor",Id="" })';
+    $(function () {
+        $('#SelectedPatient').on('change', function (e) {
+            $(location).attr('href', recUrl+'/'+this.value)
+        });
+    })
+    </script>
+}

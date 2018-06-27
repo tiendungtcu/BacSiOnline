@@ -121,6 +121,7 @@
     <Compile Include="ViewModels\DistrictDetail.cs" />
     <Compile Include="ViewModels\Doctor\DoctorProfile.cs" />
     <Compile Include="ViewModels\Doctor\Doc_OrderList.cs" />
+    <Compile Include="ViewModels\Doctor\WaitingOrderModel.cs" />
     <Compile Include="ViewModels\MeasureParamDetail.cs" />
     <Compile Include="ViewModels\NotificationDetail.cs" />
     <Compile Include="Models\Province.cs">
@@ -192,14 +193,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\NotifyTypeDto.cs" />
     <Compile Include="ViewModels\AddressDetail.cs" />
-    <Compile Include="ViewModels\Patient\OrderDetail.cs" />
-    <Compile Include="ViewModels\Patient\OrderIdTitle.cs" />
+    <Compile Include="ViewModels\OrderDetail.cs" />
+    <Compile Include="ViewModels\OrderIdTitle.cs" />
     <Compile Include="ViewModels\OrderListModel.cs" />
     <Compile Include="ViewModels\ParamTypeDetail.cs" />
     <Compile Include="ViewModels\Patient\OrderViewModel.cs" />
-    <Compile Include="ViewModels\Patient\ParamDetail.cs" />
+    <Compile Include="ViewModels\ParamDetail.cs" />
     <Compile Include="ViewModels\Patient\PatientProfile.cs" />
-    <Compile Include="ViewModels\Patient\SymptomDetail.cs" />
+    <Compile Include="ViewModels\SymptomDetail.cs" />
     <Compile Include="ViewModels\Quantri\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\Quantri\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Reception\ReceptionViewModel.cs" />

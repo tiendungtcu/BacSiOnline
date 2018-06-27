@@ -209,6 +209,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="Areas\Doctor\Controllers\DoctorOrderController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\DoctorPatientController.cs" />
     <Compile Include="Areas\Doctor\Controllers\DoctorProfileController.cs" />
     <Compile Include="Controllers\AvatarController.cs" />
     <Compile Include="Areas\Patient\Controllers\PatientProfileController.cs" />
@@ -257,6 +258,8 @@
     <Content Include="Areas\Doctor\Views\Diagnosis\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\DoctorProfile\Detail.cshtml" />
     <Content Include="Areas\Doctor\Views\DoctorOrder\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorPatient\History.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorOrder\Detail.cshtml" />
     <None Include="Areas\Doctor\Views\Shared\_DoctorLayout.cshtml" />
     <Content Include="Areas\Quantri\Views\UserManager\UserManagePartial.cshtml" />
     <Content Include="Content\bootstrap.css" />

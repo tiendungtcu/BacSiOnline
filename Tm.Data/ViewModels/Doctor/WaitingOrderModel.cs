@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tm.Data.ViewModels.Patient
+namespace Tm.Data.ViewModels.Doctor
 {
-    public class SymptomDetail
+    public class WaitingOrderModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         
     }
 }

@@ -28,6 +28,16 @@ namespace Tm.Data.Functions
             
         }
 
+        // Get list of patients by doctor Id
+        public IEnumerable<int?> GetPatientsFromDoctor(int doctorId)
+        {
+            var model= db.TM_DoctorOrder.Where(dr => dr.DoctorId == doctorId)
+                                    .Select(r => r.PatientId )
+                                    //.GroupBy(dr => dr.Value)                                  
+                                    .ToList();
+            return model.Distinct();
+        }
+
         // Get doctor profile detail
         public DoctorProfile GetDoctorProfile(int userId)
         {

@@ -26,7 +26,7 @@ namespace TM.Web.Controllers
 
         private const string _tempFolder = "/Upload/Temp";
         private const string _mapTempFolder = "~" + _tempFolder;
-        private const string _avatarPath = "/Upload/Avatars";
+        private string _avatarPath = "/Upload/Avatars";
 
         private readonly string[] _imageFileExtensions = { ".jpg", ".png", ".gif", ".jpeg" };
 
@@ -58,6 +58,7 @@ namespace TM.Web.Controllers
                 {
                     return RedirectToAction("Login", "Home");
                 }
+                _avatarPath +="-"+ userId;
                 // Get file from temporary folder, ...
                 var fn = Path.Combine(Server.MapPath(_mapTempFolder), Path.GetFileName(fileName));
 

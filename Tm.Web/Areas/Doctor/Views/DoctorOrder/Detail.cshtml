@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
-            <!-- MAIN CONTENT-->
+<!-- MAIN CONTENT-->
 
 <div class="main-content">
     <div class="card">
         <div class="card-header" style="background-color :#ddd">
             <div class="row group-control">
-                <p style="margin: 3px 10px">@Html.ActionLink("Danh sách bệnh án", "Index", "PatientOrder", new { Area = "Patient" }, new { })</p>
+                <p style="margin: 3px 10px">@Html.ActionLink("Danh sách bệnh án", "Index", "DoctorOrder", new { Area = "Doctor" }, new { })</p>
                 <p style="margin: 3px 10px">&#9658;</p>
-                @Html.DropDownListFor(model => model.SelectedOrder, new SelectList(Model.Orders, "Id", "Id",Model.SelectedOrder), new { @class = "col-2 form-control-sm" })
+                @Html.DropDownListFor(model=>model.SelectedOrder, (SelectList)ViewBag.OrderList, new { @class = "col-2 form-control-sm" })
             </div>
         </div>
         <div class="card-header" style="text-align: center; font-size: 20px;
@@ -21,7 +21,8 @@
             <strong>Chi tiết bệnh án</strong>
         </div>
         <div class="card-body card-block">
-            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+           @using (Html.BeginForm("Diagnosis", "DoctorOrder", new { Area = "Doctor",Id=Model.Id }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+            {
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="record-title-input" class="form-control-label">Tiêu đề bệnh án</label>
@@ -85,13 +86,11 @@
                         </div>
                     </div>
                 </div>
-
                 <hr>
-
                 <div style="padding-bottom: 20px;">
                     <strong>Thông số lâm sàng </strong>
                 </div>
-                @foreach (var item in Model.ClinicalParams)
+                foreach (var item in Model.ClinicalParams)
                 {
                     <div class="row form-group">
                         <div class="col col-md-3">
@@ -107,11 +106,10 @@
                     </div>
                 }
                 <hr>
-
                 <div style="padding-bottom: 20px;">
                     <strong>Thông số cận lâm sàng</strong>
                 </div>
-                @foreach (var item in Model.ParaclinicalParams)
+                foreach (var item in Model.ParaclinicalParams)
                 {
                     <div class="row form-group">
                         <div class="col col-md-3">
@@ -129,29 +127,34 @@
 
                 <hr>
 
-                @if (string.IsNullOrEmpty(Model.DiagnosisNote))
+                if (string.IsNullOrEmpty(Model.DiagnosisNote))
                 {
 
-                    <div style="padding-bottom: 20px;">
-                        <strong>Bác sĩ phụ trách</strong>
-                    </div>
                     <div class="row form-group timeline-record-content">
-                        <div class="col-md-2">
-                            <div class="center-image">
-                                <img src="@Model.DoctorAvatar" alt="@Html.DisplayFor(m=>m.DoctorName)" class="diag-avatar">
-                            </div>
+                        <div class="col-md-3">
                             <div style="text-align: center">
-                                <p>@Html.DisplayFor(m => m.DoctorName)</p>
+                                <p>Tới BN. @Model.PatientName</p>
                                 <!-- <p class="time-label">28/12/2017 18:32</p> -->
                             </div>
+                            <div class="center-image">
+                                <img src="@Model.PatientAvatar" alt="Bệnh nhân @Model.PatientName" class="diag-avatar">
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <p class="diagnosis-bubble">
-                                Đang chờ chẩn đoán...
-                            </p>
+
+                        <div class="col-md-8">
+                            <!-- Chưa có chẩn đoán -->
+                            <textarea name="DiagnosisNotes" cols="30" rows="10" class="form-control" placeholder="Bệnh án này đang chờ chẩn đoán. Thêm chẩn đoán tại đây, lưu ý chẩn đoán khi đã thêm sẽ không sửa được"></textarea>
                         </div>
                     </div>
-
+                    <hr>
+                    <div class="row form-group" style="float:right">
+                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px; margin: 5px">
+                            <i class="fa fa-dot-circle-o"></i> Thêm chẩn đoán
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-lg" style="font-size: 16px; margin: 5px">
+                            <i class="fa fa-ban"></i> Xóa viết lại
+                        </button>
+                    </div>
 
                 }
                 else
@@ -175,27 +178,28 @@
                             </p>
                         </div>
                     </div>
-                }
+               
                 <hr>
                 <div class="row form-group" style="float:right;">
-                    @Html.ActionLink("Về danh sách bệnh án", "Index", "PatientOrder", new { Area = "Patient" }, new { @class = "btn btn-danger btn-lg", style = "font-size: 16px; margin: 5px" })
+                    @Html.ActionLink("Về danh sách bệnh án", "Index", "DoctorOrder", new { Area = "Doctor" }, new { @class = "btn btn-danger btn-lg", style = "font-size: 16px; margin: 5px" })
                 </div>
-            </form>
+                }
+            }
         </div>
 
         <div class="card-footer" style="font-size: 0.8em">
             <a href="">Cần trao đổi thêm với BS.Trần Huy Hòa về bệnh án này?</a>
         </div>
     </div>
-</div>      
+</div>
 
-@section Scripts{ 
-<script type="text/javascript">
-    var recUrl = '@Url.Action("Detail","PatientOrder",new { Area = "Patient",Id="" })';
+@section Scripts{
+    <script type="text/javascript">
+    var recUrl = '@Url.Action("Detail","DoctorOrder",new { Area = "Doctor",Id="" })';
     $(function () {
         $('#SelectedOrder').on('change', function (e) {
             $(location).attr('href', recUrl+'/'+this.value)
         });
     })
-</script>
+    </script>
 }
