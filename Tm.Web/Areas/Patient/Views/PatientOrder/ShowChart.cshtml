@@ -1,0 +1,222 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header card-header-title">
+            Biểu đồ sức khỏe
+        </div>
+
+        <div class="card-body card-block">
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <fieldset class="form-control" id="filter-panel">
+                        <legend><i class="fa fa-filter"></i> Chọn các thông số</legend>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="ha-tamthu" class="form-check-input" checked> Huyết áp
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> Cholesteron
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> GPT
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                            <h3 class="chart-title">Huyết áp</h3>
+                            <canvas id="ha-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+<script src="~/Content/Common/chartjs/Chart.bundle.min.js"></script>
+<script>
+    var chartUrl = '@Url.Action("GetChartData", "PatientOrder", new { Area = "Patient" })';
+    $(function () {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: chartUrl,
+            data:{},
+            async: true,
+            cache: false,
+            dataType: "json",
+            success: OnSuccess_,
+            error: OnErrorCall_
+        })
+
+        function OnSuccess_(reponse) {
+            console.log(reponse);
+            var aData = reponse.d;
+            var aLabels = aData[0];
+            var heartBeat = aData[1];
+            var lowPress = aData[2];
+            var highPress = aData[3];
+            var gpt = aData[4];
+            var insulin = aData[5];
+            var cholesteron = aData[5];
+
+            //Sales chart
+            var ctx = document.getElementById("ha-chart");
+            if (ctx) {
+                ctx.height = 150;
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: aLabels,
+                        type: 'line',
+                        defaultFontFamily: 'Roboto',
+                        datasets: [{
+                            label: "Nhịp tim",
+                            data: heartBeat,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(220,53,69,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                        }, {
+                            label: "H.a tâm thu",
+                            data: lowPress,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(40,167,69,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(40,167,69,0.75)',
+                        }, {
+                            label: "H.a Tâm trương",
+                            data: highPress,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(10,53,5,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                        },{
+                            label: "GPT",
+                            data: gpt,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(10,53,5,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                        }, {
+                            label: "Insulin",
+                            data: insulin,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(60,53,5,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                        }, {
+                            label: "Cholesteron",
+                            data: cholesteron,
+                            backgroundColor: 'transparent',
+                            borderColor: 'rgba(120,68,50,0.75)',
+                            borderWidth: 3,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'rgba(220,53,69,0.75)',
+                        }
+
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            titleFontSize: 12,
+                            titleFontColor: '#000',
+                            bodyFontColor: '#000',
+                            backgroundColor: '#fff',
+                            titleFontFamily: 'Roboto',
+                            bodyFontFamily: 'Roboto',
+                            cornerRadius: 3,
+                            intersect: false,
+                        },
+                        legend: {
+                            display: false,
+                            labels: {
+                                usePointStyle: true,
+                                fontFamily: 'Roboto',
+                            },
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Month'
+                                },
+                                ticks: {
+                                    fontFamily: "Roboto"
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Giá trị',
+                                    fontFamily: "Roboto"
+
+                                },
+                                ticks: {
+                                    fontFamily: "Roboto"
+                                }
+                            }]
+                        },
+                        title: {
+                            display: false,
+                            text: 'Normal Legend'
+                        }
+                    }
+                });
+            }
+
+        }
+        function OnErrorCall_(repo) {
+            //alert(repo);
+            console.log(repo)
+        }
+    })
+</script>    
+}
+

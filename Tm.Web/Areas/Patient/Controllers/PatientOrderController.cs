@@ -9,12 +9,14 @@ using System.Web.Mvc;
 using Tm.Data.Functions;
 using Tm.Data.Models;
 using Tm.Data.ViewModels.Patient;
+using TM.Web.Models;
 
 namespace TM.Web.Areas.Patient.Controllers
 {
     public class PatientOrderController : Controller
     {
-        // Show history of orders of a patient
+
+        // GET: history of orders of a patient
         public ActionResult History()
         {
             int patienId = User.Identity.GetUserId<int>(); //Get current user Id
@@ -25,7 +27,8 @@ namespace TM.Web.Areas.Patient.Controllers
             var models = new OrderDao().GetHistories(patienId);
             return View(models);
         }
-        // Get detail of an order       
+       
+        // GET: detail of an order       
         public ActionResult Detail(long? id)
         {
             if (!id.HasValue)
@@ -45,8 +48,8 @@ namespace TM.Web.Areas.Patient.Controllers
             //return Json(model,JsonRequestBehavior.AllowGet);                   
             return View(model);
         }
-        // Patient see a list of order that he submitted before
-        // GET: Patient/PatientOrder
+
+        // GET: lists of order that patient submitted with filter
         public ActionResult Index(int? typeFilter)
         {
             // Get list of all patient Orders
@@ -79,15 +82,19 @@ namespace TM.Web.Areas.Patient.Controllers
         // GET: Patient/PatientOrder/Create
         public ActionResult Create()
         {
+            // List all paraclinical params
             ViewBag.Symptom = "symptom";
             ViewBag.SymptomList = new MeasureParamDao().ListAll(2);
             return View();
         }
-        // Patient create order and add symptoms, measured params
+
+        // POST: Patient create order and add symptoms, measured params
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create (OrderViewModel model)
         {
+
+            // List all paraclinical params
             ViewBag.SymptomList = new MeasureParamDao().ListAll(2);
             if (ModelState.IsValid)
             {
@@ -176,6 +183,22 @@ namespace TM.Web.Areas.Patient.Controllers
                     return Json(new { loi = "asign doctor for an order",doctor=doctorId,patient = curUserId });
                     //return View(model);
                 }
+
+                // Notify to doctor
+                TM_Notification noty = new TM_Notification();
+                noty.Title = "Yêu cầu chẩn đoán từ " + User.Identity.GetFullName();
+                noty.Link = (int)order.Id;
+                noty.CreatedDate = DateTime.Now;
+                noty.Contents = "Bệnh nhân gửi yêu cầu chẩn đoán cho bác sĩ";
+                noty.Type = 2; // yêu cầu chẩn đoán
+                noty.ReceiverId = doctorId;
+                noty.Status = false;
+                var notiResult = new NotificationDao().Create(noty);
+                if (notiResult<1)
+                {
+                    ModelState.AddModelError("", "Không tìm thấy bác sĩ nào trên hệ thống");
+                    return Json(new { loi = "Không thêm được thông báo" });
+                }
                 TempData["Message"] = "Tạo bệnh án thành công";
                 return RedirectToAction("Index","PatientOrder",new { Area = "Patient" });
             }
@@ -183,5 +206,107 @@ namespace TM.Web.Areas.Patient.Controllers
             return View(model);
         }
 
+        // GET: Health Chart, can choose Params
+        public ActionResult ShowChart(int[] arguments)
+        {
+            
+            return View();
+        }
+
+        // AJAX: Get Chart datas
+        public JsonResult GetChartData()
+        {
+            // Find current user Id
+            int patienId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (patienId <= 0)
+            {
+                patienId = 1021;
+            }
+
+            // Get list of all orders of current user
+            var models = new OrderDao().GetHistories(patienId).ToList();
+            List<object> dataset = new List<object>();
+            var labels = new List<string>();
+            var lowPress = new List<int>();
+            var highPress = new List<int>();
+            var heartBeat = new List<int>();
+            var gpt = new List<int>();
+            var insulin = new List<int>();
+            var cholesteron = new List<int>();
+            // Loop through all order to add datas
+            for(var i=0; i< models.Count();i++)
+            {
+                labels.Add(((DateTime)models[i].CreatedDate).ToString("dd/MM/yy"));
+                foreach (var param in models[i].ClinicalParams)
+                {
+                    if (param.CodeName.Equals("HeartBeat"))
+                    {
+                        heartBeat.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("LowPressure"))
+                    {
+                        lowPress.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("HighPressure"))
+                    {
+                        highPress.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("GPT"))
+                    {
+                        lowPress.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("Insulin"))
+                    {
+                        highPress.Add((int)param.Value);
+                    }
+                    if (param.CodeName.Equals("Cholesteron"))
+                    {
+                        highPress.Add((int)param.Value);
+                    }
+
+                }
+
+                // if one has null value, add zero to it
+                if (heartBeat.Count< i+1)
+                {
+                    heartBeat.Add(0);
+                }
+                if (lowPress.Count < i + 1)
+                {
+                    lowPress.Add(0);
+                }
+                if (highPress.Count < i + 1)
+                {
+                    highPress.Add(0);
+                }
+                if (gpt.Count < i + 1)
+                {
+                    gpt.Add(0);
+                }
+                if (cholesteron.Count < i + 1)
+                {
+                    cholesteron.Add(0);
+                }
+                if (insulin.Count < i + 1)
+                {
+                    insulin.Add(0);
+                }
+            }
+            dataset.Add(labels);
+            dataset.Add(heartBeat);
+            dataset.Add(lowPress);
+            dataset.Add(highPress);
+            dataset.Add(gpt);
+            dataset.Add(insulin);
+            dataset.Add(cholesteron);
+            return Json(new { d = dataset });
+
+        }
+
+        // GET: Show Dashboard
+        public ActionResult DashBoard()
+        {
+            return View();
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace TM.Web.Areas.Patient.Controllers
                 }
 
                 // Update account data
-                user.Avatar = model.Avatar;
+                
                 user.Email = model.Email;
                 user.DateOfBirth = model.DoB;
                 user.FullName = model.FullName;

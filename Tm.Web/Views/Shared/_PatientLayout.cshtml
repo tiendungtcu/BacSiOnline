@@ -80,7 +80,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Statistic", "PatientOrder", new {Area = "Patient" })">
+                            <a href="@Url.Action("ShowChart", "PatientOrder", new {Area = "Patient" })">
                                 <i class="far fa-check-square"></i>Thống kê
                             </a>
                         </li>
@@ -105,7 +105,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="@Url.Action("Index","Home",new { Area=""})">
+                            <a class="js-arrow" href="@Url.Action("DashBoard","PatientOrder",new { Area="Patient"})">
                                 <i class="fas fa-tachometer-alt"></i>Bảng tin
                             </a>
                         </li>
@@ -132,7 +132,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Statistic","PatientOrder",new { Area = "Patient" })">
+                                    <a href="@Url.Action("ShowChart","PatientOrder",new { Area = "Patient" })">
                                         <i class="fas fa-chart-pie"></i>Thống kê
                                     </a>
                                 </li>
@@ -197,7 +197,6 @@
     </script>
     <script src="~/Content/Common/circle-progress/circle-progress.min.js"></script>
     <script src="~/Content/Common/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="~/Content/Common/chartjs/Chart.bundle.min.js"></script>
     <script src="~/Content/Common/select2/js/select2.min.js">
     </script>
 

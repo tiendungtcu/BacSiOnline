@@ -26,10 +26,10 @@ insert into TM_MeasureParam(CodeName,Description,Unit,Type,CreatedDate,Status)
 Values('HeartBeat',N'Nhịp tim',N'Lần/phút',1,GETDATE(),1)
 
 insert into TM_MeasureParam(CodeName,Description,Unit,Type,CreatedDate,Status)
-Values(N'GPT',N'Cholesteron','mmHg',2,GETDATE(),1)
+Values(N'Cholesteron',N'Cholesteron','mmHg',2,GETDATE(),1)
 
 insert into TM_MeasureParam(CodeName,Description,Unit,Type,CreatedDate,Status)
-Values(N'GPT',N'Insulin','mmHg',2,GETDATE(),1)
+Values(N'Insulin',N'Insulin','mmHg',2,GETDATE(),1)
 
 insert into TM_MeasureParam(CodeName,Description,Unit,Type,CreatedDate,Status)
 Values(N'GPT',N'GPT','mmHg',2,GETDATE(),1)

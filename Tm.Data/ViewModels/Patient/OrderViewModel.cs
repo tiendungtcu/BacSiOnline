@@ -28,17 +28,17 @@ namespace Tm.Data.ViewModels.Patient
         // Clinical Params     
         [Display(Name = "Chiều cao")]
         [Required(ErrorMessage = "Chưa nhập chiều cao")]
-        [Range(40, 160, ErrorMessage = "Chiều cao trong khoảng 40-160")]
+        [Range(40, 200, ErrorMessage = "Chiều cao trong khoảng 40-200")]
         public float Height { get; set; }
 
         [Display(Name = "Cân nặng")]
         [Required(ErrorMessage = "Chưa nhập cân nặng")]
-        [Range(40, 160, ErrorMessage = "Cân nặng trong khoảng 40-160")]
+        [Range(3, 160, ErrorMessage = "Cân nặng trong khoảng 3-160")]
         public float Weight { get; set; }
 
         [Display(Name = "Huyết áp tâm trương")]
         [Required(ErrorMessage = "Chưa nhập huyết áp tâm trương")]
-        [Range(40, 160, ErrorMessage = "Huyết áp trong khoảng 40-160")]
+        [Range(80, 300, ErrorMessage = "Huyết áp trong khoảng 80-300")]
         public float HighPressure { get; set; }
 
         [DataType(DataType.Date)]
@@ -46,7 +46,7 @@ namespace Tm.Data.ViewModels.Patient
 
         [Display(Name = "Huyết áp tâm thu")]
         [Required(ErrorMessage = "Chưa nhập huyết áp tâm thu")]
-        [Range(40, 160, ErrorMessage = "Huyết áp trong khoảng 40-160")]
+        [Range(20, 120, ErrorMessage = "Huyết áp trong khoảng 20-120")]
         public float LowPressure { get; set; }
 
         [DataType(DataType.Date)]
