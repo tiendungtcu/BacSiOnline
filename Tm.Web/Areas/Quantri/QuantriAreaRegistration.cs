@@ -14,6 +14,7 @@ namespace TM.Web.Areas.Quantri
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+
             context.MapRoute(
                 "Quantri_default",
                 "Quantri/{controller}/{action}/{id}",

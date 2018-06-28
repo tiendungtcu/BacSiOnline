@@ -16,13 +16,12 @@
                             <div class="col-md-2">
                                 <p>Tình trạng:</p>
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-control-sm" id="filter-by-status">
-                                    <option value="all">Tất cả</option>
-                                    <option value="d">Đã chẩn đoán</option>
-                                    <option value="u">Chưa chẩn đoán</option>
-                                </select>
-                            </div>
+                            @using (Html.BeginForm("Index", "DoctorOrder", new { area = "Doctor" }, FormMethod.Post, new { id = "formFilter" }))
+                            {
+                                <div class="col-md-2">
+                                    @Html.DropDownList("typeFilter", new SelectList(ViewBag.StatusFilter, "Value", "Text"), new { @class = "form-control-sm" })
+                                </div>
+                            }
                         </div>
 
                         <div class="row form-group">
@@ -118,14 +117,17 @@
 </div>
 
 @section Scripts{
-    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
-
-
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- My JS -->
     <script>
         $(document).ready(function () {
+
+            $('#typeFilter').on('change', function (e) {
+                // $(location).attr('href', recUrl + '/' + this.value)
+                $('#formFilter').submit();
+            });
             // GLOBAL VAR
             var current = new Date($.now());
 
@@ -212,78 +214,6 @@
                 var yyyy = current.getFullYear();
                 return `${yyyy}-${mm}-${dd}`;
             }
-
-            // Add form group element
-            // $("#btn-add-2").click(function()
-            // {
-            // <!-- Form Replica -->
-            //     <div class="row form-group" id="copy-group">
-            //         <!-- Label -->
-            //         <div class="col col-md-3">
-            //             <label>Cholesteron (mmol/l)</label>
-            //         </div>
-            //         <!-- Value input -->
-            //         <div class="col-12 col-md-4">
-            //             <input type="text" id="test-select" placeholder="Chỉ số cholesteron trong máu" name="cholesteron-input" class="form-control">
-            //         </div>
-            //         <!-- Measuring date input -->
-            //         <div class="col-12 col-md-4">
-            //             <input type="date" name="cholesteron-date-input" class="form-control">
-            //         </div>
-            //         <!-- Delete button -->
-            //         <div class="input-group-btn">
-            //             <button class="btn btn-danger remove" type="button">
-            //                 <i class="fas fa-minus"></i>
-            //             </button>
-            //         </div>
-            // </div>
-            //     if(paramCount==0) return;
-            //     var paramName = $("#select-2").find(":selected").text();
-            //     $("#select-2 :selected").remove(); paramCount--;
-            //     // $("#test-select").val("Duy Trung");
-            //     var pDiv = $('<div/>',{
-            //         class:"row form-group",
-            //         name: paramName + '-group',
-            //         html: [$("<div/>",{
-            //             class: "col col-md-3",
-            //             html: $('<label/>',{
-            //                 text: paramName
-            //             })
-            //         }), $("<div/>",{
-            //             class: "col-12 col-md-4",
-            //             html: $("<input/>",{
-            //                 type: "number",
-            //                 placeholder: "Chỉ số " + paramName + " trong máu",
-            //                 name: paramName + "-input",
-            //                 class: "form-control"
-            //             })
-            //         }), $("<div/>",{
-            //             class: "col-12 col-md-4",
-            //             html: $("<input/>",{
-            //                 type: "date",
-            //                 name: paramName.toLowerCase() + "-date-input",
-            //                 value: getCurrentDateStr(),
-            //                 class: "form-control"
-            //             })
-            //         }),$("<div/>",{
-            //             class: "input-group-btn",
-            //             html: $("<button/>",{
-            //                 type: "button",
-            //                 class: "btn btn-danger remove",
-            //                 html: '<i class="fas fa-minus"></i>'
-            //                 + `<input type="hidden" class="btn-hidden-val" value=${paramName}>`,
-            //             }).bind('click',function(){
-            //                 //alert($(this).closest(".form-group").html());
-            //                 $(this).closest(".form-group").remove(); paramCount++;
-            //                 $("#select-2").prepend(`<option>${$(this).find(".btn-hidden-val").val()}</option>`);
-            //             })
-            //         })]
-            //     })
-
-            //     $("#add-group-before").before(pDiv);
-            // });
-
-
         });
     </script>
 

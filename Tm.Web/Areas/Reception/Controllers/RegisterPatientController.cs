@@ -11,6 +11,7 @@ using TM.Web.Models;
 
 namespace TM.Web.Areas.Reception.Controllers
 {
+    [Authorize(Roles ="RECPTION_GROUP")]
     public class RegisterPatientController : QuantriBaseController
     {
         // GET: Reception/Home

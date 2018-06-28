@@ -14,22 +14,37 @@
             <div class="row form-group">
                 <div class="col-md-12">
                     <fieldset class="form-control" id="filter-panel">
-                        <legend><i class="fa fa-filter"></i> Chọn các thông số</legend>
+                        <legend>
+                            <i class="fa fa-flask"></i> Lựa chọn thông số
+                        </legend>
+
                         <div class="row form-group">
-                            <div class="col-md-2">
-                                <input type="checkbox" name="paramChecked" value="ha-tamthu" class="form-check-input" checked> Huyết áp
+                            <div class="col-md-2 offset-md-2">
+                                <label>
+                                    <input type="checkbox" id="cholesteron" class="form-check-input">Cholesteron
+                                </label>
                             </div>
 
                             <div class="col-md-2">
-                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> Cholesteron
-                            </div>
-
-                            <div class="col-md-2">
-                                <input type="checkbox" name="paramChecked" value="thisWeek" class="form-check-input"> GPT
+                                <label>
+                                    <input type="checkbox" id="gpt" class="form-check-input">GPT
+                                </label>
                             </div>
                         </div>
-
-                    </fieldset>
+                        <!-- Thời gian thống kê -->
+                        <!-- <div class="row form-group">
+                <div class="col-md-2">
+                    <p>Phạm vi thống kê:</p>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control-sm">
+                        <option value="5">5 bệnh án gần nhất</option>
+                        <option value="5">10 bệnh án gần nhất</option>
+                        <option value="5">Toàn bộ thời gian</option>
+                    </select>
+                </div>
+            </div> -->
+                    </fieldset><hr>
                 </div>
             </div>
             <hr>

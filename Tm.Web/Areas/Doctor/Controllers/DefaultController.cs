@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace TM.Web.Areas.Doctor.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController : DoctorBaseController
     {
         // GET: Doctor/Home
         public ActionResult Default()

@@ -137,3 +137,36 @@ input.input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+tr .dt-diag-content{
+    font-family: 'Roboto';
+    color: purple
+}
+
+tr .dt-diag-content.none{
+    font-style: italic
+}
+
+tr .dt-diag-content.readmore{
+    /* font-size: 20px; */
+    color: tomato;
+}
+
+tr a.more-link{
+    text-decoration: none;
+    outline: none;
+}
+
+tr a{
+    color: #0254EB;
+}
+
+tr a:visited{
+    color: #0254EB;
+}
+
+tr .more-content span{
+    display: none;
+}
+/* fieldset#filter-panel select, input{
+    height: 80%;    
+} */

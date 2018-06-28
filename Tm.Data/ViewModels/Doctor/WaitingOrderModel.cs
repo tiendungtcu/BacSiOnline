@@ -9,10 +9,10 @@ namespace Tm.Data.ViewModels.Doctor
 {
     public class WaitingOrderModel
     {
-        [Display(Name = "Mã bệnh án")]
+        [Display(Name = "Mã B.án")]
         public long Id { get; set; }
 
-        [Display(Name = "Mã bệnh bệnh nhân")]
+        [Display(Name = "Mã B.Nhân ")]
         public int? PatientId { get; set; }
 
         [Display(Name = "Tên bệnh nhân")]
@@ -21,7 +21,7 @@ namespace Tm.Data.ViewModels.Doctor
         [Display(Name = "Tuổi")]
         public int Age { get; set; }
 
-        [Display(Name = "Tuổi")]
+        [Display(Name = "Giới tính")]
         public string Gender { get; set; }
 
         [Display(Name = "Ngày gửi")]

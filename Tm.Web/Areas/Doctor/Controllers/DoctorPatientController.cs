@@ -8,7 +8,7 @@ using Tm.Data.Functions;
 
 namespace TM.Web.Areas.Doctor.Controllers
 {
-    public class DoctorPatientController : Controller
+    public class DoctorPatientController : DoctorBaseController
     {
         // GET: Doctor/DoctorPatient
         public ActionResult History(int? id)

@@ -53,53 +53,54 @@
                                     @Html.TextBoxFor(m => m.DoB, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
                                 </div>
                             </div>
-                            @{ int i = 0;}
-                            @foreach (var addr in Model.Addresses)
+                
+                            @if (Model.Addresses != null)
                             {
+                                int i = 0;
+                                foreach (var addr in Model.Addresses)
+                                {
 
+                                    <div class="row form-group">
+                                        <div class="col-md-2">
+                                            <p>Địa chỉ:</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="street-input" class="form-control-label">Số nhà, đường</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBox("addr[" + i + "].Address", addr.Address, new { @class = "form-control", placeholder = "Nhập vào chi tiết số nhà, ngõ, đường phố" })
+                                        </div>
+                                    </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-2">
-                                        <p>Địa chỉ:</p>
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="province-input" class="form-control-label">Tỉnh thành</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].ProvinceName", addr.ProvinceName, new { @class = "form-control" })
+                                        </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label for="street-input" class="form-control-label">Số nhà, đường</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.TextBox("addr[" + i + "].Address", addr.Address, new { @class = "form-control", placeholder = "Nhập vào chi tiết số nhà, ngõ, đường phố" })
-                                    </div>
-                                </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label for="province-input" class="form-control-label">Tỉnh thành</label>
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="district-input" class="form-control-label">Quận, huyện</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].DistrictName", addr.DistrictName, new { @class = "form-control" })
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        @Html.TextBox("addr[" + i + "].ProvinceName", addr.ProvinceName, new { @class = "form-control" })
-                                    </div>
-                                </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label for="district-input" class="form-control-label">Quận, huyện</label>
+                                    <div class="row form-group">
+                                        <div class="col-md-8" style="text-align: right">
+                                            <label for="ward-input" class="form-control-label">Xã, phường, thị trấn</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("addr[" + i + "].WardName", addr.WardName, new { @class = "form-control" })
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        @Html.TextBox("addr[" + i + "].DistrictName", addr.DistrictName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label for="ward-input" class="form-control-label">Xã, phường, thị trấn</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.TextBox("addr[" + i + "].WardName", addr.WardName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                                i = i + 1;
-                            }
-
-
+                                    i = i + 1;
+                                }
+                            }                            
                             <div class="row form-group">
                                 <div class="col-md-2">
                                     <label for="idcard-input" class="form-control-label">

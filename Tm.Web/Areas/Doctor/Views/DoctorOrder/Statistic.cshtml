@@ -98,86 +98,88 @@
 
 
 @section Scripts{
-    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/Common/datatable/Select-1.2.6/js/dataTables.select.min.js"></script>
 
     <!-- My JS -->
     <script>
-        $(document).ready(function () {
+        $(document).ready(function(){
             // populate DataTable
 
             var paramCount = $("#select-2").children().length;
             var table = $("#record-table").DataTable({
-                columnDefs: [
-                    {
-                        width: '10%',
-                        targets: [0, 1]
-                    },
-                    {
-                        width: '5%',
-                        targets: [3, 4]
-                    }],
+                columnDefs:[
+                {
+                    width: '10%',
+                    targets:[0,1]
+                },
+                {
+                    width: '5%',
+                    targets:[3,4]
+                }],
                 // cho chọn hàng
-                select: {
-                    style: 'single',
+                select : {
+                    style:'single',
                     info: false
                 },
                 // chỉnh ngôn ngữ các thành phần trong bảng
                 "language": {
                     "lengthMenu": "Hiển thị _MENU_ bản ghi một trang",
                     "zeroRecords": "Không tìm thấy kết quả nào!",
-                    "info": "Hiển thị trang _PAGE_/_PAGES_, tổng số _MAX_ bản ghi",
-                    "infoEmpty": "Hiện không có bản ghi nào",
-                    "infoFiltered": "Tìm kiếm trên tất cả _MAX_ bản ghi",
-                    "paginate": {
-                        "previous": "Trước",
-                        "next": "Tiếp"
+                    "info":"Hiển thị trang _PAGE_/_PAGES_, tổng số _MAX_ bản ghi",
+                    "infoEmpty":"Hiện không có bản ghi nào",
+                    "infoFiltered":"Tìm kiếm trên tất cả _MAX_ bản ghi",
+                    "paginate":{
+                        "previous":"Trước",
+                        "next":"Tiếp"
                     },
-                    "search": "Tìm kiếm",
+                    "search":"Tìm kiếm",
                 }
             });
 
-            $("#btn-add-2").click(function () {
-                if (paramCount == 0) return;
+            $("#btn-add-2").click(function()
+            {
+                if(paramCount==0) return;
 
                 var paramName = $("#select-2").find(":selected").text();
                 $("#select-2 :selected").remove(); paramCount--;
-                var pDiv = $('<div/>', {
-                    class: "row form-group",
+                var pDiv = $('<div/>',{
+                    class:"row form-group",
                     name: paramName + '-group',
-                    css: { 'text-align': 'right' },
-                    html: [$("<div/>", {
+                    css: {'text-align':'right'},
+                    html: [$("<div/>",{
                         class: "col col-md-3",
-                        html: $('<label/>', {
+                        html: $('<label/>',{
                             class: 'form-control-label',
                             text: paramName,
                         }),
-                    }), $("<div/>", {
+                    }), $("<div/>",{
                         class: "col-12 col-md-4",
-                        html: $("<input/>", {
+                        html: $("<input/>",{
                             type: "number",
                             placeholder: "Cận dưới chỉ số " + paramName,
                             name: paramName.toLowerCase() + 'From',
                             id: paramName + "-input",
                             class: "input-sm form-control-sm form-control"
                         })
-                    }), $("<div/>", {
+                    }), $("<div/>",{
                         class: "col-12 col-md-4",
-                        html: $("<input/>", {
+                        html: $("<input/>",{
                             type: "number",
                             placeholder: "Cận trên chỉ số " + paramName,
                             name: paramName.toLowerCase() + 'To',
                             id: paramName + "-input",
                             class: "input-sm form-control-sm form-control"
                         })
-                    }), $("<div/>", {
+                    }),$("<div/>",{
                         class: "input-group-btn",
-                        html: $("<button/>", {
+                        html: $("<button/>",{
                             type: "button",
                             class: "btn btn-danger remove btn-sm",
                             html: '<i class="fas fa-minus"></i>'
-                                + `<input type="hidden" class="btn-hidden-val" value=${paramName}>`,
-                        }).bind('click', function () {
+                            + `<input type="hidden" class="btn-hidden-val" value=${paramName}>`,
+                        }).bind('click',function(){
                             //alert($(this).closest(".form-group").html());
                             $(this).closest(".form-group").remove(); paramCount++;
                             $("#select-2").prepend(`<option>${$(this).find(".btn-hidden-val").val()}</option>`);
@@ -187,5 +189,5 @@
                 $("#add-group-before").before(pDiv);
             });
         });
-    </script>
+</script>
 }

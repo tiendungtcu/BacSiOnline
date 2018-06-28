@@ -10,7 +10,7 @@ using TM.Web.Models;
 
 namespace TM.Web.Areas.Patient.Controllers
 {
-    public class PatientOrderController : Controller
+    public class PatientOrderController : PatientBaseController
     {
 
         // GET: history of orders of a patient
@@ -54,7 +54,7 @@ namespace TM.Web.Areas.Patient.Controllers
             int patienId = User.Identity.GetUserId<int>(); //Get current user Id
             if (patienId <= 0)
             {
-                patienId = 1021;
+                return RedirectToAction("Login", "Account", new { Area = "" });
             }
             var orders = new OrderDao().ListOrdersByPatient(patienId);
             if (typeFilter==2)

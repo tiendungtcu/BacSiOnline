@@ -9,6 +9,7 @@ using Tm.Data.Models;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
+    [Authorize(Roles ="ADMIN_GROUP")]
     public class QuantriBaseController : Controller
     {
         protected MyIdentityDbContext context;

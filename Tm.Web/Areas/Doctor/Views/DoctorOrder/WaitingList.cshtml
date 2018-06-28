@@ -60,8 +60,10 @@
 </div>
 
 @section Scripts{
-    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
+<!-- DataTable JS -->
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Common/datatable/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/Common/datatable/Select-1.2.6/js/dataTables.select.min.js"></script>
 
     <!-- END MAIN CONTENT-->
     <!-- My JS -->
@@ -70,14 +72,14 @@
             // populate DataTable
             var table = $("#record-table").DataTable({
                 columnDefs: [
-                    {
-                        width: '10%',
-                        targets: [0, 1]
-                    },
-                    {
-                        width: '5%',
-                        targets: [3, 4]
-                    }],
+                {
+                    width: '5%',
+                    targets: [0, 1]
+                },
+                {
+                    width: '5%',
+                    targets: [3, 4]
+                }],
                 // cho chọn hàng
                 select: {
                     style: 'single',

@@ -50,8 +50,6 @@ namespace Tm.Data.Functions
         // Get (DoctorPatientModel) patient detail for doctor
         public DoctorPatientModel GetDoctorPatientDetail(int patientId)
         {
-            try
-            {
                 var model = new DoctorPatientModel();
                 var patient = db.TM_Users.Find(patientId);
                 var patDetail = db.TM_Patient.Where(p => p.UserId == patientId).FirstOrDefault();
@@ -69,14 +67,8 @@ namespace Tm.Data.Functions
                 model.Gender = patient.Gender == "M" ? "Nam" : patient.Gender == "F" ? "Nữ" : "Khác";
                 model.LastOrder = GetLastOrder(patientId);
                 model.Age = patient.DateOfBirth == null ? 0 : DateTime.Now.Year - patient.DateOfBirth.Value.Year;
-                model.FullAddress = ToFullAddress((int)address.WardId, address.Address);                
+                model.FullAddress = address==null?null:ToFullAddress((int)address.WardId, address.Address);                
                 return model;
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
         }
         
         // Get lastorder time
@@ -91,8 +83,7 @@ namespace Tm.Data.Functions
         // Get (PatientOrderDetail) Patient detail (patientId)
         public PatientOrderDetail GetPatientDetail(int patientId)
         {
-            try
-            {
+
                 var model = new PatientOrderDetail();
                 var patient = db.TM_Users.Find(patientId);
                 var patDetail = db.TM_Patient.Where(p => p.UserId == patientId).FirstOrDefault();
@@ -112,20 +103,11 @@ namespace Tm.Data.Functions
                 model.Email = patient.Email;
                 model.LastLogin = patient.LastLogin;
                 model.Age = patient.DateOfBirth == null ? 0 : DateTime.Now.Year - patient.DateOfBirth.Value.Year;
-                model.Address = ToFullAddress((int)address.WardId, address.Address);
+                model.Address = address==null?null:ToFullAddress((int)address.WardId, address.Address);
                 model.AssurenceCard = patDetail.AssuranceCard;
                 model.IdentityCard = patDetail.IdentityCard;
                 model.Orders = ListOrdersByPatient(patientId);
                 return model;
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-            
-
-
             
         }
 
@@ -182,8 +164,6 @@ namespace Tm.Data.Functions
         // Convert address to string 
         public string ToFullAddress(int wardId, string address)
         {
-            try
-            {
                 var model = db.Wards.Where(w=>w.Id==wardId)
                     .Join(
                     db.Districts, // join with
@@ -212,14 +192,7 @@ namespace Tm.Data.Functions
                 result.Append(model.Type + " ");
                 result.Append(model.Name); // Tinh
                 return result.ToString();
-            }
-            catch (Exception)
-            {
-
-                return string.Empty;
-            }
             
-
         }
 
         // Get all Orders by PatienId

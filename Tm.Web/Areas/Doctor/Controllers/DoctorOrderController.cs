@@ -8,10 +8,10 @@ using Tm.Data.Functions;
 
 namespace TM.Web.Areas.Doctor.Controllers
 {
-    public class DoctorOrderController : Controller
+    public class DoctorOrderController : DoctorBaseController
     {
         // GET: Doctor/DoctorOrder - show all order by doctor
-        public ActionResult Index()
+        public ActionResult Index(int? typeFilter)
         {
             // Get list of all Orders this doctor responds
             int doctorId = User.Identity.GetUserId<int>(); //Get current user Id
@@ -20,6 +20,22 @@ namespace TM.Web.Areas.Doctor.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
             var orders = new OrderDao().ListOrdersByDoctor(doctorId);
+            if (typeFilter == 2)
+            {
+                orders = orders.Where(o => o.Status.Equals("Chưa chẩn đoán"));
+            }
+            if (typeFilter == 1)
+            {
+                orders = orders.Where(o => o.Status.Equals("Đã chẩn đoán"));
+            }
+            IList<SelectListItem> statusList = new List<SelectListItem>
+            {
+                new SelectListItem{Text = "--Tất cả--", Value = "0"},
+                new SelectListItem{Text = "Đã chẩn đoán", Value = "1"},
+                new SelectListItem{Text = "Chưa chẩn đoán", Value = "2"},
+            };
+
+            ViewBag.StatusFilter = statusList;
             //return Json(orders,JsonRequestBehavior.AllowGet);
             return View(orders);
         }

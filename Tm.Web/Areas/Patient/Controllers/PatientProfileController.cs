@@ -7,17 +7,26 @@ using Tm.Data.Models;
 using Tm.Data.ViewModels;
 using Tm.Data.ViewModels.Patient;
 using TM.Web.Areas.Quantri.Controllers;
+using TM.Web.Controllers;
 using TM.Web.Models;
 
 namespace TM.Web.Areas.Patient.Controllers
 {
-    public class PatientProfileController : QuantriBaseController
+    [Authorize(Roles="PATIENT_GROUP")]
+    public class PatientProfileController : CommonBaseController
     {
         // Update user detail
         [HttpPost]
         public ActionResult Update(PatientProfile model, IList<AddressDetail> addr)
         {
-            model.Addresses = addr; // Assign AddressDetail list to PatientProfile model
+            if (addr != null)
+            {
+                model.Addresses = addr; // Assign AddressDetail list to PatientProfile model
+            }
+            else
+            {
+                model.Addresses = null;
+            }          
             if (ModelState.IsValid)
             {
                 int userid = User.Identity.GetUserId<int>();

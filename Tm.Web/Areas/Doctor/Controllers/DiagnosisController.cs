@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace TM.Web.Areas.Doctor.Controllers
 {
-    public class DiagnosisController : Controller
+    public class DiagnosisController : DoctorBaseController
     {
         // GET: Doctor/Diagnosis
         public ActionResult Index()

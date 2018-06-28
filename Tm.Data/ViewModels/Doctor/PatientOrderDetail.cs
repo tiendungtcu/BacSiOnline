@@ -9,7 +9,7 @@ namespace Tm.Data.ViewModels.Doctor
 {
     public class PatientOrderDetail
     {
-        [Display(Name = "Mã bệnh nhân")]
+        [Display(Name = "Mã B.Nhân")]
         public int PatienId { get; set; }
 
         [Display(Name = "Giới tính")]

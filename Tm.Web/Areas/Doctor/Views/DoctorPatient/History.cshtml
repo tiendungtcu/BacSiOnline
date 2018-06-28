@@ -12,7 +12,7 @@
                 <p style="margin: 3px 10px"><a href="@Url.Action("Index","DoctorPatient",new { Area="Doctor"})">Chọn bệnh nhân</a></p>
                 <p style="margin: 3px 10px">&#9658;</p>
 
-                 @Html.DropDownList("SelectedPatient", (SelectList)ViewBag.PatientList)                
+                 @Html.DropDownList("SelectedPatient", (SelectList)ViewBag.PatientList,new { @class="col-2 form-control-sm"})                
             </div>
         </div>
         <div class="card-header card-header-title">

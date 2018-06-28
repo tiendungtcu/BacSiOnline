@@ -7,7 +7,7 @@
 <!-- MAIN CONTENT-->
 <div class="main-content">
     <div class="card">
-        <div class="card-header" style=" background-color: #ddd">
+        <div class="card-header" style="background-color: #ddd">
             <div class="row group-control">
                 <p style="margin: 3px 10px"><a href="@Url.Action("Index", "DoctorPatient", new { Area = "Doctor" })">Các bệnh nhân đang theo dõi</a></p>
                 <p style="margin: 3px 10px">&#9658;</p>
@@ -28,27 +28,19 @@
                 <div class="col-md-9">
                     <fieldset class="form-control">
                         <legend>Thông tin cá nhân</legend>
-                        <div class="row form-group">
-                            <div class="col-md-2">
-                                <p>Họ và tên:</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p style="text-transform: uppercase" id="name-label">@Html.DisplayFor(m => m.PatientName)</p>
-                            </div>
-                        </div>
 
                         <div class="row form-group">
-                            <div class="col-md-2">
-                                <p>Giới tính:</p>
+                            <div class="col col-md-3">
+                                <label for="record-date-input" class="form-control-label">Tên bệnh nhân</label>
                             </div>
-                            <div class="col-md-5">
-                                <p id="gender-label">@Html.DisplayFor(m => m.Gender)</p>
+                            <div class="col-12 col-md-3">
+                                <div class="typo-articles">@Html.DisplayFor(m => m.PatientName)</div>
                             </div>
-                            <div class="col-md-2" style="float: right">
-                                <p>Tuổi:</p>
+                            <div class="col col-md-2">
+                                <div class="typo-articles">Tuổi: @Html.DisplayFor(m => m.Age)</div>
                             </div>
-                            <div class="col-md-2">
-                                <p id="age-label">@Html.DisplayFor(m => m.Age)</p>
+                            <div class="col col-md-3">
+                                <div class="typo-articles">Giới tính: @Html.DisplayFor(m => m.Gender)</div>
                             </div>
                         </div>
 
@@ -94,10 +86,9 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12">
-                                @if (Model.LastLogin != null)
-	                             {
-                                    <p id="lastlogin-label">Lần truy cập cuối cùng vào lúc:@Model.LastLogin.ToString()     </p>
-                                 }   
+
+                                    <p id="lastlogin-label">Lần truy cập cuối cùng vào lúc:@Html.DisplayFor(m=>m.LastLogin)     </p>
+
                                 
                             </div>
                         </div>
@@ -111,7 +102,7 @@
                 </div> -->
                 <div class="col-md-3">
                     <div class="center-image div-image">
-                        <img src="@Model.Avatar" id="avatar-holder" alt="Ảnh đại diện" style="margin: auto; padding: auto">
+                        <img src="@Model.Avatar" id="avatar-holder" alt="Ảnh đại diện" style="margin:auto; padding:auto">
                     </div>
                     <!-- <div style="display: block; margin: auto; text-align: center">
                         <label id="avatar-input" style="padding-top: 10px"><i class="fa fa-cloud-upload-alt"></i>Tải lên ảnh đại diện...<input type="file" style="opacity: 0; position: absolute;"></label>

@@ -10,11 +10,12 @@ using Tm.Data.Models;
 using Tm.Data.ViewModels;
 using Tm.Data.ViewModels.Doctor;
 using TM.Web.Areas.Quantri.Controllers;
+using TM.Web.Controllers;
 using TM.Web.Models;
 
 namespace TM.Web.Areas.Doctor.Controllers
 {
-    public class DoctorProfileController : QuantriBaseController
+    public class DoctorProfileController : CommonBaseController
     {
         // POST: Update doctor detail
         [HttpPost]
@@ -23,6 +24,10 @@ namespace TM.Web.Areas.Doctor.Controllers
             if (addr!=null)
             {
                 model.Addresses = addr; // Assign AddressDetail list to PatientProfile model
+            }
+            else
+            {
+                model.Addresses = null;
             }
             
             if (ModelState.IsValid)
@@ -36,7 +41,6 @@ namespace TM.Web.Areas.Doctor.Controllers
                 }
 
                 // Update account data
-
                 user.Email = model.Email;
                 user.DateOfBirth = model.DoB;
                 user.FullName = model.FullName;
@@ -75,7 +79,7 @@ namespace TM.Web.Areas.Doctor.Controllers
                 }
                 return RedirectToAction("Detail", new { message = ProfileMessageId.ChangeAccountSuccess });
             }
-            return View("Detail", model);
+            return View("Detail",model);
         }
 
         // POST: Change doctor password
