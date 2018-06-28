@@ -34,5 +34,33 @@ namespace TM.Web.Areas.Doctor.Controllers
             var models = new OrderDao().GetHistories(patientId);
             return View(models);
         }
+
+        // GET: Get Patient detail
+        public ActionResult Detail(int id)
+        {
+            
+            int doctor = User.Identity.GetUserId<int>();
+            if (doctor<1)
+            {
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            ViewBag.PatientList = new SelectList(new PatientDao().GetDoctorPatientsId(doctor),id);
+            var model = new PatientDao().GetPatientDetail(id);
+            //return Json(model,JsonRequestBehavior.AllowGet);           
+            return View(model);
+        }
+
+        //GET: Get patients list
+        public ActionResult Index()
+        {
+            int doctor = User.Identity.GetUserId<int>();
+            if (doctor < 1)
+            {
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            var model = new PatientDao().GetPatientsDetail(doctor);
+            //return Json(model, JsonRequestBehavior.AllowGet);
+            return View(model);
+        }
     }
 }

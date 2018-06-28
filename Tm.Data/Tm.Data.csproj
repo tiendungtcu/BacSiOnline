@@ -119,8 +119,10 @@
     </Compile>
     <Compile Include="ViewModels\ChangeUserPasswordViewModel.cs" />
     <Compile Include="ViewModels\DistrictDetail.cs" />
+    <Compile Include="ViewModels\Doctor\DoctorPatientModel.cs" />
     <Compile Include="ViewModels\Doctor\DoctorProfile.cs" />
     <Compile Include="ViewModels\Doctor\Doc_OrderList.cs" />
+    <Compile Include="ViewModels\Doctor\PatientOrderDetail.cs" />
     <Compile Include="ViewModels\Doctor\WaitingOrderModel.cs" />
     <Compile Include="ViewModels\MeasureParamDetail.cs" />
     <Compile Include="ViewModels\NotificationDetail.cs" />

@@ -4,12 +4,54 @@ using System.Linq;
 using Tm.Data.Common;
 using Tm.Data.Models;
 using Tm.Data.ViewModels;
+using Tm.Data.ViewModels.Doctor;
 using Tm.Data.ViewModels.Patient;
 
 namespace Tm.Data.Functions
 {
     public class OrderDao:CommonDao
     {
+        // Get all order
+        public IEnumerable<WaitingOrderModel> GetAllDoctorOrders(int doctorId)
+        {
+            return db.TM_Order.Join( // first order table
+             db.TM_DoctorOrder.Where(dro => dro.DoctorId == doctorId),   // doctororder table
+             order => order.Id,    //on order.Id
+             doctor => doctor.OrderId, // equal doctor.OrderId
+             (order, doctor) => new WaitingOrderModel // Select
+                        {
+                 Id = order.Id,
+                 PatientId = order.PatientId,
+                 Title = order.Title,
+                 CreatedDate = order.OrderDate,
+                 Age = order.TM_Users.DateOfBirth == null ? 0 : DateTime.Now.Year - order.TM_Users.DateOfBirth.Value.Year,
+                 PatientName = order.TM_Users.FullName,
+                 Gender = order.TM_Users.Gender == "M" ? "Name" : order.TM_Users.Gender == "F" ? "Nữ" : "Khác"
+             })
+             .ToList();
+        }
+
+        // Get all waiting order
+        public IEnumerable<WaitingOrderModel> GetWaitingList(int doctorId)
+        {
+            return db.TM_Order.Join( // first order table
+                db.TM_DoctorOrder.Where(dro => dro.DoctorId == doctorId&&dro.Status==false),   // doctororder table
+                order => order.Id,    //on order.Id
+                doctor => doctor.OrderId, // equal doctor.OrderId
+                (order, doctor) => new WaitingOrderModel // Select
+                {
+                    Id = order.Id,
+                    PatientId = order.PatientId,
+                    Title = order.Title,
+                    CreatedDate = order.OrderDate,
+                    Age = order.TM_Users.DateOfBirth == null ? 0 : DateTime.Now.Year - order.TM_Users.DateOfBirth.Value.Year,
+                    PatientName = order.TM_Users.FullName,
+                    Gender = order.TM_Users.Gender=="M"?"Name": order.TM_Users.Gender == "F"?"Nữ":"Khác"
+                })
+                .ToList();
+
+        }
+
         // Return order Detail
         public OrderDetail GetDetail(long orderId)
         {
@@ -57,6 +99,7 @@ namespace Tm.Data.Functions
             }
             
         }
+
         // Get symptoms of an order
         public IList<SymptomDetail> GetSymptoms(long orderId)
         {
@@ -72,6 +115,7 @@ namespace Tm.Data.Functions
                     }
                 ).ToList();
         }
+
         // Get all Order consists of OrderId and OrderTitle by patientId
         public IList<OrderIdTitle> GetOrderIdTitle(int patientId)
         {
@@ -82,6 +126,7 @@ namespace Tm.Data.Functions
                                   Title = u.Title
                               }).ToList();
         }
+
         // Get all Params of an order with type
         public IList<ParamDetail> GetOrderParams(long orderId, int typeId)
         {
@@ -175,6 +220,7 @@ namespace Tm.Data.Functions
                 .Where(joined => joined.PatientId == patientId);
 
         }
+
         // Add Symptom to Order by orderId and symptomId
         public bool AddSymptom(long orderId,int symId)
         {
@@ -229,6 +275,7 @@ namespace Tm.Data.Functions
                 return false;
             }
         }
+
         // Create new Order
         public long Create(TM_Order entity)
         {
@@ -272,6 +319,8 @@ namespace Tm.Data.Functions
             
             
         }
+
+        // Assign doctor to order
         public bool AssignDoctorToOrder(TM_DoctorOrder entity)
         {
             try

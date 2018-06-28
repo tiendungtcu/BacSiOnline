@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             @Html.TextBoxFor(modelItem => item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly = "readonly", @class = "form-control" })
-                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring</span>
+                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} <i>@timestring</i> </span>
                         </div>
                     </div>
                 }
@@ -122,7 +122,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             @Html.TextBoxFor(modelItem => item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly = "readonly", @class = "form-control" })
-                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring </span>
+                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} <i>@timestring</i>  </span>
                         </div>
                     </div>
                 }

@@ -53,7 +53,7 @@
                                     @Html.TextBoxFor(m => m.DoB, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
                                 </div>
                             </div>
-                            @if (Model.Addresses.Count() > 0)
+                            @if (Model.Addresses!=null)
                             {
                                 int i = 0;
                                 foreach (var addr in Model.Addresses)
@@ -112,6 +112,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(model => model.IdentityCard, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IdentityCard)
 
                                 </div>
                                 <div class="col-md-2">
@@ -161,6 +162,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", required = "true" })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber)
                                 </div>
                                 <div class="col-md-2">
                                     <label for="email-input" class="form-control-label">
@@ -169,6 +171,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Email)
                                 </div>
                             </div>
 

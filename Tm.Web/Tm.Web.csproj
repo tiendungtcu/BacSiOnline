@@ -260,6 +260,10 @@
     <Content Include="Areas\Doctor\Views\DoctorOrder\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\DoctorPatient\History.cshtml" />
     <Content Include="Areas\Doctor\Views\DoctorOrder\Detail.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorOrder\WaitingList.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorPatient\Detail.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorPatient\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\DoctorOrder\Statistic.cshtml" />
     <None Include="Areas\Doctor\Views\Shared\_DoctorLayout.cshtml" />
     <Content Include="Areas\Quantri\Views\UserManager\UserManagePartial.cshtml" />
     <Content Include="Content\bootstrap.css" />
@@ -762,10 +766,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Upload\Avatars\avatar.jpeg" />
-    <Content Include="Upload\Avatars\chip chip.jpeg" />
-    <Content Include="Upload\Avatars\IMG_1718.JPG" />
-    <Content Include="Upload\Avatars\IMG_1740.JPG" />
     <Content Include="Upload\Temp\avatar.jpeg" />
     <Content Include="Upload\Temp\IMG_0044.JPG" />
     <Content Include="Upload\Temp\IMG_0045.JPG" />

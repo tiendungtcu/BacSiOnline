@@ -1,0 +1,103 @@
+﻿@using Tm.Data.ViewModels.Doctor
+@model IEnumerable<WaitingOrderModel>
+@{
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header card-header-title">
+            <strong>Danh sách bệnh án chờ chẩn đoán</strong>
+        </div>
+        <div class="card-body card-block">
+            <div class="col">
+                <p>Có @Model.Count() bệnh án chưa chẩn đoán.</p>
+                <p>Click vào mã bệnh án để xem chi tiết bệnh án, click vào mã bệnh nhân để xem hồ sơ bệnh nhân</p>
+            </div>
+            <hr>
+            <table id="record-table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.PatientId)</th>
+                        <th>@Html.DisplayNameFor(model => model.PatientName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Age)</th>
+                        <th>@Html.DisplayNameFor(model => model.Gender)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.Id.ToString(), "Detail", "DoctorOrder", new { Area = "Doctor", id = item.Id }, new { })</td>
+                            <td>@Html.ActionLink(item.PatientId.ToString(), "Detail", "DoctorPatient", new { Area = "Doctor", id = item.PatientId }, new { })</td>
+                            <td>@Html.DisplayFor(modelItem => item.PatientName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <!-- <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr> -->
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
+
+@section Scripts{
+    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- END MAIN CONTENT-->
+    <!-- My JS -->
+    <script>
+        $(document).ready(function () {
+            // populate DataTable
+            var table = $("#record-table").DataTable({
+                columnDefs: [
+                    {
+                        width: '10%',
+                        targets: [0, 1]
+                    },
+                    {
+                        width: '5%',
+                        targets: [3, 4]
+                    }],
+                // cho chọn hàng
+                select: {
+                    style: 'single',
+                    info: false
+                },
+                // chỉnh ngôn ngữ các thành phần trong bảng
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi một trang",
+                    "zeroRecords": "Không tìm thấy kết quả nào!",
+                    "info": "Hiển thị trang _PAGE_/_PAGES_, tổng số _MAX_ bản ghi",
+                    "infoEmpty": "Hiện không có bản ghi nào",
+                    "infoFiltered": "Tìm kiếm trên tất cả _MAX_ bản ghi",
+                    "paginate": {
+                        "previous": "Trước",
+                        "next": "Tiếp"
+                    },
+                    "search": "Tìm kiếm",
+                }
+            });
+
+        });
+    </script>
+}

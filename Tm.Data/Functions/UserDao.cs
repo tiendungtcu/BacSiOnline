@@ -10,6 +10,23 @@ namespace Tm.Data.Functions
 {
     public class UserDao : CommonDao
     {
+
+        public bool AddLastLogin(int userId)
+        {
+            try
+            {
+                var user = db.TM_Users.Find(userId);
+                user.LastLogin = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
         // Update Avatar 
         public bool UpdateAvatar(int userId,string avatar)
         {

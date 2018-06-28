@@ -83,10 +83,12 @@ namespace TM.Web.Areas.Reception.Controllers
             var user = new ApplicationUser
             {
                 UserName = entity.PhoneNumber,
+                PhoneNumber = entity.PhoneNumber,
                 FullName = entity.FullName,
                 Email = username + "@gmail.com",
                 Gender = entity.Gender,
-                DateOfBirth = new DateTime(entity.BirthYear, 1, 1)
+                DateOfBirth = new DateTime(entity.BirthYear, 1, 1),
+                LastLogin = DateTime.Now
             };
             var createdUser = UserManager.Create(user, password);
             
@@ -126,9 +128,24 @@ namespace TM.Web.Areas.Reception.Controllers
             {
                 ViewBag.Error = "Không tạo được Order";
                 return View(entity);
-            } 
-               
-          return RedirectToAction("Index");
+            }
+            // Send Notify to doctor
+            // Notify to doctor
+            TM_Notification noty = new TM_Notification();
+            noty.Title = "Yêu cầu chẩn đoán từ " + User.Identity.GetFullName();
+            noty.Link = (int)result.OrderId;
+            noty.CreatedDate = DateTime.Now;
+            noty.Contents = "Bệnh nhân gửi yêu cầu chẩn đoán cho bác sĩ";
+            noty.Type = 1; // yêu cầu chẩn đoán
+            noty.ReceiverId = entity.DoctorId;
+            noty.Status = false;
+            var notiResult = new NotificationDao().Create(noty);
+            if (notiResult < 1)
+            {
+                ModelState.AddModelError("", "Không thêm được thông báo");
+                return Json(new { loi = "Không thêm được thông báo" });
+            }
+            return RedirectToAction("Index");
             
         }
 

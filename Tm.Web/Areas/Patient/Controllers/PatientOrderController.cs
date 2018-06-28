@@ -188,7 +188,7 @@ namespace TM.Web.Areas.Patient.Controllers
                 noty.Link = (int)order.Id;
                 noty.CreatedDate = DateTime.Now;
                 noty.Contents = "Bệnh nhân gửi yêu cầu chẩn đoán cho bác sĩ";
-                noty.Type = 2; // yêu cầu chẩn đoán
+                noty.Type = 1; // yêu cầu chẩn đoán
                 noty.ReceiverId = doctorId;
                 noty.Status = false;
                 var notiResult = new NotificationDao().Create(noty);

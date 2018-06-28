@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             @Html.TextBoxFor(modelItem => item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly = "readonly", @class = "form-control" })
-                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring</span>
+                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} <i>@timestring</i> </span>
                         </div>
                     </div>
                 }
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             @Html.TextBoxFor(modelItem => item.MeasuredDate, "{0:dd/MM/yyyy}", new { type = "text", @readonly = "readonly", @class = "form-control" })
-                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} @timestring </span>
+                            <span>@{var timestring = Utilities.TimespanToString(DateTime.Now, (DateTime)item.MeasuredDate);} <i>@timestring</i>  </span>
                         </div>
                     </div>
                 }
@@ -164,11 +164,15 @@
                     </div>
                     <div class="row form-group timeline-record-content">
                         <div class="col-md-2">
+                            <div style="text-align: center">
+                                <p>Tới BN. @Model.PatientName</p>
+                                <!-- <p class="time-label">28/12/2017 18:32</p> -->
+                            </div>
                             <div class="center-image">
-                                <img src="@Model.DoctorAvatar" alt="@Html.DisplayFor(m=>m.DoctorName)" class="diag-avatar">
+                                <img src="@Model.PatientAvatar" alt="@Html.DisplayFor(m=>m.PatientName)" class="diag-avatar">
                             </div>
                             <div style="text-align: center">
-                                <p>@Html.DisplayFor(m => m.DoctorName)</p>
+                                <p>@Html.DisplayFor(m => m.DiagnosisDate)</p>
                                 <!-- <p class="time-label">28/12/2017 18:32</p> -->
                             </div>
                         </div>

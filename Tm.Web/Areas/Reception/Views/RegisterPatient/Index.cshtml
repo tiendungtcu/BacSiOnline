@@ -1,15 +1,23 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Đăng ký thành công</h1>
-        <h2>Username: @ViewBag.Username </h2>
-        <h2>Password: @ViewBag.Password</h2>
-       @Html.ActionLink("Đăng ký khám", "Create")
+
+<div class="main-content">
+    <div class="card">
+        <div class="card-header" style="text-align: center; font-size: 18px;
+                        text-transform: uppercase; background: #BFD7EA; color: black">
+            <strong>Đăng ký khám bệnh thành công</strong>
+        </div>
+        <div class="card-body card-block">          
+            <h2>Username: @ViewBag.Username </h2>
+            <br />
+            <h2>Password: @ViewBag.Password</h2>
+            <br />
+            @Html.ActionLink("Tiếp tục", "Create", null,new { @class="btn btn-info"})
+        </div>
+
     </div>
-    <!-- /.col-lg-12 -->
 </div>

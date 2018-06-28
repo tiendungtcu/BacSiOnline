@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Tm.Data.Models;
 using Tm.Data.ViewModels;
+using Tm.Data.ViewModels.Doctor;
+
 namespace Tm.Data.Functions
 {
 
     public class DoctorDao:CommonDao
-    {      
+    {  
+        // 
+
         // Find a doctor by Id
         public TM_Doctor FindByUserId(int userId)
         {

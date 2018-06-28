@@ -87,5 +87,30 @@ namespace TM.Web.Areas.Doctor.Controllers
             
             return Json(new { id = Id, diagnosis = DiagnosisNotes });
         }
+
+        // GET: Show waiting list
+        public ActionResult WaitingList()
+        {
+            int doctorId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (doctorId <= 0)
+            {
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            var model = new OrderDao().GetWaitingList(doctorId);
+            return View(model);
+        }
+
+        //GET: Statistic for all order
+        public ActionResult Statistic()
+        {
+            int doctorId = User.Identity.GetUserId<int>(); //Get current user Id
+            if (doctorId <= 0)
+            {
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            var model = new OrderDao().GetAllDoctorOrders(doctorId);
+            //return Json(model,JsonRequestBehavior.AllowGet);
+            return View(model);
+        }
     }
 }

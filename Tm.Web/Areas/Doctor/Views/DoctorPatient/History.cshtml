@@ -9,7 +9,7 @@
     <div class="card">
         <div class="card-header" style="background-color:#ddd">
             <div class="row group-control">
-                <p style="margin: 3px 10px"><a href="./1-doctor-patient-list.html">Chọn bệnh nhân</a></p>
+                <p style="margin: 3px 10px"><a href="@Url.Action("Index","DoctorPatient",new { Area="Doctor"})">Chọn bệnh nhân</a></p>
                 <p style="margin: 3px 10px">&#9658;</p>
 
                  @Html.DropDownList("SelectedPatient", (SelectList)ViewBag.PatientList)                

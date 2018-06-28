@@ -1,0 +1,99 @@
+﻿@using Tm.Data.ViewModels.Doctor
+@model IEnumerable<DoctorPatientModel>
+@{
+    Layout = "~/Views/Shared/_PatientLayout.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="card">
+        <div class="card-header card-header-title">
+            <strong>Danh sách các bệnh nhân đang theo dõi</strong>
+        </div>
+        <div class="card-body card-block">
+            <div class="col">
+                <p>Tổng số @Model.Count() bệnh nhân.</p>
+                <p>Click vào mã bệnh nhân để xem hồ sơ bệnh nhân</p>
+            </div>
+            <hr>
+            <table id="record-table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.PatientId)</th>
+                        <th>@Html.DisplayNameFor(model => model.PatientName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Age)</th>
+                        <th>@Html.DisplayNameFor(model => model.Gender)</th>
+                        <th>@Html.DisplayNameFor(model => model.FullAddress)</th>
+                        <th>@Html.DisplayNameFor(model => model.AssurenceCard)</th>
+                        <th>@Html.DisplayNameFor(model => model.LastOrder)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.PatientId.ToString(), "Detail", "DoctorPatient", new { Area = "Doctor", id = item.PatientId }, new { })</td>
+                            <td>@Html.DisplayFor(modelItem => item.PatientName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FullAddress)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AssurenceCard)</td>
+
+                            <td>@Html.DisplayFor(modelItem => item.LastOrder)</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <!-- <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr> -->
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
+
+<!-- END MAIN CONTENT-->
+
+@section Scripts{
+    <script src="~/Content/Common/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Common/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // populate DataTable
+            var table = $("#record-table").DataTable({
+                // cho chọn hàng
+                columnDefs: [
+                    { width: '5%', targets: [0, 2, 3, 5] },
+                ],
+                select: {
+                    style: 'single',
+                    info: false
+                },
+                // chỉnh ngôn ngữ các thành phần trong bảng
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi một trang",
+                    "zeroRecords": "Không tìm thấy kết quả nào!",
+                    "info": "Hiển thị trang _PAGE_/_PAGES_, tổng số _MAX_ bản ghi",
+                    "infoEmpty": "Hiện không có bản ghi nào",
+                    "infoFiltered": "Tìm kiếm trên tất cả _MAX_ bản ghi",
+                    "paginate": {
+                        "previous": "Trước",
+                        "next": "Tiếp"
+                    },
+                    "search": "Tìm kiếm",
+                }
+            });
+
+        });
+    </script>
+}

@@ -107,8 +107,8 @@
         </div>
     </aside>
     <!-- END MENU SIDEBAR-->
-}
-@if (this.User.IsInRole("DOCTOR_GROUP"))
+} else
+if (this.User.IsInRole("DOCTOR_GROUP"))
 {
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -130,7 +130,7 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li>
-                        <a href="@Url.Action("ShowChart","DoctorOrder",new { Area = "Doctor" })">
+                        <a href="@Url.Action("Statistic","DoctorOrder",new { Area = "Doctor" })">
                             <i class="fas fa-tachometer-alt"></i>Bảng tin
                         </a>
                     </li>
@@ -140,13 +140,13 @@
                         </a>
                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                             <li>
-                                <a href="@Url.Action("WaitingOrder","DoctorOrder",new { Area = "Doctor" })">Bệnh án chờ chẩn đoán</a>
+                                <a href="@Url.Action("WaitingList","DoctorOrder",new { Area = "Doctor" })">Bệnh án chờ chẩn đoán</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index","DoctorOrder",new { Area = "Doctor" })">Danh sách bệnh án</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("ShowChart","DoctorOrder",new { Area = "Doctor" })">Thống kê</a>
+                                <a href="@Url.Action("Statistic","DoctorOrder",new { Area = "Doctor" })">Thống kê</a>
                             </li>
                         </ul>
                     </li>
@@ -162,7 +162,7 @@
                                 <a href="@Url.Action("History","DoctorPatient",new { Area = "Doctor" })">Lịch sử khám bệnh</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("ShowChart","DoctorPatient",new { Area = "Doctor" })">Thống kê</a>
+                                <a href="@Url.Action("Statistic","DoctorPatient",new { Area = "Doctor" })">Thống kê</a>
                             </li>
                         </ul>
                     </li>
@@ -186,7 +186,7 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="has-sub">
-                        <a class="js-arrow" href="@Url.Action("ShowChart","DoctorOrder",new { Area = "Doctor" })">
+                        <a class="js-arrow" href="@Url.Action("Statistic","DoctorOrder",new { Area = "Doctor" })">
                             <i class="fas fa-tachometer-alt"></i>Bảng tin
                         </a>
                     </li>
@@ -196,7 +196,7 @@
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="@Url.Action("WaitingOrder","DoctorOrder",new { Area = "Doctor" })">
+                                <a href="@Url.Action("WaitingList","DoctorOrder",new { Area = "Doctor" })">
                                     <i class="fa fa-spinner"></i>Bệnh án chờ chẩn đoán
                                 </a>
                             </li>
@@ -206,7 +206,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("ShowChart","DoctorOrder",new { Area = "Doctor" })">
+                                <a href="@Url.Action("Statistic","DoctorOrder",new { Area = "Doctor" })">
                                     <i class="fas fa-chart-pie"></i>Thống kê
                                 </a>
                             </li>
@@ -228,11 +228,7 @@
                                     <i class="fas fa-calendar-alt"></i>Lịch sử khám bệnh
                                 </a>
                             </li>
-                            <li>
-                                 <a href="@Url.Action("ShowChart","DoctorOrder",new { Area = "Doctor" })">
-                                    <i class="fas fa-chart-pie"></i>Thống kê
-                                 </a>
-                            </li>                                       
+
                         </ul>
                     </li>
 
@@ -247,4 +243,94 @@
     </aside>
     <!-- END MENU SIDEBAR-->
 }
+else if (this.User.IsInRole("RECEPTION_GROUP"))
+{
+    <!-- HEADER MOBILE-->
+    <header class="header-mobile d-block d-lg-none">
+        <div class="header-mobile__bar">
+            <div class="container-fluid">
+                <div class="header-mobile-inner">
+                    <a class="logo" href="@Url.Action("Create", "RegisterPatient", new {Area = "Reception"})">
+                        <img src="~/Content/Common/images/icon/logo.1.png" alt="Doctor" />
+                    </a>
+                    <button class="hamburger hamburger--slider" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar-mobile">
+            <div class="container-fluid">
+                <ul class="navbar-mobile__list list-unstyled">
+                    <li>
+                        <a href="@Url.Action("Create","RegisterPatient",new { Area = "Reception" })">
+                            <i class="fas fa-tachometer-alt"></i>Đăng ký khám bệnh
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-question-circle"></i>Trợ giúp</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- END HEADER MOBILE-->
 
+    <!-- MENU SIDEBAR-->
+    <aside class="menu-sidebar d-none d-lg-block">
+        <div class="logo">
+            <a href="#">
+                <img src="~/Content/Common/images/icon/logo.1.png" alt="Doctor" />
+            </a>
+        </div>
+        <div class="menu-sidebar__content js-scrollbar1">
+            <nav class="navbar-sidebar">
+                <ul class="list-unstyled navbar__list">
+                    <li class="has-sub">
+                        <a class="js-arrow" href="@Url.Action("Create","RegisterPatient",new { Area = "Reception" })">
+                            <i class="fas fa-tachometer-alt"></i>Đăng ký khám bệnh
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="chart.html">
+                            <i class="fas fa-question-circle"></i>Trợ giúp
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- END MENU SIDEBAR-->
+}
+else
+{
+    <!-- MENU SIDEBAR-->
+    <aside class="menu-sidebar d-none d-lg-block">
+        <div class="logo">
+            <a href="#">
+                <img src="~/Content/Common/images/icon/logo.1.png" alt="Doctor" />
+            </a>
+        </div>
+        <div class="menu-sidebar__content js-scrollbar1">
+            <nav class="navbar-sidebar">
+                <ul class="list-unstyled navbar__list">
+                    <li class="has-sub">
+                        <a class="js-arrow" href="@Url.Action("Create","RegisterPatient",new { Area = "Reception" })">
+                            <i class="fas fa-tachometer-alt"></i>Đăng ký khám bệnh
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="chart.html">
+                            <i class="fas fa-question-circle"></i>Trợ giúp
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- END MENU SIDEBAR-->
+}

@@ -20,7 +20,11 @@ namespace TM.Web.Areas.Doctor.Controllers
         [HttpPost]
         public ActionResult Update(DoctorProfile model, IList<AddressDetail> addr)
         {
-            model.Addresses = addr; // Assign AddressDetail list to PatientProfile model
+            if (addr!=null)
+            {
+                model.Addresses = addr; // Assign AddressDetail list to PatientProfile model
+            }
+            
             if (ModelState.IsValid)
             {
                 int userid = User.Identity.GetUserId<int>();

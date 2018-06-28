@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Tm.Data.Functions;
 using TM.Web.Models;
 
 namespace TM.Web.Controllers
@@ -63,7 +64,7 @@ namespace TM.Web.Controllers
                 // If Patient role
                 if (UserManager.IsInRole(id, "PATIENT_GROUP"))
                 {
-                    return RedirectToAction("History", "PatientOrder", new { area="Patient"});
+                    return RedirectToAction("Index", "PatientOrder", new { area="Patient"});
                 }
                 // If Admin role
                 else if (UserManager.IsInRole(id, "QUANTRI_GROUP"))
@@ -73,12 +74,12 @@ namespace TM.Web.Controllers
                 // If Reception role
                 else if (UserManager.IsInRole(id, "RECEPTION_GROUP"))
                 {
-                    return RedirectToAction("Index", "ReceptionRegister", new { area = "Reception" });
+                    return RedirectToAction("Create", "RegisterPatient", new { area = "Reception" });
                 }
                 // If doctor role
                 else if (UserManager.IsInRole(id, "DOCTOR_GROUP"))
                 {
-                    return RedirectToAction("Detail", "DoctorProfile", new { area = "Doctor" });
+                    return RedirectToAction("WaitingList", "DoctorOrder", new { area = "Doctor" });
                 }
                 // the left
                 else
@@ -122,18 +123,22 @@ namespace TM.Web.Controllers
             {
                 user = await UserManager.FindByNameAsync(model.EmailOrPhone);
             }
-
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             SignInStatus result =await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);                       
             switch (result)
             {               
                 case SignInStatus.Success:
+
+                    // add lastlogin
+                    new UserDao().AddLastLogin(user.Id);
+
                     //return RedirectToLocal(returnUrl);                   
                     // If Patient role
                     if (UserManager.IsInRole(user.Id, "PATIENT_GROUP"))
                     {
-                        return RedirectToAction("Create", "PatientOrder", new { area = "Patient" });
+                        return RedirectToAction("Index", "PatientOrder", new { area = "Patient" });
                     }
                     // If Admin role
                     else if (UserManager.IsInRole(user.Id, "QUANTRI_GROUP"))
@@ -143,12 +148,12 @@ namespace TM.Web.Controllers
                     // If Reception role
                     else if (UserManager.IsInRole(user.Id, "RECEPTION_GROUP"))
                     {
-                        return RedirectToAction("Index", "ReceptionRegiser", new { area = "Reception" });
+                        return RedirectToAction("Create", "RegisterPatient", new { area = "Reception" });
                     }
                     // If Doctor role
                     else if (UserManager.IsInRole(user.Id, "DOCTOR_GROUP"))
                     {
-                        return RedirectToAction("Detail", "DoctorProfile", new { area = "Doctor" });
+                        return RedirectToAction("WaitingList", "DoctorOrder", new { area = "Doctor" });
                     }
                     // còn lại 
                     else if (UserManager.IsInRole(user.Id, "NguoiDung"))
