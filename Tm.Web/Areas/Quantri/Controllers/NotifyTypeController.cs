@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using Tm.Data.Functions;
 using Tm.Data.Models;
 using TM.Web.Areas.Quantri.Controllers;
+using TM.Web.Controllers;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class NotifyTypeController : QuantriBaseController
+    public class NotifyTypeController : CommonBaseController
     {
         [AllowAnonymous]
         public ActionResult TabView()

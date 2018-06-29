@@ -81,7 +81,7 @@
     function newUser() {
         $('#dlgUser').dialog('open').dialog('center').dialog('setTitle', 'Thêm tài khoản');
         $('#fmUser').form('clear');
-        url = '@Url.Action("Create","UserManager")';
+        url = '@Url.Action("Create","UserManager1")';
     }
     /* khi click nút Đặt lại mật khẩu */
     function resetPassword() {
@@ -89,7 +89,7 @@
         if (row) {
             $.messager.confirm('Xác nhận', 'Mật khẩu của tài khoản này sẽ reset về mặc định (123456) ?', function (r) {
                 if (r) {
-                    $.post('@Url.Action("ResetPassword", "UserManager", new { Area = "Quantri"})?Id='+row.Id, function (result) {
+                    $.post('@Url.Action("ResetPassword", "UserManager1", new { Area = "Quantri"})?Id='+row.Id, function (result) {
                         if (result.success) {
                             $.messager.alert('Thông báo', 'Reset mật khẩu thành công!');
                         } else {
@@ -161,10 +161,10 @@
     /* chuyển table thành edatagridview*/
 		$(function () {
 		    $('#dgUser').edatagrid({
-		        url: '@Url.Action("ListAllPaging", "UserManager", new { Area = "Quantri" })',
-		        saveUrl: '@Url.Action("Create", "UserManager", new { Area = "Quantri" })',
-		        updateUrl: '@Url.Action("Update", "UserManager", new { Area = "Quantri" })',
-		        destroyUrl: '@Url.Action("Destroy", "UserManager", new { Area = "Quantri" })',
+		        url: '@Url.Action("ListAllPaging", "UserManager1", new { Area = "Quantri" })',
+		        saveUrl: '@Url.Action("Create", "UserManager1", new { Area = "Quantri" })',
+		        updateUrl: '@Url.Action("Update", "UserManager1", new { Area = "Quantri" })',
+		        destroyUrl: '@Url.Action("Destroy", "UserManager1", new { Area = "Quantri" })',
 		        toolbar: '#toolbarUser',
 		        iconCls: 'icon-edit',
                 idField: 'Id' ,

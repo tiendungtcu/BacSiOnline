@@ -16,13 +16,14 @@ namespace TM.Web.Areas.Reception
         {
 
             // Register new Patient 
+            
             context.MapRoute(
                  "registernewpatient", //name
-                "dang-ky-benh-nhan/{action}", // url
+                "rec-dang-ky-benh-nhan/{action}", // url
                 new { Area = "Reception", controller = "RegisterPatient", action = "Create" }, // defaults
                 new[] { "TM.Web.Areas.Reception.Controllers" }  //namespace
             );
-
+            
             context.MapRoute(
                 "Reception_default",
                 "Reception/{controller}/{action}/{id}",

@@ -2,10 +2,11 @@
 using Tm.Data.Functions;
 using Tm.Data.Models;
 using Tm.Data.ViewModels;
+using TM.Web.Controllers;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class NotificationController :  QuantriBaseController
+    public class NotificationController :  CommonBaseController
     {
         [AllowAnonymous]
         public ActionResult TabView()

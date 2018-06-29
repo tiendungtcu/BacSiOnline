@@ -2,11 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TM.Web.Controllers;
 using TM.Web.Models;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class RoleController : QuantriBaseController
+    public class RoleController : CommonBaseController
     {
         /// <summary>
         /// Get All Roles

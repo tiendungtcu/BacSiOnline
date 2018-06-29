@@ -7,12 +7,13 @@ using Tm.Data.Functions;
 using Tm.Data.Models;
 using Tm.Data.ViewModels.Reception;
 using TM.Web.Areas.Quantri.Controllers;
+using TM.Web.Controllers;
 using TM.Web.Models;
 
 namespace TM.Web.Areas.Reception.Controllers
 {
-    [Authorize(Roles ="RECPTION_GROUP")]
-    public class RegisterPatientController : QuantriBaseController
+   // [Authorize(Roles ="RECEPTION_GROUP")]
+    public class RegisterPatientController : CommonBaseController
     {
         // GET: Reception/Home
         public ActionResult Index()

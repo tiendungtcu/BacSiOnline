@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Linq;
-using System.Web.Mvc;
-using TM.Web.Models;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Tm.Data.ViewModels.Quantri;
+using TM.Web.Models;
 
-namespace TM.Web.Areas.Quantri.Controllers
+namespace TM.Web.Controllers
 {
-    public class UserManagerController : QuantriBaseController
+    public class UserManagerController : CommonBaseController
     {
         /// <summary>
         /// Trả về Partial view 
@@ -27,13 +27,13 @@ namespace TM.Web.Areas.Quantri.Controllers
         /// <param name="rows"></param>
         /// <returns></returns>
         public JsonResult ListAll()
-        {          
+        {
             var users = context.Users
-                         .Select (u=> new
+                         .Select(u => new
                          {
                              Id = u.Id,
-                             UserName = u.UserName,                         
-                             FullName = string.IsNullOrEmpty(u.FullName)?u.UserName:u.FullName                          
+                             UserName = u.UserName,
+                             FullName = string.IsNullOrEmpty(u.FullName) ? u.UserName : u.FullName
                          }).ToArray();
             return Json(users, JsonRequestBehavior.AllowGet);
         }
@@ -51,8 +51,8 @@ namespace TM.Web.Areas.Quantri.Controllers
                 var roleId = roles.First().Id;
                 var result = from user in context.Users
                              where user.Roles.Any(r => r.RoleId == roleId)
-                             select new {Id = user.Id,UserName = user.UserName } ;
-                var result1 = result.Select(r => new { id = r.Id, text = r.UserName }).ToArray();
+                             select new { Id = user.Id, FullName = user.FullName };
+                var result1 = result.Select(r => new { id = r.Id, text = r.FullName }).ToArray();
                 return Json(new { results = result1 }, JsonRequestBehavior.AllowGet);
             }
             return NotifyError("Xem");
@@ -177,10 +177,11 @@ namespace TM.Web.Areas.Quantri.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {
-                            UserName = model.UserName,
-                            Email = model.Email,
-                            FullName = model.FullName
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FullName = model.FullName
                 };
                 // tạo người dùng mới
 

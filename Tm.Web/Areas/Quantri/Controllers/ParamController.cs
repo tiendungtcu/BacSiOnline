@@ -3,10 +3,11 @@ using System.Web.Mvc;
 using Tm.Data.Models;
 using Tm.Data.Functions;
 using Tm.Data.ViewModels;
+using TM.Web.Controllers;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class ParamController : QuantriBaseController
+    public class ParamController : CommonBaseController
     {
         // 
         [AllowAnonymous]

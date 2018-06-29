@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Tm.Data.Functions;
 using TM.Web.Areas.Quantri.Controllers;
+using TM.Web.Controllers;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class ProvinceController : QuantriBaseController
+    public class ProvinceController : CommonBaseController
     {
         /// <summary>
         /// Lấy danh sách tỉnh nạp vào Select2

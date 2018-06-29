@@ -5,14 +5,12 @@
         <thead>
             <tr>
                 <th field="Id" width="50">Mã nhóm</th>
-                <th field="Name" width="50" editor="{type:'validatebox',options:{required:true}}">Tên nhóm</th>
+                <th field="Name" width="50" >Tên nhóm</th>
                 <th field="Description" width="50" editor="{type:'validatebox',options:{required:true}}">Mô tả</th>
             </tr>
         </thead>
     </table>
     <div id="toolbarRole">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dgRole').edatagrid('addRow')">Thêm</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dgRole').edatagrid('destroyRow')">Xóa</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dgRole').edatagrid('saveRow')">Lưu</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dgRole').edatagrid('cancelRow')">Hủy</a>
     </div>

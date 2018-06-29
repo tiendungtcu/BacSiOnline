@@ -67,7 +67,7 @@ namespace TM.Web.Controllers
                     return RedirectToAction("Index", "PatientOrder", new { area="Patient"});
                 }
                 // If Admin role
-                else if (UserManager.IsInRole(id, "QUANTRI_GROUP"))
+                else if (UserManager.IsInRole(id, "ADMIN_GROUP"))
                 {
                     return RedirectToAction("Default", "Default", new { area = "Quantri" });
                 }
@@ -84,7 +84,7 @@ namespace TM.Web.Controllers
                 // the left
                 else
                 {
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    return RedirectToAction("Index","Home",new { Area = "" });
                 }
 
             }
@@ -99,6 +99,11 @@ namespace TM.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            model.EmailOrPhone.Trim();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -141,7 +146,7 @@ namespace TM.Web.Controllers
                         return RedirectToAction("Index", "PatientOrder", new { area = "Patient" });
                     }
                     // If Admin role
-                    else if (UserManager.IsInRole(user.Id, "QUANTRI_GROUP"))
+                    else if (UserManager.IsInRole(user.Id, "ADMIN_GROUP"))
                     {
                         return RedirectToAction("Default", "Default", new { area = "Quantri" });
                     }
@@ -156,12 +161,12 @@ namespace TM.Web.Controllers
                         return RedirectToAction("WaitingList", "DoctorOrder", new { area = "Doctor" });
                     }
                     // còn lại 
-                    else if (UserManager.IsInRole(user.Id, "NguoiDung"))
+                    else
                     {
                         return RedirectToAction("Index", "Home", new { area = "" });
                     }
-                    ModelState.AddModelError("", "Đăng nhập thành công");
-                    return View(model);
+                    //ModelState.AddModelError("", "Đăng nhập thành công");
+                    //return View(model);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

@@ -2,10 +2,11 @@
 using System.Web.Mvc;
 using Tm.Data.Models;
 using Tm.Data.Functions;
+using TM.Web.Controllers;
 
 namespace TM.Web.Areas.Quantri.Controllers
 {
-    public class SymptomController : QuantriBaseController
+    public class SymptomController : CommonBaseController
     {
         // 
         [AllowAnonymous]
